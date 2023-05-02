@@ -6,7 +6,18 @@
 }
 
 <h1>Index</h1>
+<div class="hexbox">
+    @{
+        int i = 0;
+        @foreach (var item in Model.Service)
+        {
+            <div class="hex @(i%2 == 0 ? "offset" : "") sm-@(i%3) md-@(i%5) lg-@(i%7) xl-@(i%9)">
+                <div class="small">
+                    <a asp-page="./Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+                </div>
+            </div>
+            i++;
+        }
+    }
+</div>
 
-@foreach (var item in Model.Service) {
-                <a asp-page="./Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
-}
