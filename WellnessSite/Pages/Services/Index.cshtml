@@ -1,0 +1,12 @@
+﻿@page
+@model WellnessSite.Pages.Services.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@foreach (var item in Model.Service) {
+                <a asp-page="./Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+}

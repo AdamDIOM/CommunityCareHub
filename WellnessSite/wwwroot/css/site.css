@@ -1,0 +1,63 @@
+html {
+  font-size: var(--textSize);
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+:root{
+    --text: black;
+    --highColour: cyan;
+    --backColour: white;
+
+    --headColour: green;
+    --headText:white;
+    --headTextAlt:lightgrey;
+
+    --footColour:darkgreen;
+    --footText:white;
+    --footTextAlt:lightgrey;
+
+    --linkColour:blue;
+    --textSize:15px;
+}
+
+header{
+    background-color:var(--headColour);
+    color:var(--headText);
+}
+header:any-link, header a, header .nav-link{
+    color:var(--headText);
+}
+
+header:any-link:hover, header a:hover, .nav-link:hover{
+    color:var(--headTextAlt)
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")
+}
+
+main{
+    background-color:var(--backColour);
+    color:var(--text);
+}
+
+footer{
+    background-color:var(--footColour);
+    color:var(--footText);
+}
+
+footer:any-link, footer a{
+    color:var(--footText);
+}
+
+footer:any-link:hover, footer a:hover{
+    color:var(--footTextAlt);
+}
