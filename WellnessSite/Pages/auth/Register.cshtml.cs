@@ -89,11 +89,12 @@ namespace WellnessSite.Pages.auth
             {
                 p = new Preferences("u");
                 if (Request.Cookies["user"] == null)
-                {
-                    Response.Cookies.Append("user", _context.Preferences.Count().ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(30) });
-                    _context.Preferences.Add(new Preferences("usr-" + _context.Preferences.Count().ToString()));
-                    await _context.SaveChangesAsync();
-                }
+				{
+					Response.Cookies.Append("user", _context.Preferences.Count().ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+					p = new Preferences("usr-" + _context.Preferences.Count().ToString());
+					_context.Preferences.Add(p);
+					await _context.SaveChangesAsync();
+				}
                 else
                 {
                     string uID = "usr-" + Request.Cookies["user"]!;
@@ -112,7 +113,9 @@ namespace WellnessSite.Pages.auth
                 var result = await _um.CreateAsync(user, Password);
                 if (result.Succeeded)
                 {
-                    await _sim.SignInAsync(user, isPersistent: false);
+					_context.Preferences.Add(new Preferences(user.Id));
+					await _context.SaveChangesAsync();
+					await _sim.SignInAsync(user, isPersistent: false);
                     return RedirectToPage("/Index");
                 }
                 foreach (var error in result.Errors)

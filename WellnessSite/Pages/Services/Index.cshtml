@@ -11,13 +11,31 @@
         int i = 0;
         @foreach (var item in Model.Service)
         {
-            <div class="hex @(i%2 == 0 ? "offset" : "") sm-@(i%3) md-@(i%5) lg-@(i%7) xl-@(i%9)">
-                <div class="small">
-                    <a asp-page="./Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+            <a asp-page="./Details" asp-route-id="@item.Id">
+                <div class="hex @(i%2 == 0 ? "offset" : "") sm-@(i%3) md-@(i%5) lg-@(i%7) xl-@(i%9)">
+                    <div class="small">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </div>
                 </div>
-            </div>
+            </a>
             i++;
         }
     }
 </div>
 
+<script>
+    function changeColour(property, colour) {
+        document.documentElement.style.setProperty(property, colour);
+    }
+    changeColour('--text', '@Model.p.Text');
+    changeColour('--highColour', '@Model.p.Highlight');
+    changeColour('--backColour', '@Model.p.Background');
+    changeColour('--headColour', '@Model.p.Header');
+    changeColour('--headText', '@Model.p.HeaderText');
+    changeColour('--headTextAlt', '@Model.p.HeaderTextalt');
+    changeColour('--footColour', '@Model.p.Footer');
+    changeColour('--footText', '@Model.p.FooterText');
+    changeColour('--footTextAlt', '@Model.p.FooterTextAlt');
+    changeColour('--linkColour', '@Model.p.Link');
+    changeColour('--textSize', '@(Model.p.TextSize)px');
+</script>

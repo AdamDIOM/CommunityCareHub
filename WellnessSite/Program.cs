@@ -6,8 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<WellnessSiteContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("WellnessSiteContext") ?? throw new InvalidOperationException("Connection string 'WellnessSiteContext' not found.")));
+builder.Services.AddDbContext<WellnessSiteContext>(options => {
+    options.UseSqlServer(builder.Configuration.GetConnectionString("WellnessSiteContext") ?? throw new InvalidOperationException("Connection string 'WellnessSiteContext' not found."));
+    options.EnableSensitiveDataLogging();
+    });
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<WellnessSiteContext>()

@@ -23,3 +23,20 @@
     </div>
     <div class="col-md-3"></div>
 </div>
+
+<script>
+    function changeColour(property, colour) {
+        document.documentElement.style.setProperty(property, colour);
+    }
+    changeColour('--text', '@Model.p.Text');
+    changeColour('--highColour', '@Model.p.Highlight');
+    changeColour('--backColour', '@Model.p.Background');
+    changeColour('--headColour', '@Model.p.Header');
+    changeColour('--headText', '@Model.p.HeaderText');
+    changeColour('--headTextAlt', '@Model.p.HeaderTextalt');
+    changeColour('--footColour', '@Model.p.Footer');
+    changeColour('--footText', '@Model.p.FooterText');
+    changeColour('--footTextAlt', '@Model.p.FooterTextAlt');
+    changeColour('--linkColour', '@Model.p.Link');
+    changeColour('--textSize', '@(Model.p.TextSize)px');
+</script>

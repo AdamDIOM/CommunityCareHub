@@ -1,9 +1,10 @@
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using System.Drawing;
 using WellnessSite.Data;
 using WellnessSite.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace WellnessSite.Pages
 {
@@ -40,7 +41,8 @@ namespace WellnessSite.Pages
                 if (Request.Cookies["user"] == null)
                 {
                     Response.Cookies.Append("user", _context.Preferences.Count().ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(30) });
-                    _context.Preferences.Add(new Preferences("usr-" + _context.Preferences.Count().ToString()));
+                    p = new Preferences("usr-" + _context.Preferences.Count().ToString());
+					_context.Preferences.Add(p);
                     await _context.SaveChangesAsync();
                 }
                 else

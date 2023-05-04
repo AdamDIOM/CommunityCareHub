@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.Text;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Text;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.ComponentModel.DataAnnotations;
 
@@ -49,18 +50,65 @@ namespace WellnessSite.Models
         public Preferences(string uid)
         {
             UserID = uid;
-            Text = "black";
-            Highlight = "cyan";
-            Background = "white";
-            Header = "green";
-            HeaderText = "white";
-            HeaderTextalt = "lightgrey";
-            Footer = "darkgreen";
-            FooterText = "white";
-            FooterTextAlt = "lightgrey";
-            Link = "blue";
+            Text = "#000000";
+            Highlight = "#00ffff";
+            Background = "#ffffff";
+            Header = "#008000";
+            HeaderText = "#ffffff";
+            HeaderTextalt = "#00A000";
+            Footer = "#005300";
+            FooterText = "#ffffff";
+            FooterTextAlt = "#007000";
+            Link = "#0000ff";
             TextSize = 15;
         }
 
+        public Preferences() : this("usr-x") { }
+
+
+        public Preferences(string uid, int text, AccessibilityOptions choice)
+        {
+            UserID = uid;
+            TextSize = text;
+            if(choice == AccessibilityOptions.Contrast)
+            {
+                Text = "#000000";
+                Highlight = "#00FFFF";
+                Background = "#FFFFFF";
+                Header = "#FFFF00";
+                HeaderText = "#000000";
+                HeaderTextalt = "#003333";
+                Footer = "#00FFFF";
+                FooterText = "#000000";
+                FooterTextAlt = "#333300";
+                Link = "#00FFFF";
+            }
+            if(choice == AccessibilityOptions.Greyscale)
+            {
+                Text = "#000000";
+                Highlight = "#B2B2B2";
+                Background = "#FFFFFF";
+                Header = "#4B4B4B";
+                HeaderText = "#FFFFFF";
+                HeaderTextalt = "D3D3D3";
+                Footer = "#303030";
+                FooterText = "#FFFFFF";
+                FooterTextAlt = "#D3D3D3";
+				Link = "#1C1C1C";
+			}
+            if(choice == AccessibilityOptions.Invert)
+            {
+                Text = "#FFFFFF";
+                Highlight = "#FF0000";
+                Background = "#000000";
+                Header = "#FF7FFF";
+                HeaderText = "#000000";
+                HeaderTextalt = "#2C2C2C";
+                Footer = "#FFACFF";
+                FooterText = "#000000";
+                FooterTextAlt = "#2C2C2C";
+                Link = "#FFFF00";
+            }
+        }
     }
 }

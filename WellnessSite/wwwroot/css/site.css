@@ -9,23 +9,21 @@ html {
 
 body {
   margin-bottom: 60px;
+  background-color:var(--backColour);
 }
 
-:root{
+:root {
     --text: black;
     --highColour: cyan;
     --backColour: white;
-
     --headColour: green;
-    --headText:white;
-    --headTextAlt:lightgrey;
-
-    --footColour:darkgreen;
-    --footText:white;
-    --footTextAlt:lightgrey;
-
-    --linkColour:blue;
-    --textSize:15px;
+    --headText: white;
+    --headTextAlt: lightgrey;
+    --footColour: darkgreen;
+    --footText: white;
+    --footTextAlt: lightgrey;
+    --linkColour: blue;
+    --textSize: 15px;
 }
 
 header{
@@ -60,4 +58,13 @@ footer:any-link, footer a{
 
 footer:any-link:hover, footer a:hover{
     color:var(--footTextAlt);
+}
+
+.accordion-body{
+    background-color:var(--backColour);
+}
+
+.accordion-header, .accordion-button, .accordion-button:not(.collapsed) {
+    background-color: var(--backColour);
+    color:var(--text);
 }

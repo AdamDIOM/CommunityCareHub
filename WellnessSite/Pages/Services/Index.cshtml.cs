@@ -48,11 +48,12 @@ namespace WellnessSite.Pages.Services
             {
                 p = new Preferences("u");
                 if (Request.Cookies["user"] == null)
-                {
-                    Response.Cookies.Append("user", _context.Preferences.Count().ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(30) });
-                    _context.Preferences.Add(new Preferences("usr-" + _context.Preferences.Count().ToString()));
-                    await _context.SaveChangesAsync();
-                }
+				{
+					Response.Cookies.Append("user", _context.Preferences.Count().ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+					p = new Preferences("usr-" + _context.Preferences.Count().ToString());
+					_context.Preferences.Add(p);
+					await _context.SaveChangesAsync();
+				}
                 else
                 {
                     string uID = "usr-" + Request.Cookies["user"]!;
