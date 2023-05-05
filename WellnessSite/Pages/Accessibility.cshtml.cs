@@ -5,6 +5,7 @@ using WellnessSite.Data;
 using WellnessSite.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
+using WellnessSite.Migrations;
 
 namespace WellnessSite.Pages
 {
@@ -84,6 +85,38 @@ namespace WellnessSite.Pages
             }
             return Page();
         }
+
+        public async Task<IActionResult> OnPostSetText(string reset, int size)
+        {
+			if (_context.Preferences != null)
+			{
+				prefs = await _context.Preferences.ToListAsync();
+			}
+			if (_context.Preferences == null) return NotFound();
+
+            if(size > 0)
+            {
+                p.TextSize = size;
+            }
+
+			Preferences pr = p;
+			if (_sim.IsSignedIn(User))
+			{
+				ApplicationUser u = await _um.GetUserAsync(User);
+				p.UserID = u.Id;
+			}
+			else
+			{
+				p.UserID = "usr-" + Request.Cookies["user"]!;
+			}
+
+            if (reset == "true") pr.TextSize = new Preferences().TextSize;
+
+			_context.ChangeTracker.Clear();
+			_context.Attach(pr).State = EntityState.Modified;
+			await _context.SaveChangesAsync();
+			return Redirect("/Accessibility");
+		}
 
         public async Task<IActionResult> OnPostSetPropertiesAsync(string reset, string theme)
         {

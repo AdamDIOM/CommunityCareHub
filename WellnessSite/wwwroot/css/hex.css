@@ -192,10 +192,17 @@
     margin-right: auto;
     /*background-color:green;*/
     display: block;
-    font-size: calc(var(--s)/12);
+    font-size: var(--textSize);
     hyphens: auto;
 }
 
 .hexbox a{
     color:var(--text);
+}
+
+.bodycontainer {
+    margin-left: 0px;
+    margin-right: 0px;
+    max-width: 100vw;
+    padding: 0px;
 }

@@ -6,8 +6,8 @@
     <title>@ViewData["Title"] - WellnessSite</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/hex.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WellnessSite.styles.css" asp-append-version="true" />
+    @RenderSection("Styles", false)
 </head>
 <body>
     <header>
@@ -30,7 +30,7 @@
                             <a class="nav-link" asp-area="" asp-page="/Services/Index">A-Z Services</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Contact">Contact</a>
+                            <a class="nav-link" asp-area="" asp-page="/Contact/Index">Contact</a>
                         </li>
                     </ul>
 
@@ -69,7 +69,7 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container bodycontainer">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

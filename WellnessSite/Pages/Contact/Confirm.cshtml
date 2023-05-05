@@ -1,7 +1,12 @@
 ﻿@page
-@model WellnessSite.Pages.ContactModel
+@model WellnessSite.Pages.Contact.ConfirmModel
 @{
 }
+
+<h1>Email sent!</h1>
+<p>Message says: @Model.Message</p>
+
+<a asp-page="/Index" class="btn">Return to Homepage</a>
 
 <script>
     function changeColour(property, colour) {

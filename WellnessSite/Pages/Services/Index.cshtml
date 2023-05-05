@@ -11,10 +11,10 @@
         int i = 0;
         @foreach (var item in Model.Service)
         {
-            <a asp-page="./Details" asp-route-id="@item.Id">
+            <a asp-page="./Service" asp-route-id="@item.Id">
                 <div class="hex @(i%2 == 0 ? "offset" : "") sm-@(i%3) md-@(i%5) lg-@(i%7) xl-@(i%9)">
                     <div class="small">
-                        @Html.DisplayFor(modelItem => item.Name)
+                        <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
                     </div>
                 </div>
             </a>
@@ -27,6 +27,15 @@
     function changeColour(property, colour) {
         document.documentElement.style.setProperty(property, colour);
     }
+
+    function changeHexMediaQueries(size) {
+        document.styleSheets[3].cssRules[0].media.mediaText = '(max-width: ' + (size * 2) + 'px)';
+        document.styleSheets[3].cssRules[1].media.mediaText = '(min-width: ' + (size * 2) + 'px) and (max-width: ' + (size * 3) + 'px)';
+        document.styleSheets[3].cssRules[2].media.mediaText = '(min-width: ' + (size * 3) + 'px) and (max-width: ' + (size * 4) + 'px)';
+        document.styleSheets[3].cssRules[3].media.mediaText = '(min-width: ' + (size * 4) + 'px) and (max-width: ' + (size * 5) + 'px)';
+        document.styleSheets[3].cssRules[4].media.mediaText = '(min-width: ' + (size * 5) + 'px)';
+    }
+
     changeColour('--text', '@Model.p.Text');
     changeColour('--highColour', '@Model.p.Highlight');
     changeColour('--backColour', '@Model.p.Background');
@@ -38,4 +47,12 @@
     changeColour('--footTextAlt', '@Model.p.FooterTextAlt');
     changeColour('--linkColour', '@Model.p.Link');
     changeColour('--textSize', '@(Model.p.TextSize)px');
+    changeColour('--s', '@(Model.p.TextSize*15)px')
+
+    changeHexMediaQueries(@(Math.Ceiling(Model.p.TextSize * 15 * 1.1547)))
 </script>
+
+@section Styles{
+
+    <link rel="stylesheet" href="~/css/hex.css" asp-append-version="true" />
+}

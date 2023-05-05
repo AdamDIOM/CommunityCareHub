@@ -15,6 +15,8 @@ namespace WellnessSite.Pages.auth
         private readonly WellnessSiteContext _context;
         private readonly SignInManager<ApplicationUser> _sim;
         private IList<Preferences> prefs;
+        public IList<Bookmarks> bookmarks;
+        public IList<Service> Services;
         public Preferences p;
 
         public string username;
@@ -79,6 +81,11 @@ namespace WellnessSite.Pages.auth
 
                 }
             }
+
+            bookmarks = await _context.Bookmarks.Where(b => b.UID == u.Id).ToListAsync();
+
+            Services = await _context.Service.ToListAsync();
+
         }
 
         public async Task<IActionResult> OnPostAsync()

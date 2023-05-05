@@ -20,11 +20,15 @@ namespace WellnessSite.Data
         {
             modelBuilder.Entity<Service>().ToTable("Service");
             modelBuilder.Entity<Preferences>().ToTable("Preferences");
+            modelBuilder.Entity<Bookmarks>().ToTable("Bookmarks");
+            modelBuilder.Entity<AdminAccess>().ToTable("AdminAccess");
             base.OnModelCreating(modelBuilder);
             modelBuilder.Ignore<IdentityUserLogin<string>>();
         }
 
-        public DbSet<WellnessSite.Models.Service> Service { get; set; } = default!;
+        public DbSet<Service> Service { get; set; } = default!;
         public DbSet<Preferences> Preferences { get; set; } = default!;
+        public DbSet<Bookmarks> Bookmarks { get; set; } = default!;
+        public DbSet<AdminAccess> AdminAccess { get; set; } = default!;
     }
 }
