@@ -1,0 +1,37 @@
+﻿@page
+@model WellnessSite.Pages.Admin.AdminRequestsModel
+@{
+    ViewData["Title"] = "Admin Requests List";
+    ViewData["Prefs"] = Model.p.ToString();
+}
+<h1>Users Requesting Organisation Admin Rights</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+   <tbody>
+        @foreach(var u in Model.users){
+            <tr>
+                <td>
+                    @u.UserName
+                </td>
+                <td>
+                    @u.Email
+                </td>
+                <td>
+                    <form method="post">
+                        <button asp-page-handler="ProcessAdminRequest" asp-route-uid="@u.Id" asp-route-accept="true" class="btn btn-success">Accept</button> | <button asp-route-handler="ProcessAdminRequest" asp-route-uid="@u.Id" asp-route-accept="false" class="btn btn-danger">Decline</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

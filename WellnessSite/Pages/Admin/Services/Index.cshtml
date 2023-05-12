@@ -1,0 +1,122 @@
+﻿@page
+@model WellnessSite.Pages.Admin.Services.IndexModel
+
+@{
+    ViewData["Title"] = "Modify Services List";
+    ViewData["Prefs"] = Model.p.ToString();
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Service[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service[0].Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service[0].PhoneNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service[0].Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service[0].Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service[0].Town)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service[0].Postcode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service[0].WebLink)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service[0].Other)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service[0].ImageData)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service[0].ImageAltText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service[0].Tags)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Service) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Town)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Postcode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WebLink)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Other)
+            </td>
+            <td>
+                    @if (item.ImageData.Count() > 0)
+                    {
+                        <img class="edit-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(item.ImageData))" alt="@item.ImageAltText" />
+                    }
+                    else
+                    {
+                        <p>Image unavailable</p>
+                    }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageAltText)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tags)
+            </td>
+            <td>
+                    <p>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                    </p>
+                    <p>
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                    </p>
+                    <p>
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </p>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

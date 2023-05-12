@@ -3,98 +3,74 @@
 
 @{
     ViewData["Title"] = "Service";
+    ViewData["Prefs"] = Model.p.ToString();
+    ViewData["Layout"] = "Img";
 }
 
 <h1>Service</h1>
 
 <div>
-    <h4>Service</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Service.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Service.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Service.PhoneNum)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Service.PhoneNum)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Service.Email)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Service.Email)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Service.WebLink)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Service.WebLink)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Service.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Service.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Service.Location)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Service.Location)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Service.Aim)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Service.Aim)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Service.Referral)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Service.Referral)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Service.Times)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Service.Times)
-        </dd>
-    </dl>
-</div>
-<div>
-    @if(Model.user != null)
+    <h4>@Model.Service.Name - @Model.Service.Category</h4>
+    @if (Model.user != null)
     {
-        <form method="post">
-            <button asp-page-handler="Bookmark" asp-route-id="@Model.id">@(Model.Bookmarked ? "Unb" : "B")ookmark Service</button>
-        </form>
+            <form method="post">
+                <button asp-page-handler="Bookmark" asp-route-id="@Model.id">@(Model.Bookmarked ? "Unb" : "B")ookmark Service</button>
+            </form>
     }
     else
     {
-        <p><a asp-page="../auth/Index">Login or Register</a> to Bookmark Service</p>
+                 <p><a asp-page="../auth/Index">Login or Register</a> to Bookmark Service</p>
     }
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            @Model.Service.Description
+        </div>
+        <div class="col-md-6">
+            @if(@Model.Service.ImageData.Count() > 0){
+			    <img class="service-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.Service.ImageData))" alt="@Model.Service.ImageAltText" />
+            }
+            else{
+            <p>Image unavailable</p>
+            }
+        </div>
+        <div class="col-md-6">
+            <p>
+                @Model.Service.PhoneNum
+            </p>
+            <p>
+                @Model.Service.Email
+            </p>
+            <p>
+                @Model.Service.Address
+            </p>
+            <p>
+                @Model.Service.Town
+            </p>
+            <p>
+                @Model.Service.Postcode
+            </p>
+        </div>
+        <div class="col-md-6">
+            <p>
+                @Model.Service.Other
+            </p>
+            <p>
+                <a href="https://@Model.Service.WebLink">@Model.Service.WebLink</a>
+            </p>
+        </div>
+    </div>
+</div>
+<div>
+    
 
     <a asp-page="./Index">Return to A-Z</a>
 </div>
 
-<script>
-    function changeColour(property, colour) {
-        document.documentElement.style.setProperty(property, colour);
-    }
-    changeColour('--text', '@Model.p.Text');
-    changeColour('--highColour', '@Model.p.Highlight');
-    changeColour('--backColour', '@Model.p.Background');
-    changeColour('--headColour', '@Model.p.Header');
-    changeColour('--headText', '@Model.p.HeaderText');
-    changeColour('--headTextAlt', '@Model.p.HeaderTextalt');
-    changeColour('--footColour', '@Model.p.Footer');
-    changeColour('--footText', '@Model.p.FooterText');
-    changeColour('--footTextAlt', '@Model.p.FooterTextAlt');
-    changeColour('--linkColour', '@Model.p.Link');
-    changeColour('--textSize', '@(Model.p.TextSize)px');
-</script>
+@section Styles{
+    <style>
+        body {
+            background-image: url("/img/contact-bg.jpeg");
+        }
+    </style>
+}

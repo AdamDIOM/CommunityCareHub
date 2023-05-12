@@ -1,14 +1,21 @@
 ﻿@page
 @model WellnessSite.Pages.Contact.IndexModel
 @{
+    ViewData["Title"] = "Contact";
+    ViewData["Prefs"] = Model.p.ToString();
+    ViewData["Layout"] = "Img";
 }
 
-<h2>Contact</h2>
+<h1>Contact</h1>
 <p>Please use the contact form below to get in touch</p>
-
 <form method="post">
     <div asp-validation-summary="All" class="text-danger"></div>
 
+	<div class="form-group">
+		<label asp-for="Name" class="control-label"></label>
+		<input asp-for="Name" class="form-control" placeholder="Your name" />
+		<span asp-validation-for="Name" class="text-danger"></span>
+	</div>
     <div class="form-group">
         <label asp-for="Email" class="control-label"></label>
         @if (Model.sim.IsSignedIn(User))
@@ -21,10 +28,11 @@
         }
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
+
     <div class="form-group">
-        <label asp-for="Name" class="control-label"></label>
-        <input asp-for="Name" class="form-control" placeholder="Your name" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+        <label asp-for="Subject" class="control-label"></label>
+        <input asp-for="Subject" class="form-control" placeholder="Subject" />
+        <span asp-validation-for="Subject" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Message" class="control-label"></label>
@@ -36,19 +44,10 @@
     </div>
 </form>
 
-<script>
-    function changeColour(property, colour) {
-        document.documentElement.style.setProperty(property, colour);
-    }
-    changeColour('--text', '@Model.p.Text');
-    changeColour('--highColour', '@Model.p.Highlight');
-    changeColour('--backColour', '@Model.p.Background');
-    changeColour('--headColour', '@Model.p.Header');
-    changeColour('--headText', '@Model.p.HeaderText');
-    changeColour('--headTextAlt', '@Model.p.HeaderTextalt');
-    changeColour('--footColour', '@Model.p.Footer');
-    changeColour('--footText', '@Model.p.FooterText');
-    changeColour('--footTextAlt', '@Model.p.FooterTextAlt');
-    changeColour('--linkColour', '@Model.p.Link');
-    changeColour('--textSize', '@(Model.p.TextSize)px');
-</script>
+@section Styles{
+    <style>
+        body{
+            background-image: url("/img/contact-bg.jpeg");
+        }
+    </style>
+}

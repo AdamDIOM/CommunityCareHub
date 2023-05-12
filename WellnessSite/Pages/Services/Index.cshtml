@@ -3,9 +3,22 @@
 
 @{
     ViewData["Title"] = "Index";
+    ViewData["Prefs"] = Model.p.ToString();
 }
+<div class="row">
+    <div class="col-md-2 col-1"></div>
+    <div class="col-md-8 col-10">
+        <h1>A-Z Services</h1>
+        <form>
+            <label asp-for="qry">Search</label>
+            <input asp-for="qry" />
+            <input type="submit" asp-route-qry="@Model.qry" value="Search" class="btn btn-success">
+        </form>
+    </div>
+    <div class="col-md-2 col-1"></div>
+</div>
 
-<h1>Index</h1>
+
 <div class="hexbox">
     @{
         int i = 0;
@@ -24,10 +37,6 @@
 </div>
 
 <script>
-    function changeColour(property, colour) {
-        document.documentElement.style.setProperty(property, colour);
-    }
-
     function changeHexMediaQueries(size) {
         document.styleSheets[3].cssRules[0].media.mediaText = '(max-width: ' + (size * 2) + 'px)';
         document.styleSheets[3].cssRules[1].media.mediaText = '(min-width: ' + (size * 2) + 'px) and (max-width: ' + (size * 3) + 'px)';
@@ -35,20 +44,6 @@
         document.styleSheets[3].cssRules[3].media.mediaText = '(min-width: ' + (size * 4) + 'px) and (max-width: ' + (size * 5) + 'px)';
         document.styleSheets[3].cssRules[4].media.mediaText = '(min-width: ' + (size * 5) + 'px)';
     }
-
-    changeColour('--text', '@Model.p.Text');
-    changeColour('--highColour', '@Model.p.Highlight');
-    changeColour('--backColour', '@Model.p.Background');
-    changeColour('--headColour', '@Model.p.Header');
-    changeColour('--headText', '@Model.p.HeaderText');
-    changeColour('--headTextAlt', '@Model.p.HeaderTextalt');
-    changeColour('--footColour', '@Model.p.Footer');
-    changeColour('--footText', '@Model.p.FooterText');
-    changeColour('--footTextAlt', '@Model.p.FooterTextAlt');
-    changeColour('--linkColour', '@Model.p.Link');
-    changeColour('--textSize', '@(Model.p.TextSize)px');
-    changeColour('--s', '@(Model.p.TextSize*15)px')
-
     changeHexMediaQueries(@(Math.Ceiling(Model.p.TextSize * 15 * 1.1547)))
 </script>
 

@@ -110,5 +110,10 @@ namespace WellnessSite.Models
                 Link = "#FFFF00";
             }
         }
+
+        public override string ToString()
+        {
+            return Text + ',' + Highlight + ',' + Background + ',' + Header + ',' + HeaderText +',' + HeaderTextalt + ',' + Footer + ',' + FooterText + ',' + FooterTextAlt + ',' + Link + ',' + TextSize;
+        }
     }
 }

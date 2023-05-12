@@ -1,85 +1,73 @@
 ﻿@page
 @model WellnessSite.Pages.auth.ProfileModel
 @{
+    ViewData["Title"] = "Profile";
+    ViewData["Prefs"] = Model.p.ToString();
+    ViewData["Layout"] = "Img";
 }
 
-<div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md-6">
-        <h1>Your profile</h1>
-        <dl class="row">
-            <dt class="col-sm-5">
-                Username
-            </dt>
-            <dd class="col-sm-7">
-                @Model.username
-            </dd>
-        </dl>
 
-        <h2>Bookmarks</h2>
-        @foreach(Models.Bookmarks bm in Model.bookmarks)
-        {
-            <p><a asp-page="../Services/Service" asp-route-id="@bm.SID">@Model.Services.FirstOrDefault(s => s.Id == bm.SID).Name</a></p>
+<h1>Your profile</h1>
+<dl class="row">
+    <dt class="col-sm-5">
+        Username
+    </dt>
+    <dd class="col-sm-7">
+        @Model.username
+    </dd>
+</dl>
+
+<h2>Bookmarks</h2>
+@foreach(Models.Bookmarks bm in Model.bookmarks)
+{
+    <p><a asp-page="../Services/Service" asp-route-id="@bm.SID">@Model.Services.FirstOrDefault(s => s.Id == bm.SID).Name</a></p>
+}
+
+<!-- Change password functionality -->
+<form method="post">
+    <dl class="row">
+        <dt class="col-sm-5">
+            Current Password
+        </dt>
+        <dd class="col-sm-7">
+            <div class="form-group">
+                <label asp-for="CurrentPassword" class="control-label"></label>
+                <input asp-for="CurrentPassword" class="form-control" />
+                <span asp-validation-for="CurrentPassword" class="text-danger"></span>
+            </div>
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-5">
+            New Password
+        </dt>
+        <dd class="col-sm-7">
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-5">
+            Confirm Password
+        </dt>
+        <dd class="col-sm-7">
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" class="control-label"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+        </dd>
+    </dl>
+    <input type="submit" value="Change" class="btn btn-danger" />
+</form>
+
+@section Styles{
+    <style>
+        body {
+            background-image: url("/img/contact-bg.jpeg");
         }
-
-        <!-- Change password functionality -->
-        <form method="post">
-            <dl class="row">
-                <dt class="col-sm-5">
-                    Current Password
-                </dt>
-                <dd class="col-sm-7">
-                    <div class="form-group">
-                        <label asp-for="CurrentPassword" class="control-label"></label>
-                        <input asp-for="CurrentPassword" class="form-control" />
-                        <span asp-validation-for="CurrentPassword" class="text-danger"></span>
-                    </div>
-                </dd>
-            </dl>
-            <dl class="row">
-                <dt class="col-sm-5">
-                    New Password
-                </dt>
-                <dd class="col-sm-7">
-                    <div class="form-group">
-                        <label asp-for="Password" class="control-label"></label>
-                        <input asp-for="Password" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-                </dd>
-            </dl>
-            <dl class="row">
-                <dt class="col-sm-5">
-                    Confirm Password
-                </dt>
-                <dd class="col-sm-7">
-                    <div class="form-group">
-                        <label asp-for="ConfirmPassword" class="control-label"></label>
-                        <input asp-for="ConfirmPassword" class="form-control" />
-                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                    </div>
-                </dd>
-            </dl>
-            <input type="submit" value="Change" class="btn btn-danger" />
-        </form>
-
-    </div>
-    <div class="col-md-3"></div>
-</div>
-
-<script>
-    function changeColour(property, colour) {
-        document.documentElement.style.setProperty(property, colour);
-    }
-    changeColour('--text', '@Model.p.Text');
-    changeColour('--highColour', '@Model.p.Highlight');
-    changeColour('--backColour', '@Model.p.Background');
-    changeColour('--headColour', '@Model.p.Header');
-    changeColour('--headText', '@Model.p.HeaderText');
-    changeColour('--headTextAlt', '@Model.p.HeaderTextalt');
-    changeColour('--footColour', '@Model.p.Footer');
-    changeColour('--footText', '@Model.p.FooterText');
-    changeColour('--footTextAlt', '@Model.p.FooterTextAlt');
-    changeColour('--linkColour', '@Model.p.Link');
-    changeColour('--textSize', '@(Model.p.TextSize)px');
-</script>
+    </style>
+}

@@ -16,16 +16,18 @@ namespace WellnessSite.Pages.Contact
         private readonly UserManager<ApplicationUser> _um;
         public readonly SignInManager<ApplicationUser> sim;
         private readonly WellnessSiteContext _context;
-        private IList<Preferences> prefs;
         public Preferences p;
 
+        [BindProperty]
+        [Required]
+        public string Name { get; set; }
         [BindProperty]
         [EmailAddress]
         [Required]
         public string Email { get; set; }
         [BindProperty]
         [Required]
-        public string Name { get; set; }
+        public string Subject { get; set; }
         [BindProperty]
         [Required]
         public string Message { get; set; }
@@ -41,71 +43,17 @@ namespace WellnessSite.Pages.Contact
 
         public async Task OnGetAsync()
         {
-            if (_context.Preferences != null)
-            {
-                prefs = await _context.Preferences.ToListAsync();
-            }
+            p = await UsefulFunctions.GetPreferences(_context, _um, sim, User, this);
             ApplicationUser u = await _um.GetUserAsync(User);
             email = (u != null) ? u.Email : "";
-
-            if (sim.IsSignedIn(User) && prefs.FirstOrDefault(p => p.UserID == u.Id) != null)
-            {
-                p = prefs.FirstOrDefault(p => p.UserID == u.Id)!;
-            }
-            else
-            {
-                p = new Preferences("u");
-                if (Request.Cookies["user"] == null)
-				{
-					Response.Cookies.Append("user", _context.Preferences.Count().ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(30) });
-					p = new Preferences("usr-" + _context.Preferences.Count().ToString());
-					_context.Preferences.Add(p);
-					await _context.SaveChangesAsync();
-				}
-                else
-                {
-                    string uID = "usr-" + Request.Cookies["user"]!;
-
-                    p = prefs.FirstOrDefault(p => p.UserID == uID)!;
-
-                }
-            }
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
 
-            if (_context.Preferences != null)
-            {
-                prefs = await _context.Preferences.ToListAsync();
-            }
             ApplicationUser u = await _um.GetUserAsync(User);
             email = (u != null) ? u.Email : "";
-
-            if (sim.IsSignedIn(User) && prefs.FirstOrDefault(p => p.UserID == u.Id) != null)
-            {
-                p = prefs.FirstOrDefault(p => p.UserID == u.Id)!;
-            }
-            else
-            {
-                p = new Preferences("u");
-                if (Request.Cookies["user"] == null)
-                {
-                    Response.Cookies.Append("user", _context.Preferences.Count().ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(30) });
-                    p = new Preferences("usr-" + _context.Preferences.Count().ToString());
-                    _context.Preferences.Add(p);
-                    await _context.SaveChangesAsync();
-                }
-                else
-                {
-                    string uID = "usr-" + Request.Cookies["user"]!;
-
-                    p = prefs.FirstOrDefault(p => p.UserID == uID)!;
-
-                }
-            }
-
-
+            p = await UsefulFunctions.GetPreferences(_context, _um, sim, User, this);
 
 
             if (!ModelState.IsValid)
@@ -134,8 +82,9 @@ namespace WellnessSite.Pages.Contact
                 // CC in user's email
                 m.CC.Add(new MailAddress(Email));
                 // adds text and subject line then sends
-                m.Body = $"{Name} said {Message}.";
-                m.Subject = "Wellness Form Enquiry";
+                m.Body = $"Message from {Name}:" +
+                    $"{Message}.";
+                m.Subject = $"Wellness Form Enquiry - {Subject}";
                 sc.Send(m);
                 // provided nothing failed, redirects to confirmation page to show user their message.
                 return Redirect("/Contact/Confirm?Message=" + Message);

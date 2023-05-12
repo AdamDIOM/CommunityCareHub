@@ -32,12 +32,13 @@ namespace WellnessSite.Pages.auth
         [Display(Name = "Confirm Password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match")]
         public string ConfirmPassword { get; set; }
+        [BindProperty]
+        public bool RequestAdmin { get; set; }
 
         private readonly SignInManager<ApplicationUser> _sim;
         private readonly UserManager<ApplicationUser> _um;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<IdentityRole> _rm;
         private readonly WellnessSiteContext _context;
-        private IList<Preferences> prefs;
         public Preferences p;
 
         public RegisterModel(
@@ -48,82 +49,54 @@ namespace WellnessSite.Pages.auth
         {
             _sim = signInManager;
             _um = userManager;
-            _roleManager = roleManager;
+            _rm = roleManager;
             _context = con;
         }
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(string email)
         {
-            /*
-            // sets up admin@ltpr.it to always have admin access
-            bool exists = await _roleManager.RoleExistsAsync("Admin");
-            if(!exists)
-            {
-                var role = new IdentityRole { Name = "Admin" };
-                var result = await _roleManager.CreateAsync(role);
-                if(result.Succeeded)
-                {
-                    var user = await _userManager.FindByEmailAsync("admin@ltpr.it");
-                    if(user != null)
-                    {
-                        await _userManager.AddToRoleAsync(user, "Admin");
-                    }
-                    
-                }
-            }*/
+
+            await UsefulFunctions.SetStandardAdmin(_um, _rm);
+
             if (email == null)
             {
                 email = "";
             }
 
-            if (_context.Preferences != null)
-            {
-                prefs = await _context.Preferences.ToListAsync();
-            }
-            ApplicationUser u = await _um.GetUserAsync(User);
-
-            if (_sim.IsSignedIn(User) && prefs.FirstOrDefault(p => p.UserID == u.Id) != null)
-            {
-                p = prefs.FirstOrDefault(p => p.UserID == u.Id)!;
-            }
-            else
-            {
-                p = new Preferences("u");
-                if (Request.Cookies["user"] == null)
-				{
-					Response.Cookies.Append("user", _context.Preferences.Count().ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(30) });
-					p = new Preferences("usr-" + _context.Preferences.Count().ToString());
-					_context.Preferences.Add(p);
-					await _context.SaveChangesAsync();
-				}
-                else
-                {
-                    string uID = "usr-" + Request.Cookies["user"]!;
-
-                    p = prefs.FirstOrDefault(p => p.UserID == uID)!;
-
-                }
-            }
+            p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
         }
         public async Task<IActionResult> OnPostAsync()
         {
+
+
+            if (email == null)
+            {
+                email = "";
+            }
+
+
+            p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
+
             if (ModelState.IsValid)
             {
                 // creates new user and redirects to homepage otherwise reloads page if there is an error
-                var user = new ApplicationUser { UserName = Email, Email = Email };
+                var user = new ApplicationUser { UserName = Email, Email = Email, RequestedAdmin = RequestAdmin };
                 var result = await _um.CreateAsync(user, Password);
                 if (result.Succeeded)
                 {
+                    
 					_context.Preferences.Add(new Preferences(user.Id));
 					await _context.SaveChangesAsync();
 					await _sim.SignInAsync(user, isPersistent: false);
-                    return RedirectToPage("/Index");
+					await UsefulFunctions.SetStandardAdmin(_um, _rm);
+					return RedirectToPage("/Index");
                 }
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
-            }
-            return Page();
+			}
+			await UsefulFunctions.SetStandardAdmin(_um, _rm);
+			return Page();
         }
     }
 }

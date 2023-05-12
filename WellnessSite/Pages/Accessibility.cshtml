@@ -1,6 +1,8 @@
 ﻿@page
 @model WellnessSite.Pages.AccessibilityModel
 @{
+	ViewData["Title"] = "Accessibility Options";
+	ViewData["Prefs"] = Model.p.ToString();
 }
 <h1>Accessibility Settings</h1>
 <form method="post">
@@ -16,9 +18,11 @@
 	</div>
 	<div>
 		<h2>Text, Background and Graphics Colours</h2>
-		<button asp-page-handler="SetProperties" asp-route-theme="greyscale">Greyscale</button>
-		<button asp-page-handler="SetProperties" asp-route-theme="contrast">High Contrast</button>
-		<button asp-page-handler="SetProperties" asp-route-theme="invert">Invert Colours</button>
+		<p>
+			<button asp-page-handler="SetProperties" asp-route-theme="greyscale">Greyscale</button>
+			<button asp-page-handler="SetProperties" asp-route-theme="contrast">High Contrast</button>
+			<button asp-page-handler="SetProperties" asp-route-theme="invert">Invert Colours</button>
+		</p>
 		<div class="accordion">
 			<div class="accordion-item">
 				<h2 class="accordion-header">
@@ -26,7 +30,7 @@
 						Advanced
 					</button>
 				</h2>
-				<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+				<div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
 					<div class="accordion-body">
 						<input hidden asp-for="p.UserID" value="@Model.p.UserID" />
 						<div>
@@ -83,18 +87,4 @@
 	function changeTextSize(size){
 		document.documentElement.style.setProperty('--textSize', size + 'pt')
 	}
-	function changeColour(property, colour) {
-		document.documentElement.style.setProperty(property, colour);
-	}
-	changeColour('--text', '@Model.p.Text');
-	changeColour('--highColour', '@Model.p.Highlight');
-	changeColour('--backColour', '@Model.p.Background');
-	changeColour('--headColour', '@Model.p.Header');
-	changeColour('--headText', '@Model.p.HeaderText');
-	changeColour('--headTextAlt', '@Model.p.HeaderTextalt');
-	changeColour('--footColour', '@Model.p.Footer');
-	changeColour('--footText', '@Model.p.FooterText');
-	changeColour('--footTextAlt', '@Model.p.FooterTextAlt');
-	changeColour('--linkColour', '@Model.p.Link');
-	changeColour('--textSize', '@(Model.p.TextSize)px');
 </script>

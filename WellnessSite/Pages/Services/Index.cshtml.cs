@@ -16,9 +16,10 @@ namespace WellnessSite.Pages.Services
 
         private readonly UserManager<ApplicationUser> _um;
         private readonly SignInManager<ApplicationUser> _sim;
-        private IList<Preferences> prefs;
         public Preferences p;
         private readonly WellnessSiteContext _context;
+        [BindProperty(SupportsGet = true)]
+        public string qry { get; set; }
         public IndexModel(SignInManager<ApplicationUser> sim, UserManager<ApplicationUser> um, WellnessSiteContext con)
         {
             _sim = sim;
@@ -32,36 +33,22 @@ namespace WellnessSite.Pages.Services
         {
             if (_context.Service != null)
             {
-                Service = await _context.Service.ToListAsync();
-            }
-            if (_context.Preferences != null)
-            {
-                prefs = await _context.Preferences.ToListAsync();
-            }
-            ApplicationUser u = await _um.GetUserAsync(User);
-
-            if (_sim.IsSignedIn(User) && prefs.FirstOrDefault(p => p.UserID == u.Id) != null)
-            {
-                p = prefs.FirstOrDefault(p => p.UserID == u.Id)!;
-            }
-            else
-            {
-                p = new Preferences("u");
-                if (Request.Cookies["user"] == null)
-				{
-					Response.Cookies.Append("user", _context.Preferences.Count().ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(30) });
-					p = new Preferences("usr-" + _context.Preferences.Count().ToString());
-					_context.Preferences.Add(p);
-					await _context.SaveChangesAsync();
-				}
-                else
+                Service = await _context.Service.Where(s => s.Accepted).ToListAsync();
+                if (qry != null && qry.Trim() != "")
                 {
-                    string uID = "usr-" + Request.Cookies["user"]!;
+                    Service = Service.Where(s =>
 
-                    p = prefs.FirstOrDefault(p => p.UserID == uID)!;
-
+                        s.Name.ToLower().Contains(qry.ToLower()) ||
+                        s.PhoneNum.ToLower().Contains(qry.ToLower()) ||
+                        s.Email.ToLower().Contains(qry.ToLower()) ||
+                        s.WebLink.ToLower().Contains(qry.ToLower()) ||
+                        s.Address.ToLower().Contains(qry.ToLower()) ||
+                        s.Tags.ToLower().Contains(qry.ToLower())
+                    ).ToList();
                 }
             }
+
+            p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
         }
     }
 }

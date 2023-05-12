@@ -1,0 +1,95 @@
+﻿@page
+@model WellnessSite.Pages.Admin.Services.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Service</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Service.Id" />
+            <div class="form-group">
+                <label asp-for="Service.Name" class="control-label"></label>
+                <input asp-for="Service.Name" class="form-control" />
+                <span asp-validation-for="Service.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Service.Category" class="control-label"></label>
+                <input asp-for="Service.Category" class="form-control" />
+                <span asp-validation-for="Service.Category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Service.Description" class="control-label"></label>
+                <input asp-for="Service.Description" class="form-control" />
+                <span asp-validation-for="Service.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Service.PhoneNum" class="control-label"></label>
+                <input asp-for="Service.PhoneNum" class="form-control" />
+                <span asp-validation-for="Service.PhoneNum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Service.Email" class="control-label"></label>
+                <input asp-for="Service.Email" class="form-control" />
+                <span asp-validation-for="Service.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Service.Address" class="control-label"></label>
+                <input asp-for="Service.Address" class="form-control" />
+                <span asp-validation-for="Service.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Service.Town" class="control-label"></label>
+                <input asp-for="Service.Town" class="form-control" />
+                <span asp-validation-for="Service.Town" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Service.Postcode" class="control-label"></label>
+                <input asp-for="Service.Postcode" class="form-control" />
+                <span asp-validation-for="Service.Postcode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Service.WebLink" class="control-label"></label>
+                <input asp-for="Service.WebLink" class="form-control" />
+                <span asp-validation-for="Service.WebLink" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Service.Other" class="control-label"></label>
+                <input asp-for="Service.Other" class="form-control" />
+                <span asp-validation-for="Service.Other" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Service.ImageData" class="control-label"></label>
+                <input asp-for="Service.ImageData" class="form-control" />
+                <span asp-validation-for="Service.ImageData" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Service.ImageAltText" class="control-label"></label>
+                <input asp-for="Service.ImageAltText" class="form-control" />
+                <span asp-validation-for="Service.ImageAltText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Service.Tags" class="control-label"></label>
+                <input asp-for="Service.Tags" class="form-control" />
+                <span asp-validation-for="Service.Tags" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

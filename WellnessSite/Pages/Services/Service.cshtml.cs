@@ -18,7 +18,6 @@ namespace WellnessSite.Pages.Services
         public ApplicationUser? user;
         public int? id;
         private readonly SignInManager<ApplicationUser> _sim;
-        private IList<Preferences> prefs;
         public Preferences p;
 
         public ServiceModel(SignInManager<ApplicationUser> sim, UserManager<ApplicationUser> um, WellnessSiteContext con)
@@ -34,34 +33,7 @@ namespace WellnessSite.Pages.Services
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (_context.Preferences != null)
-            {
-                prefs = await _context.Preferences.ToListAsync();
-            }
-            ApplicationUser u = await _um.GetUserAsync(User);
-
-            if (_sim.IsSignedIn(User) && prefs.FirstOrDefault(p => p.UserID == u.Id) != null)
-            {
-                p = prefs.FirstOrDefault(p => p.UserID == u.Id)!;
-            }
-            else
-            {
-                p = new Preferences("u");
-                if (Request.Cookies["user"] == null)
-                {
-                    Response.Cookies.Append("user", _context.Preferences.Count().ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(30) });
-                    p = new Preferences("usr-" + _context.Preferences.Count().ToString());
-                    _context.Preferences.Add(p);
-                    await _context.SaveChangesAsync();
-                }
-                else
-                {
-                    string uID = "usr-" + Request.Cookies["user"]!;
-
-                    p = prefs.FirstOrDefault(p => p.UserID == uID)!;
-
-                }
-            }
+            p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
 
             this.id = id;
             if (id == null || _context.Service == null || _context.Bookmarks == null)
@@ -90,6 +62,9 @@ namespace WellnessSite.Pages.Services
 
         public async Task<IActionResult> OnPostBookmarkAsync(int? id)
         {
+
+            p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
+
             if (id == null || _context.Service == null || _context.Bookmarks == null)
             {
                 return NotFound();

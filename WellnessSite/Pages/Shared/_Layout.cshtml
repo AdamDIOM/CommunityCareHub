@@ -11,14 +11,15 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-md navbar-toggleable-md border-bottom box-shadow">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">WellnessSite</a>
+                <img src="#" alt-text="logo" />
+                <a class="navbar-brand" asp-area="" asp-page="/Index">Community Care Hub</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-md-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Index">Home</a>
@@ -27,7 +28,7 @@
                             <a class="nav-link" asp-area="" asp-page="/About">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Services/Index">A-Z Services</a>
+                            <a class="nav-link" asp-area="" asp-page="/Services/Index">A-Z</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Contact/Index">Contact</a>
@@ -50,7 +51,80 @@
                             if (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "OrgAdmin") || await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "Admin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-page="/admin/Index">Admin</a>
+                                    <a class="nav-link" asp-area="" asp-page="/Admin/Index">Admin</a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-page="/auth/Index">Login / Register</a>
+                                </li>
+                        }
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-page="/Accessibility">Accessibility</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container bodycontainer">
+        <main role="main">
+
+            @if(ViewData["Layout"] != null && ViewData["Layout"] == "Img") {
+            <div class="row row-img-bg">
+                <div class="col col-1 col-md-2 bg-transparent"></div>
+                <div class="col col-1 col-md-1"></div>
+                <div class="col col-8 col-md-6">
+                    @RenderBody()
+                </div>
+                <div class="col col-1 col-md-1"></div>
+                <div class="col col-1 col-md-2 bg-transparent"></div>
+            </div>
+            }
+            else {
+				@RenderBody()
+            }
+                    
+
+        </main>
+    </div>
+
+    <footer class="@*border-top*@ footer">
+        <nav class="navbar navbar-expand-md navbar-toggleable-md">
+            <div class="container">
+                <div class="navbar-collapse d-md-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-page="/Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-page="/About">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-page="/Services/Index">A-Z</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-page="/Contact/Index">Contact</a>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav flex-grow-1">
+                        @using Microsoft.AspNetCore.Identity;
+                        @using WellnessSite.Data;
+                        @inject SignInManager<ApplicationUser> SignInManager;
+                        @inject UserManager<ApplicationUser> UserManager;
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-page="/auth/Profile">Profile</a>
+                            </li>
+                            if (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "OrgAdmin") || await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-page="/Admin/Index">Admin</a>
                                 </li>
                             }
                         }
@@ -68,22 +142,34 @@
                 </div>
             </div>
         </nav>
-    </header>
-    <div class="container bodycontainer">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer">
-        <div class="container">
-            &copy; 2023 - WellnessSite - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        function changeColour(property, colour) {
+            console.log(property);
+            console.log(colour);
+            document.documentElement.style.setProperty(property, colour);
+        }
+
+        function changeColours(prefs) {
+            changeColour('--text', prefs[0]);
+            changeColour('--highColour', prefs[1]);
+            changeColour('--backColour', prefs[2]);
+            changeColour('--headColour', prefs[3]);
+            changeColour('--headText', prefs[4]);
+            changeColour('--headTextAlt', prefs[5]);
+            changeColour('--footColour', prefs[6]);
+            changeColour('--footText', prefs[7]);
+            changeColour('--footTextAlt', prefs[8]);
+            changeColour('--linkColour', prefs[9]);
+            changeColour('--textSize', prefs[10] + 'px');
+        }
+        //console.log(@ViewData);
+        changeColours('@(ViewData["Prefs"])'.split(","));
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

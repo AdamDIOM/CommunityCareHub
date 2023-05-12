@@ -1,0 +1,23 @@
+﻿@page
+@model WellnessSite.Pages.Admin.IndexModel
+@{
+    ViewData["Title"] = "Admin Hub";
+    ViewData["Prefs"] = Model.p.ToString();
+}
+
+@if (await Model.um.IsInRoleAsync(await Model.um.GetUserAsync(User), "Admin"))
+{
+    <h1>Admin Settings</h1>
+    <p>
+        <a asp-page="Services/Index">Edit all Services</a>
+    </p>
+    <p>
+        <a asp-page="AdminRequests">View Admin Requests</a>
+    </p>
+}
+
+@if (await Model.um.IsInRoleAsync(await Model.um.GetUserAsync(User), "OrgAdmin"))
+{
+    <h1>Organisation Admin Settings</h1>
+    <a asp-page="Services/Index">Edit your Services</a>
+}

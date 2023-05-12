@@ -2,59 +2,45 @@
 @model WellnessSite.Pages.auth.RegisterModel
 @{
     ViewData["Title"] = "Register";
+    ViewData["Prefs"] = Model.p.ToString();
+    ViewData["Layout"] = "Img";
 }
-<div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-11">
-        <h4>Sign in or Register</h4>
-    </div>
-</div>
-<hr />
-<div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md-6">
-        <h4>Create an Account</h4>
-        <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" value="@Model.email"/>
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConfirmPassword" class="control-label"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-success" />
-            </div>
-        </form>
-    </div>
 
-    <div class="text-center">
-        Already got an account? <a asp-page="Login">Login here</a>
+<h1>Create an Account</h1>
+<form method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" value="@Model.email"/>
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
+    <div class="form-group">
+        <label asp-for="Password" class="control-label"></label>
+        <input asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ConfirmPassword" class="control-label"></label>
+        <input asp-for="ConfirmPassword" class="form-control" />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="RequestAdmin" class="control-label">Registering on behalf of an organisation?</label>
+        <input asp-for="RequestAdmin" type="checkbox" />
+        <span asp-validation-for="RequestAdmin" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-success" />
+    </div>
+</form>
+<div class="text-center">
+    Already got an account? <a asp-page="Login">Login here</a>
 </div>
 
-<script>
-    function changeColour(property, colour) {
-        document.documentElement.style.setProperty(property, colour);
-    }
-    changeColour('--text', '@Model.p.Text');
-    changeColour('--highColour', '@Model.p.Highlight');
-    changeColour('--backColour', '@Model.p.Background');
-    changeColour('--headColour', '@Model.p.Header');
-    changeColour('--headText', '@Model.p.HeaderText');
-    changeColour('--headTextAlt', '@Model.p.HeaderTextalt');
-    changeColour('--footColour', '@Model.p.Footer');
-    changeColour('--footText', '@Model.p.FooterText');
-    changeColour('--footTextAlt', '@Model.p.FooterTextAlt');
-    changeColour('--linkColour', '@Model.p.Link');
-    changeColour('--textSize', '@(Model.p.TextSize)px');
-</script>
+@section Styles{
+    <style>
+        body {
+            background-image: url("/img/contact-bg.jpeg");
+        }
+    </style>
+}
