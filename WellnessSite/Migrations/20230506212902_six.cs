@@ -13,14 +13,14 @@ namespace WellnessSite.Migrations
                 name: "ImageAltText",
                 table: "Service",
                 type: "nvarchar(max)",
-                nullable: false,
+                nullable: true,
                 defaultValue: "");
 
             migrationBuilder.AddColumn<byte[]>(
                 name: "ImageData",
                 table: "Service",
                 type: "varbinary(max)",
-                nullable: false,
+                nullable: true,
                 defaultValue: new byte[0]);
         }
 

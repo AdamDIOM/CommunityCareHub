@@ -14,6 +14,9 @@
     <p>
         <a asp-page="AdminRequests">View Admin Requests</a>
     </p>
+    <p>
+        <a asp-page="PageRequests">View Page Requests</a>
+    </p>
 }
 
 @if (await Model.um.IsInRoleAsync(await Model.um.GetUserAsync(User), "OrgAdmin"))

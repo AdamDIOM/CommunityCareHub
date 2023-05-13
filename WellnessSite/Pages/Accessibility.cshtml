@@ -54,10 +54,6 @@
 							<input asp-for="p.HeaderText" type="color" value="@Model.p.HeaderText" />
 						</div>
 						<div>
-							<label asp-for="p.HeaderTextalt">Header Text Colour 2</label>
-							<input asp-for="p.HeaderTextalt" type="color" value="@Model.p.HeaderTextalt" />
-						</div>
-						<div>
 							<label asp-for="p.Footer">Footer Colour</label>
 							<input asp-for="p.Footer" type="color" value="@Model.p.Footer" />
 						</div>
@@ -66,12 +62,24 @@
 							<input asp-for="p.FooterText" type="color" value="@Model.p.FooterText" />
 						</div>
 						<div>
-							<label asp-for="p.FooterTextAlt">Footer Text Colour 2</label>
-							<input asp-for="p.FooterTextAlt" type="color" value="@Model.p.FooterTextAlt" />
-						</div>
-						<div>
 							<label asp-for="p.Link">HyperLink Colour</label>
 							<input asp-for="p.Link" type="color" value="@Model.p.Link" />
+						</div>
+						<div>
+							<label asp-for="p.Link">Hexagon Colour</label>
+							<input asp-for="p.Hex1" type="color" value="@Model.p.Hex1" />
+						</div>
+						<div>
+							<label asp-for="p.Link">Hexagon Colour 2</label>
+							<input asp-for="p.Hex2" type="color" value="@Model.p.Hex2" />
+						</div>
+						<div>
+							<label asp-for="p.Link">Hexagon Text Colour</label>
+							<input asp-for="p.HexColour" type="color" value="@Model.p.HexColour" />
+						</div>
+						<div>
+							<label asp-for="p.Link">Hexagon Hover Colour</label>
+							<input asp-for="p.HexHover" type="color" value="@Model.p.HexHover" />
 						</div>
 						<button asp-page-handler="SetProperties">Save</button>
 						<button asp-page-handler="SetProperties" asp-route-reset="true">Reset</button>

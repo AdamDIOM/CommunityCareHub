@@ -27,12 +27,20 @@ namespace WellnessSite.Pages.Admin
 
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
 
-            requests = await _context.Service.Where(s => !s.Accepted).ToListAsync();
-
+            if(_context.Service != null)
+            {
+                requests = await _context.Service.ToListAsync();
+                requests = requests.Where(s => !s.Accepted).ToList();
+            }
+            else
+            {
+                requests = new List<Service>();
+            }
         }
 
         public async Task OnPostProcessPageRequestAsync(string sid, string accept)
         {
+            requests = await _context.Service.ToListAsync();
             Service s = requests.FirstOrDefault(s => s.Id.ToString() == sid)!;
             if (accept == "true")
             {

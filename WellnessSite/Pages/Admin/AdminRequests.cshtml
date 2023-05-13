@@ -5,6 +5,7 @@
     ViewData["Prefs"] = Model.p.ToString();
 }
 <h1>Users Requesting Organisation Admin Rights</h1>
+@if(Model.users.Count() > 0){
 <table class="table">
     <thead>
         <tr>
@@ -17,8 +18,9 @@
             <th></th>
         </tr>
     </thead>
-   <tbody>
-        @foreach(var u in Model.users){
+    <tbody>
+        @foreach (var u in Model.users)
+        {
             <tr>
                 <td>
                     @u.UserName
@@ -35,3 +37,7 @@
         }
     </tbody>
 </table>
+}
+else{
+    <h2>No awaiting users</h2>
+}

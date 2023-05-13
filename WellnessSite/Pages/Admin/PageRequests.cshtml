@@ -4,35 +4,42 @@
     ViewData["Title"] = "Page Requests List";
     ViewData["Prefs"] = Model.p.ToString();
 }
-<h1>Users Requesting Organisation Admin Rights</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Maintainer
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var r in Model.requests)
-        {
+<h1>Submitted Page Requests Pending Approval</h1>
+@if(Model.requests.Count() > 0)
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @r.Name
-                </td>
-                <td>
-                    @r.Maintainer
-                </td>
-                <td>
-                    <form method="post">
-                        <button asp-page-handler="ProcessPageRequest" asp-route-sid="@r.Id" asp-route-accept="true" class="btn btn-success">Accept</button> | <button asp-route-handler="ProcessPageRequest" asp-route-sid="@r.Id" asp-route-accept="false" class="btn btn-danger">Decline</button>
-                    </form>
-                </td>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Maintainer
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var r in Model.requests)
+            {
+                <tr>
+                    <td>
+                        @r.Name
+                    </td>
+                    <td>
+                        @r.Maintainer
+                    </td>
+                    <td>
+                        <form method="post">
+                            <button asp-page-handler="ProcessPageRequest" asp-route-sid="@r.Id" asp-route-accept="true" class="btn btn-success">Accept</button> | <button asp-route-handler="ProcessPageRequest" asp-route-sid="@r.Id" asp-route-accept="false" class="btn btn-danger">Decline</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h2>No pending pages.</h2>
+}

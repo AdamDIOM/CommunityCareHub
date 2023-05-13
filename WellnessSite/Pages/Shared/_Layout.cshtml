@@ -11,7 +11,28 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-md navbar-toggleable-md border-bottom box-shadow">
+        @{
+            string size;
+            double value = Convert.ToDouble(ViewData["Prefs"].ToString().Split(',')[12]);
+            switch (value)
+            {
+                case var ex when value > 20:
+                    size = "xl";
+                    break;
+                case var ex when value > 15:
+                    size = "lg";
+                    break;
+                case var ex when value > 10:
+                    size="md";
+                    break;
+                case var ex when value > 5:
+                    size = "sm";
+                    break;
+                default:
+                    size = "md";
+                    break;
+            }
+        <nav class="navbar navbar-expand-@size navbar-toggleable-@size border-bottom box-shadow">
             <div class="container">
                 <img src="#" alt-text="logo" />
                 <a class="navbar-brand" asp-area="" asp-page="/Index">Community Care Hub</a>
@@ -19,7 +40,7 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-md-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-@size-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Index">Home</a>
@@ -69,11 +90,13 @@
                 </div>
             </div>
         </nav>
+        }
     </header>
+
     <div class="container bodycontainer">
         <main role="main">
 
-            @if(ViewData["Layout"] != null && ViewData["Layout"] == "Img") {
+            @if(ViewData["Layout"] != null && ViewData["Layout"].ToString() == "Img") {
             <div class="row row-img-bg">
                 <div class="col col-1 col-md-2 bg-transparent"></div>
                 <div class="col col-1 col-md-1"></div>
@@ -148,26 +171,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script>
-        function changeColour(property, colour) {
-            console.log(property);
-            console.log(colour);
-            document.documentElement.style.setProperty(property, colour);
-        }
-
-        function changeColours(prefs) {
-            changeColour('--text', prefs[0]);
-            changeColour('--highColour', prefs[1]);
-            changeColour('--backColour', prefs[2]);
-            changeColour('--headColour', prefs[3]);
-            changeColour('--headText', prefs[4]);
-            changeColour('--headTextAlt', prefs[5]);
-            changeColour('--footColour', prefs[6]);
-            changeColour('--footText', prefs[7]);
-            changeColour('--footTextAlt', prefs[8]);
-            changeColour('--linkColour', prefs[9]);
-            changeColour('--textSize', prefs[10] + 'px');
-        }
-        //console.log(@ViewData);
         changeColours('@(ViewData["Prefs"])'.split(","));
     </script>
 

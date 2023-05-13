@@ -32,7 +32,7 @@ namespace WellnessSite.Migrations
                 name: "Address",
                 table: "Service",
                 type: "nvarchar(max)",
-                nullable: false,
+                nullable: true,
                 defaultValue: "");
         }
 

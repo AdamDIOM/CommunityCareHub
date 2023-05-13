@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using WellnessSite.Data;
 using Microsoft.AspNetCore.Identity;
+using MessagePack.Resolvers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -25,7 +27,14 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+//using (var scope = app.Services.CreateScope())
+//{
+//    var services = scope.ServiceProvider;
+//    var context = services.GetRequiredService<WellnessSiteContext>();
+//    context.Database.EnsureCreated();
+//}
+
+    app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();

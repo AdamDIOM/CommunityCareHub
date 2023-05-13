@@ -12,7 +12,7 @@ namespace WellnessSite.Migrations
                 name: "Tags",
                 table: "Service",
                 type: "nvarchar(max)",
-                nullable: false,
+                nullable: true,
                 defaultValue: "");
         }
 

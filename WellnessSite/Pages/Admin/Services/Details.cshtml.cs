@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -12,17 +13,24 @@ namespace WellnessSite.Pages.Admin.Services
 {
     public class DetailsModel : PageModel
     {
-        private readonly WellnessSite.Data.WellnessSiteContext _context;
+        private readonly UserManager<ApplicationUser> _um;
+        private readonly SignInManager<ApplicationUser> _sim;
+        private readonly WellnessSiteContext _context;
+        public Preferences p;
 
-        public DetailsModel(WellnessSite.Data.WellnessSiteContext context)
+        public DetailsModel(SignInManager<ApplicationUser> sim, UserManager<ApplicationUser> um, WellnessSiteContext con)
         {
-            _context = context;
+            _sim = sim;
+            _um = um;
+            _context = con;
         }
-
       public Service Service { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+
+            p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
+
             if (id == null || _context.Service == null)
             {
                 return NotFound();

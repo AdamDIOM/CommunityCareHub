@@ -25,7 +25,7 @@
         @foreach (var item in Model.Service)
         {
             <a asp-page="./Service" asp-route-id="@item.Id">
-                <div class="hex @(i%2 == 0 ? "offset" : "") sm-@(i%3) md-@(i%5) lg-@(i%7) xl-@(i%9)">
+                <div class="hex xs-@(i%2) sm-@(i%3) md-@(i%5) lg-@(i%7) xl-@(i%9)">
                     <div class="small">
                         <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
                     </div>

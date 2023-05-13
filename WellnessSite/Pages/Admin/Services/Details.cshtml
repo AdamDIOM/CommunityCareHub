@@ -2,7 +2,8 @@
 @model WellnessSite.Pages.Admin.Services.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Service Details";
+    ViewData["Prefs"] = Model.p.ToString();
 }
 
 <h1>Details</h1>
@@ -75,7 +76,14 @@
             @Html.DisplayNameFor(model => model.Service.ImageData)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Service.ImageData)
+            @if (Model.Service.ImageData != null && Model.Service.ImageData.Count() > 0)
+            {
+                <img class="edit-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.Service.ImageData))" alt="@Model.Service.ImageAltText" />
+            }
+            else
+            {
+                <p>Image unavailable</p>
+            }
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Service.ImageAltText)

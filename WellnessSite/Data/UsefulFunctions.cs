@@ -61,6 +61,13 @@ namespace WellnessSite.Data
                     string uID = "usr-" + page.Request.Cookies["user"]!;
 
                     p = prefs.FirstOrDefault(p => p.UserID == uID)!;
+                    if(p == null)
+                    {
+                        page.Response.Cookies.Append("user", _context.Preferences.Count().ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+                        p = new Preferences("usr-" + _context.Preferences.Count().ToString());
+                        _context.Preferences.Add(p);
+                        await _context.SaveChangesAsync();
+                    }
                 }
             }
             return p;

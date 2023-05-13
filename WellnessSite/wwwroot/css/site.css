@@ -20,12 +20,14 @@ body {
     --backColour: white;
     --headColour: green;
     --headText: white;
-    --headTextAlt: lightgrey;
     --footColour: darkgreen;
     --footText: white;
-    --footTextAlt: lightgrey;
     --linkColour: blue;
     --textSize: 15px;
+    --hex1: #22AA22;
+    --hex2: #44CC44;
+    --hexColour: black;
+    --hexHover: #FFFF99;
 }
 
 header{
