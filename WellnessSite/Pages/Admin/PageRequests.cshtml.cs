@@ -9,7 +9,7 @@ namespace WellnessSite.Pages.Admin
 {
     public class PageRequestsModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _um;
+        public readonly UserManager<ApplicationUser> um;
         private readonly SignInManager<ApplicationUser> _sim;
         private readonly WellnessSiteContext _context;
         public Preferences p;
@@ -18,14 +18,14 @@ namespace WellnessSite.Pages.Admin
         public PageRequestsModel(SignInManager<ApplicationUser> sim, UserManager<ApplicationUser> um, WellnessSiteContext con)
         {
             _sim = sim;
-            _um = um;
+            this.um = um;
             _context = con;
         }
 
         public async Task OnGetAsync()
         {
 
-            p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
+            p = await UsefulFunctions.GetPreferences(_context, um, _sim, User, this);
 
             if(_context.Service != null)
             {
@@ -55,7 +55,7 @@ namespace WellnessSite.Pages.Admin
                 await _context.SaveChangesAsync();
             }
 
-            p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
+            p = await UsefulFunctions.GetPreferences(_context, um, _sim, User, this);
 
             requests = await _context.Service.Where(s => !s.Accepted).ToListAsync();
         }

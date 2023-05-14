@@ -49,6 +49,8 @@ namespace WellnessSite.Pages.Services
             }
 
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
+
+            Service = Service.OrderBy(s => s.Name).ToList();
         }
     }
 }

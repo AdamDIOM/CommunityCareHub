@@ -17,6 +17,7 @@ namespace WellnessSite.Pages.Admin.Services
         private readonly SignInManager<ApplicationUser> _sim;
         private readonly WellnessSiteContext _context;
         public Preferences p;
+        public bool rPR = false;
 
         public DetailsModel(SignInManager<ApplicationUser> sim, UserManager<ApplicationUser> um, WellnessSiteContext con)
         {
@@ -26,9 +27,9 @@ namespace WellnessSite.Pages.Admin.Services
         }
       public Service Service { get; set; } = default!; 
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? id, string? ret)
         {
-
+            if (ret == "PageRequests") rPR = true;
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
 
             if (id == null || _context.Service == null)

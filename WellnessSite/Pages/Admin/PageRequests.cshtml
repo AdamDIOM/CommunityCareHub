@@ -27,11 +27,24 @@
                         @r.Name
                     </td>
                     <td>
-                        @r.Maintainer
+                        @if(r.Maintainer != null)
+                        {
+                            var u = await Model.um.FindByIdAsync(r.Maintainer);
+                            if(u != null)
+                            {
+                                @u.Email
+                            }
+                            else
+                            {
+                                @r.Maintainer
+                            }
+                        }
                     </td>
                     <td>
                         <form method="post">
-                            <button asp-page-handler="ProcessPageRequest" asp-route-sid="@r.Id" asp-route-accept="true" class="btn btn-success">Accept</button> | <button asp-route-handler="ProcessPageRequest" asp-route-sid="@r.Id" asp-route-accept="false" class="btn btn-danger">Decline</button>
+                            <a asp-page="Services/Details" asp-route-id="@r.Id" asp-route-ret="PageRequests">Details</a> | 
+                            <button asp-page-handler="ProcessPageRequest" asp-route-sid="@r.Id" asp-route-accept="true" class="btn btn-success">Accept</button> | 
+                            <button asp-route-handler="ProcessPageRequest" asp-route-sid="@r.Id" asp-route-accept="false" class="btn btn-danger">Decline</button>
                         </form>
                     </td>
                 </tr>

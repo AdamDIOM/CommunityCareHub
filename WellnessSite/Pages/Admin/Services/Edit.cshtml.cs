@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,11 +14,17 @@ namespace WellnessSite.Pages.Admin.Services
 {
     public class EditModel : PageModel
     {
-        private readonly WellnessSite.Data.WellnessSiteContext _context;
+        private readonly UserManager<ApplicationUser> _um;
+        private readonly SignInManager<ApplicationUser> _sim;
+        private readonly WellnessSiteContext _context;
+        public Preferences p;
+        public byte[]? imgData;
 
-        public EditModel(WellnessSite.Data.WellnessSiteContext context)
+        public EditModel(SignInManager<ApplicationUser> sim, UserManager<ApplicationUser> um, WellnessSiteContext con)
         {
-            _context = context;
+            _sim = sim;
+            _um = um;
+            _context = con;
         }
 
         [BindProperty]
@@ -25,6 +32,8 @@ namespace WellnessSite.Pages.Admin.Services
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
+
             if (id == null || _context.Service == null)
             {
                 return NotFound();
@@ -36,6 +45,7 @@ namespace WellnessSite.Pages.Admin.Services
                 return NotFound();
             }
             Service = service;
+            imgData = service.ImageData;
             return Page();
         }
 
@@ -43,7 +53,26 @@ namespace WellnessSite.Pages.Admin.Services
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
+
+            if(Service.ImageData != null) Service.ImageData = Service.ImageData.ToArray();
+
+            if (Request.Form.Files.Count >= 1)
+            {
+                foreach (var file in Request.Form.Files)
+                {
+                    // copies file data into an array and then into the object
+                    MemoryStream ms = new MemoryStream();
+                    file.CopyTo(ms);
+                    Service.ImageData = ms.ToArray();
+
+                    ms.Close();
+                    ms.Dispose();
+                }
+            }
+
+
+                if (!ModelState.IsValid)
             {
                 return Page();
             }

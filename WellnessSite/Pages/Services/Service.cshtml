@@ -27,7 +27,7 @@
             @Model.Service.Description
         </div>
         <div class="col-md-6">
-            @if(@Model.Service.ImageData.Count() > 0){
+            @if(Model.Service.ImageData != null && Model.Service.ImageData.Count() > 0){
 			    <img class="service-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.Service.ImageData))" alt="@Model.Service.ImageAltText" />
             }
             else{

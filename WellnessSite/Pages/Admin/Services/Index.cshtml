@@ -6,10 +6,10 @@
     ViewData["Prefs"] = Model.p.ToString();
 }
 
-<h1>Index</h1>
+<h1>Services</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Create New Service Page</a>
 </p>
 <table class="table">
     <thead>
@@ -48,7 +48,7 @@
                 @Html.DisplayFor(modelItem => item.WebLink)
             </td>
             <td>
-                    @if (item.ImageData.Count() > 0)
+                    @if (item.ImageData != null && item.ImageData.Count() > 0)
                     {
                         <img class="edit-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(item.ImageData))" alt="@item.ImageAltText" />
                     }

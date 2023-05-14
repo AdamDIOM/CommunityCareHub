@@ -3,17 +3,17 @@
 
 @{
     ViewData["Title"] = "Edit";
+    ViewData["Prefs"] = Model.p.ToString();
 }
 
-<h1>Edit</h1>
-
-<h4>Service</h4>
+<h1>Edit @Model.Service.Name</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Service.Id" />
+            <input type="hidden" asp-for="Service.Maintainer" />
             <div class="form-group">
                 <label asp-for="Service.Name" class="control-label"></label>
                 <input asp-for="Service.Name" class="form-control" />
@@ -66,9 +66,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="Service.ImageData" class="control-label"></label>
-                <input asp-for="Service.ImageData" class="form-control" />
+                @if (Model.Service.ImageData != null && Model.Service.ImageData.Count() > 0)
+                {
+                    <input asp-for= "Service.ImageData" class="form-control" value="@Convert.ToBase64String(Model.Service.ImageData)" hidden />
+                    <img class="edit-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.Service.ImageData))" alt="@Model.Service.ImageAltText" />
+                }
+                <input type="file" id="file1" name="file1" multiple="multiple" asp-for="Service.ImageData" class="form-control" />
+
                 <span asp-validation-for="Service.ImageData" class="text-danger"></span>
             </div>
+           
+
             <div class="form-group">
                 <label asp-for="Service.ImageAltText" class="control-label"></label>
                 <input asp-for="Service.ImageAltText" class="form-control" />

@@ -13,25 +13,32 @@
     <header>
         @{
             string size;
-            double value = Convert.ToDouble(ViewData["Prefs"].ToString().Split(',')[12]);
-            switch (value)
+            if(ViewData["Prefs"] != null)
             {
-                case var ex when value > 20:
-                    size = "xl";
-                    break;
-                case var ex when value > 15:
-                    size = "lg";
-                    break;
-                case var ex when value > 10:
-                    size="md";
-                    break;
-                case var ex when value > 5:
-                    size = "sm";
-                    break;
-                default:
-                    size = "md";
-                    break;
+                double value = Convert.ToDouble(ViewData["Prefs"].ToString().Split(',')[12]);
+                switch (value)
+                {
+                    case var ex when value > 20:
+                        size = "xl";
+                        break;
+                    case var ex when value > 15:
+                        size = "lg";
+                        break;
+                    case var ex when value > 10:
+                        size="md";
+                        break;
+                    case var ex when value > 5:
+                        size = "sm";
+                        break;
+                    default:
+                        size = "md";
+                        break;
+                }
             }
+            else{
+                size = "md";
+            }
+            
         <nav class="navbar navbar-expand-@size navbar-toggleable-@size border-bottom box-shadow">
             <div class="container">
                 <img src="#" alt-text="logo" />
