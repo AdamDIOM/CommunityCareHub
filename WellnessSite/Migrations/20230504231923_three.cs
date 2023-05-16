@@ -8,19 +8,6 @@ namespace WellnessSite.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "AdminAccess",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UID = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AdminAccess", x => x.ID);
-                });
 
             migrationBuilder.CreateTable(
                 name: "Bookmarks",
@@ -39,9 +26,6 @@ namespace WellnessSite.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "AdminAccess");
-
             migrationBuilder.DropTable(
                 name: "Bookmarks");
         }

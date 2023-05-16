@@ -18,9 +18,10 @@ namespace WellnessSite.Pages.Admin.Services
         public readonly UserManager<ApplicationUser> _um;
         private readonly SignInManager<ApplicationUser> _sim;
         public Preferences p;
+        [BindProperty(SupportsGet = true)]
+        public string qry { get; set; }
 
         public IList<Service> Service { get;set; } = default!;
-        public IList<AdminAccess> AA { get; set; } = default!;
 
         public IndexModel(SignInManager<ApplicationUser> sim, UserManager<ApplicationUser> um, WellnessSiteContext con)
         {
@@ -30,20 +31,37 @@ namespace WellnessSite.Pages.Admin.Services
         }
         public async Task OnGetAsync()
         {
-            if(_context.AdminAccess != null)
-            {
-                AA = await _context.AdminAccess.ToListAsync();
-                ApplicationUser u = await _um.GetUserAsync(User);
+            
+            ApplicationUser u = await _um.GetUserAsync(User);
                 
-                if (_context.Service != null)
+            if (_context.Service != null)
+            {
+                Service = await _context.Service.ToListAsync();
+                if (!await _um.IsInRoleAsync(await _um.GetUserAsync(User), "Admin"))
                 {
-                    Service = await _context.Service.ToListAsync();
-                    if (!await _um.IsInRoleAsync(await _um.GetUserAsync(User), "Admin"))
-                    {
-                        Service = Service.Where(s => s.Maintainer == u.Id).ToList();
-                    }
+                    Service = Service.Where(s => s.Maintainer == u.Id).ToList();
                 }
             }
+            if (qry != null && qry.Trim() != "")
+            {
+                Service = Service.Where(s =>
+                {
+                    if (s.WebLink == null) s.WebLink = "§!";
+                    if (s.Address == null) s.Address = "§!";
+                    if (s.Town == null) s.Town = "§!";
+                    if (s.Tags == null) s.Tags = "§!";
+
+                    return s.Name.ToLower().Contains(qry.ToLower()) ||
+                    s.Category.ToLower().Contains(qry.ToLower()) ||
+                    s.Address.ToLower().Contains(qry.ToLower()) ||
+                    s.Town.ToLower().Contains(qry.ToLower()) ||
+                    s.Tags.ToLower().Contains(qry.ToLower());
+                }
+
+
+                ).ToList();
+            }
+            
 
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
         }

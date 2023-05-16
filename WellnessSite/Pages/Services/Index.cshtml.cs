@@ -38,10 +38,10 @@ namespace WellnessSite.Pages.Services
                 {
                     Service = Service.Where(s =>
 					{
-						if (s.WebLink == null) s.WebLink = "no web address";
-						if (s.Address == null) s.Address = "no address";
-						if (s.Town == null) s.Town = "no address";
-						if (s.Tags == null) s.Tags = "no tags";
+						if (s.WebLink == null) s.WebLink = "§!";
+						if (s.Address == null) s.Address = "§!";
+						if (s.Town == null) s.Town = "§!";
+						if (s.Tags == null) s.Tags = "§!";
 
 						return s.Name.ToLower().Contains(qry.ToLower()) ||
                         s.Category.ToLower().Contains(qry.ToLower()) ||
