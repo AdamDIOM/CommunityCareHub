@@ -19,7 +19,7 @@
         }
 
     .hexbox {
-        max-width: calc(calc(var(--textSize)*15)*var(--s2))
+        max-width: calc(calc(var(--textSize)*var(--multiply))*var(--s2))
     }
 }
 
@@ -34,7 +34,7 @@
         }
 
     .hexbox .sm-2 {
-        margin-left: calc(calc(var(--textSize)*15)/2*var(--s2));
+        margin-left: calc(calc(var(--textSize)*var(--multiply))/2*var(--s2));
         background-color: var(--hex2);
     }
 
@@ -44,7 +44,7 @@
         }
 
     .hexbox {
-        max-width: calc(calc(var(--textSize)*15)*2*var(--s2))
+        max-width: calc(calc(var(--textSize)*var(--multiply))*2*var(--s2))
     }
 }
 
@@ -59,14 +59,14 @@
         }
 
     .hexbox .md-3 {
-        margin-left: calc(calc(var(--textSize)*15)/2*var(--s2));
-        margin-right: calc(calc(var(--textSize)*15)/2*var(--s2)/-1);
+        margin-left: calc(calc(var(--textSize)*var(--multiply))/2*var(--s2));
+        margin-right: calc(calc(var(--textSize)*var(--multiply))/2*var(--s2)/-1);
         background-color: var(--hex2)
     }
 
     .hexbox .md-4 {
-        margin-left: calc(calc(var(--textSize)*15)/2*var(--s2));
-        margin-right: calc(calc(var(--textSize)*15)/2);
+        margin-left: calc(calc(var(--textSize)*var(--multiply))/2*var(--s2));
+        margin-right: calc(calc(var(--textSize)*var(--multiply))/2);
         background-color: var(--hex2)
     }
 
@@ -76,7 +76,7 @@
         }
 
     .hexbox {
-        max-width: calc(calc(var(--textSize)*15)*3*var(--s2))
+        max-width: calc(calc(var(--textSize)*var(--multiply))*3*var(--s2))
     }
 }
 
@@ -91,14 +91,14 @@
         }
 
     .hexbox .lg-4, .hexbox .lg-5 {
-        margin-left: calc(calc(var(--textSize)*15)/2*var(--s2));
-        margin-right: calc(calc(var(--textSize)*15)/2*var(--s2)/-1);
+        margin-left: calc(calc(var(--textSize)*var(--multiply))/2*var(--s2));
+        margin-right: calc(calc(var(--textSize)*var(--multiply))/2*var(--s2)/-1);
         background-color: var(--hex2);
     }
 
     .hexbox .lg-6 {
-        margin-left: calc(calc(var(--textSize)*15)/2*var(--s2));
-        margin-right: calc(calc(var(--textSize)*15)/2);
+        margin-left: calc(calc(var(--textSize)*var(--multiply))/2*var(--s2));
+        margin-right: calc(calc(var(--textSize)*var(--multiply))/2);
         background-color: var(--hex2);
     }
 
@@ -108,7 +108,7 @@
         }
 
     .hexbox {
-        max-width: calc(calc(var(--textSize)*15)*4*var(--s2))
+        max-width: calc(calc(var(--textSize)*var(--multiply))*4*var(--s2))
     }
 }
 
@@ -123,14 +123,14 @@
         }
 
     .hexbox .xl-5, .hexbox .xl-6, .hexbox .xl-7 {
-        margin-left: calc(calc(var(--textSize)*15)/2*var(--s2));
-        margin-right: calc(calc(var(--textSize)*15)/2*var(--s2)/-1);
+        margin-left: calc(calc(var(--textSize)*var(--multiply))/2*var(--s2));
+        margin-right: calc(calc(var(--textSize)*var(--multiply))/2*var(--s2)/-1);
         background-color: var(--hex2)
     }
 
     .hexbox .xl-8 {
-        margin-left: calc(calc(var(--textSize)*15)/2*var(--s2));
-        margin-right: calc(calc(var(--textSize)*15)/2);
+        margin-left: calc(calc(var(--textSize)*var(--multiply))/2*var(--s2));
+        margin-right: calc(calc(var(--textSize)*var(--multiply))/2);
         background-color: var(--hex2)
     }
 
@@ -140,13 +140,14 @@
         }
 
     .hexbox {
-        max-width: calc(calc(var(--textSize)*15)*5*var(--s2))
+        max-width: calc(calc(var(--textSize)*var(--multiply))*5*var(--s2))
     }
 }
 
 :root{
     --s:300px;
     --s2:1.1547;
+    --multiply: 20;
 }
 
 .hexbox {
@@ -154,24 +155,25 @@
     padding-top: 50px;
     width: 100%;
     margin-right: 0;
-    padding-bottom: calc(calc(var(--textSize)*15)/2);
+    padding-bottom: calc(calc(var(--textSize)*var(--multiply))/2);
     overflow: auto;
     margin-left: auto;
     margin-right: auto;
+    overflow-wrap: break-word;
 }
 
 .hexbox .hex {
-    height: calc(var(--textSize)*15);
-    width: calc(calc(var(--textSize)*15) * var(--s2));
+    height: calc(var(--textSize)*var(--multiply));
+    width: calc(calc(var(--textSize)*var(--multiply)) * var(--s2));
     margin-top: 0px;
-    margin-bottom: calc(calc(var(--textSize)*15)*-0.5);
+    margin-bottom: calc(calc(var(--textSize)*var(--multiply))*-0.5);
     display: inline-block;
     float: left;
     font-size: 0pt;
     clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
     text-align: center;
     border-bottom: solid white 1px;
-    padding: calc(calc(var(--textSize)*15)/25);
+    padding: calc(calc(var(--textSize)*var(--multiply))/25);
     position: relative;
 }
 
@@ -185,7 +187,7 @@
 }
 
 .hexbox .hex .small {
-    width: calc(calc(var(--textSize)*15)/1.6);
+    width: calc(calc(var(--textSize)*var(--multiply))/1.6);
     height: auto;
     text-align: center;
     margin-left: auto;

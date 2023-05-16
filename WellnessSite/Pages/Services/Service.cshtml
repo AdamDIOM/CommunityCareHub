@@ -22,26 +22,29 @@
                  <p><a asp-page="../auth/Index">Login or Register</a> to Bookmark Service</p>
     }
     <hr />
-    <div class="row">
+    <div class="row service-row">
         <div class="col-md-6">
             @Model.Service.Description
         </div>
         <div class="col-md-6">
             @if(Model.Service.ImageData != null && Model.Service.ImageData.Count() > 0){
-			    <img class="service-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.Service.ImageData))" alt="@Model.Service.ImageAltText" />
+			    <img class="service-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.Service.ImageData))" alt-text="@Model.Service.ImageAltText" />
             }
             else{
             <p>Image unavailable</p>
             }
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 form-group">
             <p>
+                <label class="control-label">Phone Number</label>
                 @Model.Service.PhoneNum
             </p>
             <p>
+                <label class="control-label">Email Address</label>
                 @Model.Service.Email
             </p>
             <p>
+                <label class="control-label">Address</label>
                 @Model.Service.Address
             </p>
             <p>

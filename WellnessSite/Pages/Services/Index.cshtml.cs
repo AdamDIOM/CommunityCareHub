@@ -37,13 +37,20 @@ namespace WellnessSite.Pages.Services
                 if (qry != null && qry.Trim() != "")
                 {
                     Service = Service.Where(s =>
+					{
+						if (s.WebLink == null) s.WebLink = "no web address";
+						if (s.Address == null) s.Address = "no address";
+						if (s.Town == null) s.Town = "no address";
+						if (s.Tags == null) s.Tags = "no tags";
 
-                        s.Name.ToLower().Contains(qry.ToLower()) ||
-                        s.PhoneNum.ToLower().Contains(qry.ToLower()) ||
-                        s.Email.ToLower().Contains(qry.ToLower()) ||
-                        s.WebLink.ToLower().Contains(qry.ToLower()) ||
-                        s.Address.ToLower().Contains(qry.ToLower()) ||
-                        s.Tags.ToLower().Contains(qry.ToLower())
+						return s.Name.ToLower().Contains(qry.ToLower()) ||
+                        s.Category.ToLower().Contains(qry.ToLower()) ||
+						s.Address.ToLower().Contains(qry.ToLower()) ||
+						s.Town.ToLower().Contains(qry.ToLower()) ||
+						s.Tags.ToLower().Contains(qry.ToLower());
+                    }
+
+                        
                     ).ToList();
                 }
             }

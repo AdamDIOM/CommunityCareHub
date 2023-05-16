@@ -15,7 +15,6 @@ namespace WellnessSite.Pages
         private readonly SignInManager<ApplicationUser> _sim;
         private readonly WellnessSiteContext _context;
         public Preferences p;
-        public UsefulFunctions.CookiesOptions cookies = UsefulFunctions.CookiesOptions.Unknown;
 
         public IndexModel(SignInManager<ApplicationUser> sim, UserManager<ApplicationUser> um, WellnessSiteContext con)
         {
@@ -26,17 +25,8 @@ namespace WellnessSite.Pages
 
         public async Task OnGetAsync()
         {
-            cookies = UsefulFunctions.IsCookiesEnabled(this);
-            p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this, cookies == UsefulFunctions.CookiesOptions.Enabled);
+            p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
         }
 
-        public async Task OnPostCookiesAsync(string choice)
-        {
-            cookies = UsefulFunctions.IsCookiesEnabled(this);
-            p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this, cookies == UsefulFunctions.CookiesOptions.Enabled);
-            if (choice == "enabled") cookies = UsefulFunctions.CookiesOptions.Enabled;
-            else cookies = UsefulFunctions.CookiesOptions.Disabled;
-            Response.Cookies.Append("cookies", choice, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
-        }
     }
 }

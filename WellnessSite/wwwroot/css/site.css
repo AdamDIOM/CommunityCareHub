@@ -103,3 +103,31 @@ main {
 .edit-image{
     width:100px;
 }
+
+.cookies-box{
+    width:50%;
+    min-height:10%;
+    padding:10px;
+    background-color:pink;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    align-content:center;
+}
+
+.cookie-abs {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-radius: 0 10px 0 0;
+}
+
+.cookie-buttons{
+    display:block;
+    margin-left: auto;
+    margin-right:auto;
+}
+
+.service-row{
+    overflow-wrap:break-word;
+}

@@ -7,11 +7,4 @@
 
 <div class="text-center">
     <h1 class="display-4">Wellness</h1>
-    @if(Model.cookies == Data.UsefulFunctions.CookiesOptions.Unknown)
-    {
-        <form method="post">
-            <button asp-page-handler="Cookies" asp-route-choice="enabled">Accept Cookies</button>
-            <button asp-page-handler="Cookies" asp-route-choice="disabled">Decline Nonessential Cookies</button>
-        </form>
-    }
 </div>

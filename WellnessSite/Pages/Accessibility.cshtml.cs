@@ -6,45 +6,48 @@ using WellnessSite.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
 using WellnessSite.Migrations;
+using System.Net;
 
 namespace WellnessSite.Pages
 {
     public class AccessibilityModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _um;
-        private readonly SignInManager<ApplicationUser> _sim;
+        public readonly SignInManager<ApplicationUser> sim;
         private readonly WellnessSiteContext _context;
-        private IList<Preferences> prefs;
         [BindProperty]
         public Preferences p { get; set; }
-        
 
-        /*
-        public int TextSize { get; set; }*/
+		public UsefulFunctions.CookiesOptions cookies = UsefulFunctions.CookiesOptions.Unknown;
 
-        public AccessibilityModel(SignInManager<ApplicationUser> sim, UserManager<ApplicationUser> um, WellnessSiteContext con)
+
+		public AccessibilityModel(SignInManager<ApplicationUser> sim, UserManager<ApplicationUser> um, WellnessSiteContext con)
         {
-            _sim = sim;
+            this.sim = sim;
             _um = um;
             _context = con;
             p = new Preferences("usr-x");
-            prefs = new List<Preferences>();
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
 
-            p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
+            p = await UsefulFunctions.GetPreferences(_context, _um, sim, User, this);
 
             return Page();
         }
 
-        public async Task<IActionResult> OnPostSetText(string reset, int size)
+		public async Task<IActionResult> OnPostCookiesAsync(string choice)
         {
-			if (_context.Preferences != null)
-			{
-				prefs = await _context.Preferences.ToListAsync();
-			}
+			cookies = UsefulFunctions.IsCookiesEnabled(this);
+			p = await UsefulFunctions.GetPreferences(_context, _um, sim, User, this);
+			if (choice == "enabled") cookies = UsefulFunctions.CookiesOptions.Enabled;
+			else cookies = UsefulFunctions.CookiesOptions.Disabled;
+			Response.Cookies.Append("cookies", choice, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+            return RedirectToPage();
+		}
+		public async Task<IActionResult> OnPostSetText(string reset, int size)
+        {
 			if (_context.Preferences == null) return NotFound();
 
             if(size > 0)
@@ -52,67 +55,69 @@ namespace WellnessSite.Pages
                 p.TextSize = size;
             }
 
-			Preferences pr = p;
-			if (_sim.IsSignedIn(User))
+
+			if (sim.IsSignedIn(User))
 			{
-				ApplicationUser u = await _um.GetUserAsync(User);
+                Preferences pr = p;
+
+                if (reset == "true") pr.TextSize = new Preferences().TextSize;
+
+                ApplicationUser u = await _um.GetUserAsync(User);
 				p.UserID = u.Id;
-			}
-			else
-			{
-				p.UserID = "usr-" + Request.Cookies["user"]!;
-			}
+                _context.ChangeTracker.Clear();
+                _context.Attach(pr).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+            else if(UsefulFunctions.IsCookiesEnabled(this) == UsefulFunctions.CookiesOptions.Enabled)
 
-            if (reset == "true") pr.TextSize = new Preferences().TextSize;
+            {
+                Response.Cookies.Append("text", size.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+            }
 
-			_context.ChangeTracker.Clear();
-			_context.Attach(pr).State = EntityState.Modified;
-			await _context.SaveChangesAsync();
 			return Redirect("/Accessibility");
 		}
 
         public async Task<IActionResult> OnPostSetPropertiesAsync(string reset, string theme)
         {
-			if (_context.Preferences != null)
-			{
-				prefs = await _context.Preferences.ToListAsync();
-			}
 			if (_context.Preferences == null) return NotFound();
 
             Preferences pr = p;
-			if (_sim.IsSignedIn(User))
+			if (sim.IsSignedIn(User))
 			{
 				ApplicationUser u = await _um.GetUserAsync(User);
 				p.UserID = u.Id;
-			}
-			else
+                if (reset == "true") pr = new Preferences(p.UserID);
+                else
+                {
+                    switch (theme)
+                    {
+                        case "greyscale":
+                            pr = new Preferences(p.UserID, p.TextSize, AccessibilityOptions.Greyscale);
+                            break;
+                        case "contrast":
+                            pr = new Preferences(p.UserID, p.TextSize, AccessibilityOptions.Contrast);
+                            break;
+                        case "invert":
+                            pr = new Preferences(p.UserID, p.TextSize, AccessibilityOptions.Invert);
+                            break;
+                        default:
+                            break;
+
+                    }
+                }
+                _context.ChangeTracker.Clear();
+                _context.Attach(pr).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+			else if(UsefulFunctions.IsCookiesEnabled(this) == UsefulFunctions.CookiesOptions.Enabled)
 			{
-                p.UserID = "usr-" + Request.Cookies["user"]!;
-			}
+                if(reset == "true")
+                {
+                    theme = "standard";
+                }
+                Response.Cookies.Append("colour", theme, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+            }
 
-			if (reset == "true") pr = new Preferences(p.UserID);
-			else
-			{
-				switch (theme)
-				{
-					case "greyscale":
-						pr = new Preferences(p.UserID, p.TextSize, AccessibilityOptions.Greyscale);
-						break;
-					case "contrast":
-						pr = new Preferences(p.UserID, p.TextSize, AccessibilityOptions.Contrast);
-						break;
-					case "invert":
-						pr = new Preferences(p.UserID, p.TextSize, AccessibilityOptions.Invert);
-						break;
-					default:
-						break;
-
-				}
-			}
-
-			_context.ChangeTracker.Clear();
-			_context.Attach(pr).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
             return Redirect("/Accessibility");
 		}
     }

@@ -15,13 +15,8 @@ namespace WellnessSite.Data
             Enabled
         }
 
+
         public static async Task<Preferences> GetPreferences(WellnessSiteContext _context, UserManager<ApplicationUser> _um, SignInManager<ApplicationUser> _sim, System.Security.Claims.ClaimsPrincipal? User, Microsoft.AspNetCore.Mvc.RazorPages.PageModel page)
-        {
-            return await GetPreferences(_context, _um, _sim, User, page, false);
-        }
-
-
-        public static async Task<Preferences> GetPreferences(WellnessSiteContext _context, UserManager<ApplicationUser> _um, SignInManager<ApplicationUser> _sim, System.Security.Claims.ClaimsPrincipal? User, Microsoft.AspNetCore.Mvc.RazorPages.PageModel page, bool cookiesEnabled)
         {
             IList<Preferences> prefs = default!;
             Preferences p = new Preferences();
@@ -46,27 +41,47 @@ namespace WellnessSite.Data
                     prefs = await _context.Preferences.ToListAsync();
                 }
             }
-            else if(cookiesEnabled)
+            else if(IsCookiesEnabled(page) == CookiesOptions.Enabled)
             {
                 p = new Preferences("u");
-                if (page.Request.Cookies["user"] == null)
+
+                int textSize;
+
+                if (page.Request.Cookies["text"] == null)
                 {
-                    page.Response.Cookies.Append("user", _context.Preferences.Count().ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(30) });
-                    p = new Preferences("usr-" + _context.Preferences.Count().ToString());
-                    _context.Preferences.Add(p);
-                    await _context.SaveChangesAsync();
+                    page.Response.Cookies.Append("text", "15", new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+                    textSize = 15;
                 }
                 else
                 {
-                    string uID = "usr-" + page.Request.Cookies["user"]!;
-
-                    p = prefs.FirstOrDefault(p => p.UserID == uID)!;
-                    if(p == null)
+                    if(!Int32.TryParse(page.Request.Cookies["text"], out textSize))
                     {
-                        page.Response.Cookies.Append("user", _context.Preferences.Count().ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(30) });
-                        p = new Preferences("usr-" + _context.Preferences.Count().ToString());
-                        _context.Preferences.Add(p);
-                        await _context.SaveChangesAsync();
+                        textSize = 15;
+                        page.Response.Cookies.Append("text", "15", new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+                    }
+                }
+
+                if (page.Request.Cookies["colour"] == null)
+                {
+                    page.Response.Cookies.Append("colour", "standard", new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+                }
+                else
+                {
+                    switch (page.Request.Cookies["colour"])
+                    {
+                        case "greyscale":
+                            p = new Preferences("x", textSize, AccessibilityOptions.Greyscale);
+                            break;
+                        case "invert":
+                            p = new Preferences("x", textSize, AccessibilityOptions.Invert);
+                            break;
+                        case "contrast":
+                            p = new Preferences("x", textSize, AccessibilityOptions.Contrast);
+                            break;
+                        default:
+                            p = new Preferences("x");
+                            p.TextSize = textSize;
+                            break;
                     }
                 }
             }
