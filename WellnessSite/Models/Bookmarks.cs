@@ -7,10 +7,10 @@ namespace WellnessSite.Models
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
+        public int BookmarkID { get; set; }
         [Required]
-        public string UID { get; set; }
+        public string UserID { get; set; }
         [Required]
-        public int SID { get; set; }
+        public int ServiceID { get; set; }
     }
 }

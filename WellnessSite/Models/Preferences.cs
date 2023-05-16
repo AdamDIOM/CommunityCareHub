@@ -26,13 +26,13 @@ namespace WellnessSite.Models
         [Required]
         public string Link { get; set; }
         [Required]
-        public int TextSize { get; set; }
-        [Required]
-        public string Hex1 { get; set; }
-        [Required]
-        public string Hex2 { get; set; }
+        public int FontSize { get; set; }
         [Required]
         public string HexColour { get; set; }
+        [Required]
+        public string HexColour2 { get; set; }
+        [Required]
+        public string HexTextColour { get; set; }
         [Required]
         public string HexHover { get; set; }
 
@@ -46,10 +46,10 @@ namespace WellnessSite.Models
             Footer = footer;
             FooterText = footerText;
             Link = link;
-            TextSize = textSize;
-            Hex1 = hex1;
-            Hex2 = hex2;
-            HexColour = hexColour;
+            FontSize = textSize;
+            HexColour = hex1;
+            HexColour2 = hex2;
+            HexTextColour = hexColour;
             HexHover = hexHover;
         }
 
@@ -59,15 +59,15 @@ namespace WellnessSite.Models
             Text = "#000000";
             Highlight = "#00ffff";
             Background = "#ffffff";
-            Header = "#008000";
+            Header = "#f8ae51";
             HeaderText = "#ffffff";
-            Footer = "#005300";
+            Footer = "#164d61";
             FooterText = "#ffffff";
             Link = "#0000ff";
-            TextSize = 15;
-            Hex1 = "#22AA22";
-            Hex2 = "#44CC44";
-            HexColour = "#000000";
+            FontSize = 15;
+            HexColour = "#cdd24e";
+            HexColour2 = "#c1c8b0";
+            HexTextColour = "#000000";
             HexHover = "#FFFF99";
         }
 
@@ -77,7 +77,7 @@ namespace WellnessSite.Models
         public Preferences(string uid, int text, AccessibilityOptions choice)
         {
             UserID = uid;
-            TextSize = text;
+            FontSize = text;
             if(choice == AccessibilityOptions.Contrast)
             {
                 Text = "#000000";
@@ -88,9 +88,9 @@ namespace WellnessSite.Models
                 Footer = "#00FFFF";
                 FooterText = "#000000";
                 Link = "#00FFFF";
-                Hex1 = "#FFFF00";
-                Hex2 = "#DDDD00";
-                HexColour = "#000000";
+                HexColour = "#FFFF00";
+                HexColour2 = "#DDDD00";
+                HexTextColour = "#000000";
                 HexHover = "#FFFFFF";
             }
             if(choice == AccessibilityOptions.Greyscale)
@@ -103,9 +103,9 @@ namespace WellnessSite.Models
                 Footer = "#303030";
                 FooterText = "#FFFFFF";
 				Link = "#1C1C1C";
-                Hex1 = "#DDDDDD";
-                Hex2 = "#BBBBBB";
-                HexColour = "#000000";
+                HexColour = "#DDDDDD";
+                HexColour2 = "#BBBBBB";
+                HexTextColour = "#000000";
                 HexHover = "#F1F1F1";
             }
             if(choice == AccessibilityOptions.Invert)
@@ -113,21 +113,21 @@ namespace WellnessSite.Models
                 Text = "#FFFFFF";
                 Highlight = "#FF0000";
                 Background = "#000000";
-                Header = "#FF7FFF";
+                Header = "#0751ae";
                 HeaderText = "#000000";
-                Footer = "#FFACFF";
+                Footer = "#e9b29e";
                 FooterText = "#000000";
                 Link = "#FFFF00";
-                Hex1 = "#DD55DD";
-                Hex2 = "#BB33BB";
-                HexColour = "#FFFFFF";
+                HexColour = "#322db1";
+                HexColour2 = "#3e374f";
+                HexTextColour = "#FFFFFF";
                 HexHover = "#000077";
             }
         }
 
         public override string ToString()
         {
-            return Text + ',' + Highlight + ',' + Background + ',' + Header + ',' + HeaderText + ',' + Footer + ',' + FooterText + ',' + Link + ',' + Hex1 + ',' + Hex2 + ',' + HexColour + ',' + HexHover + ',' + TextSize;
+            return Text + ',' + Highlight + ',' + Background + ',' + Header + ',' + HeaderText + ',' + Footer + ',' + FooterText + ',' + Link + ',' + HexColour + ',' + HexColour2 + ',' + HexTextColour + ',' + HexHover + ',' + FontSize;
         }
     }
 }

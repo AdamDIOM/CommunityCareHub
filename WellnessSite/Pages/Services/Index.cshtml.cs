@@ -34,7 +34,11 @@ namespace WellnessSite.Pages.Services
             if (_context.Service != null)
             {
                 Service = await _context.Service.Where(s => s.Accepted).ToListAsync();
-                if (qry != null && qry.Trim() != "")
+                if(qry != null && qry.Trim() != "" && qry.Length == 5 && qry.Substring(0,3) == "cat")
+                {
+                    Service = Service.Where(s => s.Name.ToUpper()[0] == qry[4]).ToList();
+                }
+                else if (qry != null && qry.Trim() != "")
                 {
                     Service = Service.Where(s =>
 					{

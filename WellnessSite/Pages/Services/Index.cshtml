@@ -6,22 +6,35 @@
     ViewData["Prefs"] = Model.p.ToString();
 }
 <div class="row">
-    <div class="col-md-2 col-1"></div>
-    <div class="col-md-8 col-10">
-        <h1>A-Z Services</h1>
-        <form>
-            <label asp-for="qry">Search</label>
-            <input asp-for="qry" />
-            <input type="submit" asp-route-qry="@Model.qry" value="Search" class="btn btn-success">
-        </form>
+    <div class="col-md-3 col-1"></div>
+    <div class="col-md-6 col-10">
+        <div class="centre"><h1>A-Z Services</h1></div>
+        <div class="centre">
+            <form>
+                <div class="form-group">
+                    <input asp-for="qry" plaeholder="Search" class="form-control"/>
+                    <input type="submit" asp-route-qry="@Model.qry" value="Search" class="btn btn-success">
+                </div>
+            </form>
+            <p>
+            @for(int letter = 65; letter < 91; letter++)
+            {
+                <a asp-page="./Index" asp-route-qry="cat-@Convert.ToChar(letter)">@Convert.ToChar(letter)</a>
+            }
+            </p>
+        </div>
     </div>
-    <div class="col-md-2 col-1"></div>
+    <div class="col-md-3 col-1"></div>
 </div>
 
 
 <div class="hexbox">
     @{
         int i = 0;
+        @if(Model.Service.Count() < 1)
+        {
+            <div class="centre"><h2>No Services Available</h2></div>
+        }
         @foreach (var item in Model.Service)
         {
             <a asp-page="./Service" asp-route-id="@item.Id">
@@ -44,7 +57,7 @@
         document.styleSheets[3].cssRules[3].media.mediaText = '(min-width: ' + (size * 4) + 'px) and (max-width: ' + (size * 5) + 'px)';
         document.styleSheets[3].cssRules[4].media.mediaText = '(min-width: ' + (size * 5) + 'px)';
     }
-    changeHexMediaQueries(@(Math.Ceiling(Model.p.TextSize * 20 * 1.1547)))
+    changeHexMediaQueries(@(Math.Ceiling(Model.p.FontSize * 20 * 1.1547)))
 </script>
 
 @section Styles{

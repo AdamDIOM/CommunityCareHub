@@ -80,7 +80,7 @@ namespace WellnessSite.Data
                             break;
                         default:
                             p = new Preferences("x");
-                            p.TextSize = textSize;
+                            p.FontSize = textSize;
                             break;
                     }
                 }

@@ -54,7 +54,7 @@ namespace WellnessSite.Pages.Services
             user = await _um.GetUserAsync(User);
             if(user != null)
             {
-                Bookmarked = await _context.Bookmarks.FirstOrDefaultAsync(b => b.SID == service.Id && b.UID == user.Id) != null;
+                Bookmarked = await _context.Bookmarks.FirstOrDefaultAsync(b => b.ServiceID == service.Id && b.UserID == user.Id) != null;
             }
             
             return Page();
@@ -88,12 +88,12 @@ namespace WellnessSite.Pages.Services
             }
             else
             {
-                Bookmarked = await _context.Bookmarks.FirstOrDefaultAsync(b => b.SID == service.Id && b.UID == user.Id) != null;
+                Bookmarked = await _context.Bookmarks.FirstOrDefaultAsync(b => b.ServiceID == service.Id && b.UserID == user.Id) != null;
             }
 
             if(Bookmarked)
             {
-                var bookmark = await _context.Bookmarks.FirstOrDefaultAsync(b => b.SID == service.Id && b.UID == user.Id);
+                var bookmark = await _context.Bookmarks.FirstOrDefaultAsync(b => b.ServiceID == service.Id && b.UserID == user.Id);
                 if(bookmark != null)
                 {
                     _context.Bookmarks.Remove(bookmark);
@@ -103,7 +103,7 @@ namespace WellnessSite.Pages.Services
             }
             else
             {
-                _context.Bookmarks.Add(new Bookmarks { SID = service.Id, UID = user.Id });
+                _context.Bookmarks.Add(new Bookmarks { ServiceID = service.Id, UserID = user.Id });
                 await _context.SaveChangesAsync();
             }
 

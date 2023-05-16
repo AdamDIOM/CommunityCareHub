@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WellnessSite.Data;
 
@@ -11,9 +12,10 @@ using WellnessSite.Data;
 namespace WellnessSite.Migrations
 {
     [DbContext(typeof(WellnessSiteContext))]
-    partial class WellnessSiteContextModelSnapshot : ModelSnapshot
+    [Migration("20230516145752_fourteen")]
+    partial class fourteen
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

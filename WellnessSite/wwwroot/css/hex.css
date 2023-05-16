@@ -1,10 +1,10 @@
 @media (max-width:693px) {
-    .hexbox .hex .xs-0 {
+    .hexbox .xs-0 {
         background-color:var(--hex1);
         display: float;
     }
 
-        .hexbox .hex .xs-0:hover {
+        .hexbox .xs-0:hover {
             background-color: var(--hexHover);
             color:var(--hexColour);
         }

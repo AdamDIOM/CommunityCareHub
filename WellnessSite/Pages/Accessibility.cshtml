@@ -23,7 +23,7 @@
 		{
 			<div>
 				<h2>Text and Graphics Size</h2>
-				<input asp-for="p.TextSize" type="range" min="10" max="25" value="@Model.p.TextSize" onchange="changeTextSize(this.value)" />
+				<input asp-for="p.FontSize" type="range" min="10" max="25" value="@Model.p.FontSize" onchange="changeTextSize(this.value)" />
 				<button asp-page-handler="SetText">Save</button>
 				<br />
 				<button asp-page-handler="SetText" asp-route-size=10>Small</button>
@@ -87,15 +87,15 @@
 						</div>
 						<div>
 							<label asp-for="p.Link">Hexagon Colour</label>
-							<input asp-for="p.Hex1" type="color" value="@Model.p.Hex1" />
+							<input asp-for="p.HexColour" type="color" value="@Model.p.HexColour" />
 						</div>
 						<div>
 							<label asp-for="p.Link">Hexagon Colour 2</label>
-							<input asp-for="p.Hex2" type="color" value="@Model.p.Hex2" />
+							<input asp-for="p.HexColour2" type="color" value="@Model.p.HexColour2" />
 						</div>
 						<div>
 							<label asp-for="p.Link">Hexagon Text Colour</label>
-							<input asp-for="p.HexColour" type="color" value="@Model.p.HexColour" />
+							<input asp-for="p.HexTextColour" type="color" value="@Model.p.HexTextColour" />
 						</div>
 						<div>
 							<label asp-for="p.Link">Hexagon Hover Colour</label>

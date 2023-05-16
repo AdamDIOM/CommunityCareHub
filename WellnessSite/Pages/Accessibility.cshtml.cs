@@ -52,7 +52,7 @@ namespace WellnessSite.Pages
 
             if(size > 0)
             {
-                p.TextSize = size;
+                p.FontSize = size;
             }
 
 
@@ -60,7 +60,7 @@ namespace WellnessSite.Pages
 			{
                 Preferences pr = p;
 
-                if (reset == "true") pr.TextSize = new Preferences().TextSize;
+                if (reset == "true") pr.FontSize = new Preferences().FontSize;
 
                 ApplicationUser u = await _um.GetUserAsync(User);
 				p.UserID = u.Id;
@@ -92,13 +92,13 @@ namespace WellnessSite.Pages
                     switch (theme)
                     {
                         case "greyscale":
-                            pr = new Preferences(p.UserID, p.TextSize, AccessibilityOptions.Greyscale);
+                            pr = new Preferences(p.UserID, p.FontSize, AccessibilityOptions.Greyscale);
                             break;
                         case "contrast":
-                            pr = new Preferences(p.UserID, p.TextSize, AccessibilityOptions.Contrast);
+                            pr = new Preferences(p.UserID, p.FontSize, AccessibilityOptions.Contrast);
                             break;
                         case "invert":
-                            pr = new Preferences(p.UserID, p.TextSize, AccessibilityOptions.Invert);
+                            pr = new Preferences(p.UserID, p.FontSize, AccessibilityOptions.Invert);
                             break;
                         default:
                             break;

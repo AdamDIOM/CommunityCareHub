@@ -15,18 +15,18 @@ body {
 }
 
 :root {
-    --text: black;
-    --highColour: cyan;
-    --backColour: white;
-    --headColour: green;
-    --headText: white;
-    --footColour: darkgreen;
-    --footText: white;
-    --linkColour: blue;
+    --text: #000000;
+    --highColour: #00ffff;
+    --backColour: #ffffff;
+    --headColour: #f8ae51;
+    --headText: #ffffff;
+    --footColour: #164d61;
+    --footText: #ffffff;
+    --linkColour: #0000ff;
     --textSize: 15px;
-    --hex1: #22AA22;
-    --hex2: #44CC44;
-    --hexColour: black;
+    --hex1: #cdd24e;
+    --hex2: #c1c8b0;
+    --hexColour: #000000;
     --hexHover: #FFFF99;
 }
 
@@ -130,4 +130,8 @@ main {
 
 .service-row{
     overflow-wrap:break-word;
+}
+
+.centre{
+    text-align:center;
 }

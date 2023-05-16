@@ -58,7 +58,7 @@ namespace WellnessSite.Pages.auth
 
             ApplicationUser u = await _um.GetUserAsync(User);
 
-            bookmarks = await _context.Bookmarks.Where(b => b.UID == u.Id).ToListAsync();
+            bookmarks = await _context.Bookmarks.Where(b => b.UserID == u.Id).ToListAsync();
 
             Services = await _context.Service.ToListAsync();
 

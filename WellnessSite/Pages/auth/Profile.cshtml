@@ -20,7 +20,7 @@
 <h2>Bookmarks</h2>
 @foreach(Models.Bookmarks bm in Model.bookmarks)
 {
-    <p><a asp-page="../Services/Service" asp-route-id="@bm.SID">@Model.Services.FirstOrDefault(s => s.Id == bm.SID).Name</a></p>
+    <p><a asp-page="../Services/Service" asp-route-id="@bm.ServiceID">@Model.Services.FirstOrDefault(s => s.Id == bm.ServiceID).Name</a></p>
 }
 
 <!-- Change password functionality -->
