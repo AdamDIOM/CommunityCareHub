@@ -10,7 +10,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/Admin", "Admin");
-    options.Conventions.AuthorizeFolder("/Admin", "OrgAdmin");
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy =>
+    {
+        policy.RequireRole("Admin", "OrgAdmin");
+    });
 });
 
 builder.Services.AddDbContext<WellnessSiteContext>(options => {
@@ -20,7 +27,8 @@ builder.Services.AddDbContext<WellnessSiteContext>(options => {
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<WellnessSiteContext>()
-    .AddDefaultTokenProviders();
+    .AddDefaultTokenProviders()
+    .AddRoles<IdentityRole>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -29,17 +37,6 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LogoutPath = "/auth/Logout";
 });
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("Admin", policy =>
-    {
-        policy.RequireRole("Admin");
-    });
-    options.AddPolicy("OrgAdmin", policy =>
-    {
-        policy.RequireRole("OrgAdmin");
-    });
-});
 
 var app = builder.Build();
 
@@ -59,7 +56,7 @@ if (!app.Environment.IsDevelopment())
 //    context.Database.EnsureCreated();
 //}
 
-    app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();

@@ -66,7 +66,7 @@ namespace WellnessSite.Pages.Contact
                 // links to email client
                 SmtpClient sc = new SmtpClient
                 {
-                    Credentials = new NetworkCredential("CommunityCareHubIOM@gmail.com", "xjiglfnicnibaffc"),
+                    Credentials = new NetworkCredential("CommunityCareHubIOM@gmail.com", "ydwazxgxyngmcrhw"),
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     EnableSsl = true,
                     Host = "smtp.gmail.com",

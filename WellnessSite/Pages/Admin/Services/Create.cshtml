@@ -14,12 +14,12 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Service.Maintainer" value="@Model.uid" />
             <div class="form-group">
-                <label asp-for="Service.Name" class="control-label"></label>
+                <label asp-for="Service.Name" class="control-label"></label>*
                 <input asp-for="Service.Name" class="form-control" />
                 <span asp-validation-for="Service.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Service.Category" class="control-label"></label>
+                <label asp-for="Service.Category" class="control-label"></label>*
                 <select asp-for="Service.Category" class="form-control">
                     @foreach(Models.Categories c in Model.c)
                     {
@@ -29,7 +29,7 @@
                 <span asp-validation-for="Service.Category" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Service.Description" class="control-label"></label>
+                <label asp-for="Service.Description" class="control-label"></label>*
                 <input asp-for="Service.Description" class="form-control" />
                 <span asp-validation-for="Service.Description" class="text-danger"></span>
             </div>
