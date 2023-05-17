@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using WellnessSite.Data;
 using WellnessSite.Models;
 
@@ -17,6 +18,7 @@ namespace WellnessSite.Pages.Admin.Services
         private readonly SignInManager<ApplicationUser> _sim;
         private readonly WellnessSiteContext _context;
         public Preferences p;
+        public IList<Categories> c;
         public string uid;
 
         public CreateModel(SignInManager<ApplicationUser> sim, UserManager<ApplicationUser> um, WellnessSiteContext con)
@@ -30,6 +32,11 @@ namespace WellnessSite.Pages.Admin.Services
         {
 
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
+
+            if(_context.Categories != null)
+            {
+                c = await _context.Categories.ToListAsync();
+            }
 
             uid = (await _um.GetUserAsync(User)).Id;
 

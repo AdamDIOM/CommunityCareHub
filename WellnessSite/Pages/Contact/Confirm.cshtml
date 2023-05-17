@@ -6,9 +6,11 @@
     ViewData["Layout"] = "Img";
 }
 
-<h1>Email sent!</h1>
-<p>Message says: @Model.Message</p>
-<a asp-page="/Index" class="btn">Return to Homepage</a>
+<h1>Thank you for your message.</h1>
+<h4>Should your message entail a response, we will endeavour to respond to you within 5 working days. In the meantime, please check out our website for more information.</h4>
+<p><b>Your message says:</b></p>
+<p>@Model.Message</p>
+<a asp-page="/Index" class="btn btn-info">Return to Homepage</a>
 
 @section Styles{
     <style>

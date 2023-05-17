@@ -19,7 +19,7 @@ namespace WellnessSite.Pages.Services
         public Preferences p;
         private readonly WellnessSiteContext _context;
         [BindProperty(SupportsGet = true)]
-        public string qry { get; set; }
+        public string Query { get; set; }
         public IndexModel(SignInManager<ApplicationUser> sim, UserManager<ApplicationUser> um, WellnessSiteContext con)
         {
             _sim = sim;
@@ -34,24 +34,24 @@ namespace WellnessSite.Pages.Services
             if (_context.Service != null)
             {
                 Service = await _context.Service.Where(s => s.Accepted).ToListAsync();
-                if(qry != null && qry.Trim() != "" && qry.Length == 5 && qry.Substring(0,3) == "cat")
+                if(Query != null && Query.Trim() != "" && Query.Length == 5 && Query.Substring(0,3) == "cat")
                 {
-                    Service = Service.Where(s => s.Name.ToUpper()[0] == qry[4]).ToList();
+                    Service = Service.Where(s => s.Name.ToUpper()[0] == Query[4]).ToList();
                 }
-                else if (qry != null && qry.Trim() != "")
+                else if (Query != null && Query.Trim() != "")
                 {
                     Service = Service.Where(s =>
 					{
-						if (s.WebLink == null) s.WebLink = "§!";
-						if (s.Address == null) s.Address = "§!";
-						if (s.Town == null) s.Town = "§!";
-						if (s.Tags == null) s.Tags = "§!";
+						if (s.WebLink == null) s.WebLink = "";
+						if (s.Address == null) s.Address = "";
+						if (s.Town == null) s.Town = "";
+						if (s.Tags == null) s.Tags = "";
 
-						return s.Name.ToLower().Contains(qry.ToLower()) ||
-                        s.Category.ToLower().Contains(qry.ToLower()) ||
-						s.Address.ToLower().Contains(qry.ToLower()) ||
-						s.Town.ToLower().Contains(qry.ToLower()) ||
-						s.Tags.ToLower().Contains(qry.ToLower());
+						return s.Name.ToLower().Contains(Query.ToLower()) ||
+                        s.Category.ToLower().Contains(Query.ToLower()) ||
+						s.Address.ToLower().Contains(Query.ToLower()) ||
+						s.Town.ToLower().Contains(Query.ToLower()) ||
+						s.Tags.ToLower().Contains(Query.ToLower());
                     }
 
                         

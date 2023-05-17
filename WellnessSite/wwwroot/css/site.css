@@ -95,6 +95,10 @@ header, nav, footer {
     min-height: calc(var(--textSize)*4);
 }
 
+.logo {
+    height: calc((var(--textSize)*4) - 26px);
+}
+
 main {
     background-color: transparent;
     padding-bottom: 0px;
@@ -134,4 +138,34 @@ main {
 
 .centre{
     text-align:center;
+}
+
+nav {
+    letter-spacing: -1px;
+}
+
+nav .container{
+    width:100%;
+    margin-left:0px;
+    margin-right:0px;
+}
+
+.navbar-brand{
+    letter-spacing:-2px;
+}
+
+.left{
+    display:block;
+    float:left;
+}
+
+.a-z-button{
+    width:calc(var(--textSize)*2);
+    text-align:center;
+    padding-left:0px;
+    padding-right:0px;
+}
+
+#secQs{
+    display:none;
 }

@@ -12,14 +12,14 @@
         <div class="centre">
             <form>
                 <div class="form-group">
-                    <input asp-for="qry" plaeholder="Search" class="form-control"/>
-                    <input type="submit" asp-route-qry="@Model.qry" value="Search" class="btn btn-success">
+                    <input asp-for="Query" plaeholder="Search" class="form-control"/>
+                    <input type="submit" asp-route-qry="@Model.Query" value="Search" class="btn btn-info">
                 </div>
             </form>
             <p>
             @for(int letter = 65; letter < 91; letter++)
             {
-                <a asp-page="./Index" asp-route-qry="cat-@Convert.ToChar(letter)">@Convert.ToChar(letter)</a>
+                <a asp-page="./Index" asp-route-qry="cat-@Convert.ToChar(letter)" class="btn btn-info a-z-button">@Convert.ToChar(letter)</a>
             }
             </p>
         </div>

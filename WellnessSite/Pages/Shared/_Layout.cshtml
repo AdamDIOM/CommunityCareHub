@@ -41,14 +41,15 @@
             
         <nav class="navbar navbar-expand-@size navbar-toggleable-@size border-bottom box-shadow">
             <div class="container">
-                <img src="#" alt-text="logo" />
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Community Care Hub</a>
+            <img src="/img/logo.png" alt-text="logo" class="logo" />
+            <a class="navbar-brand" asp-area="" asp-page="/Index">Community Care Hub</a>
+                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-@size-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav /*flex-grow-1*/">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Index">Home</a>
                         </li>
@@ -56,14 +57,14 @@
                             <a class="nav-link" asp-area="" asp-page="/About">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Services/Index">A-Z</a>
+                            <a class="nav-link" asp-area="" asp-page="/Services/Index">Services</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Contact/Index">Contact</a>
                         </li>
                     </ul>
 
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav /*flex-grow-1*/">
                         @using Microsoft.AspNetCore.Identity;
                         @using WellnessSite.Data;
                         @inject SignInManager<ApplicationUser> SignInManager;

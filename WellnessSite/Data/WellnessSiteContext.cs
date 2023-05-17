@@ -15,12 +15,15 @@ namespace WellnessSite.Data
             : base(options)
         {
         }
-
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Service>().ToTable("Service");
             modelBuilder.Entity<Preferences>().ToTable("Preferences");
             modelBuilder.Entity<Bookmarks>().ToTable("Bookmarks");
+            modelBuilder.Entity<Categories>().ToTable("Categories");
+            modelBuilder.Entity<SecQues>().ToTable("SecQues");
+
             base.OnModelCreating(modelBuilder);
             modelBuilder.Ignore<IdentityUserLogin<string>>();
         }
@@ -28,5 +31,7 @@ namespace WellnessSite.Data
         public DbSet<Service> Service { get; set; } = default!;
         public DbSet<Preferences> Preferences { get; set; } = default!;
         public DbSet<Bookmarks> Bookmarks { get; set; } = default!;
+        public DbSet<Categories> Categories { get; set; } = default!;
+        public DbSet<SecQues> SecQues { get; set; } = default!;
     }
 }

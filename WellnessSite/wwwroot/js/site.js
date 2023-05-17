@@ -23,3 +23,13 @@ function changeColours(prefs) {
     changeColour('--hexHover', prefs[11]);
     changeColour('--textSize', prefs[12] + 'px');
 }
+
+function display(property) {
+    if (document.getElementById(property).style.display == "block") {
+        document.getElementById(property).style.display = "none";
+    }
+    else {
+        document.getElementById(property).style.display = "block";
+    }
+    
+}

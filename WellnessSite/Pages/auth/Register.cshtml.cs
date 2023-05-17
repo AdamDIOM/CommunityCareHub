@@ -35,11 +35,27 @@ namespace WellnessSite.Pages.auth
         [BindProperty]
         public bool RequestAdmin { get; set; }
 
+        [BindProperty]
+        [Display(Name = "Security Question 1")]
+        public string Q1 { get; set; }
+        [BindProperty]
+        [Display(Name = "Security Question 2")]
+        public string Q2 { get; set; }
+        [BindProperty]
+        [Display(Name = "Answer 1")]
+        public string A1 { get; set; }
+        [BindProperty]
+        [Display(Name = "Answer 2")]
+        public string A2 { get; set; }
+
+        public string? SQError { get; set; } = "";
+
         private readonly SignInManager<ApplicationUser> _sim;
         private readonly UserManager<ApplicationUser> _um;
         private readonly RoleManager<IdentityRole> _rm;
         private readonly WellnessSiteContext _context;
         public Preferences p;
+        public IList<SecQues> sq;
 
         public RegisterModel(
             SignInManager<ApplicationUser> signInManager,
@@ -63,23 +79,51 @@ namespace WellnessSite.Pages.auth
             }
 
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
+
+            if (_context.SecQues != null)
+            {
+                sq = await _context.SecQues.ToListAsync();
+            }
         }
         public async Task<IActionResult> OnPostAsync()
         {
-
-
             if (email == null)
             {
                 email = "";
             }
 
-
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
 
-            if (ModelState.IsValid)
+            if (_context.SecQues != null)
+            {
+                sq = await _context.SecQues.ToListAsync();
+            }
+
+            if (RequestAdmin && Q1 == Q2)
+            {
+                SQError = "The chosen security questions must be different.";
+                return Page();
+            }
+
+            if(!RequestAdmin)
+            {
+                ModelState.Remove("A1");
+                ModelState.Remove("A2");
+            }
+
+            if (ModelState.IsValid) //|| (!RequestAdmin && ModelState.Values))
             {
                 // creates new user and redirects to homepage otherwise reloads page if there is an error
-                var user = new ApplicationUser { UserName = Email, Email = Email, RequestedAdmin = RequestAdmin };
+                ApplicationUser user;
+                if (RequestAdmin)
+                {
+                    user = new ApplicationUser { UserName = Email, Email = Email, RequestedAdmin = RequestAdmin, Question1 = Q1, Answer1 = A1, Question2 = Q2, Answer2 = A2 };
+                }
+                else
+                {
+                    user = new ApplicationUser { UserName = Email, Email = Email, RequestedAdmin = RequestAdmin };
+                }
+                
                 var result = await _um.CreateAsync(user, Password);
                 if (result.Succeeded)
                 {

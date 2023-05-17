@@ -66,7 +66,7 @@ namespace WellnessSite.Pages.Contact
                 // links to email client
                 SmtpClient sc = new SmtpClient
                 {
-                    Credentials = new NetworkCredential("adam.drummond9@gmail.com", "xjiglfnicnibaffc"),
+                    Credentials = new NetworkCredential("CommunityCareHubIOM@gmail.com", "xjiglfnicnibaffc"),
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     EnableSsl = true,
                     Host = "smtp.gmail.com",
@@ -76,9 +76,9 @@ namespace WellnessSite.Pages.Contact
 
                 MailMessage m = new MailMessage();
                 // from gmail address
-                m.From = new MailAddress("adam.drummond9@gmail.com", "Wellness Site Enquiry");
+                m.From = new MailAddress("CommunityCareHubIOM@gmail.com", "Wellness Site Enquiry");
                 // sent to Chester email address (emulating restaurant address)
-                m.To.Add(new MailAddress("2126671@chester.ac.uk"));
+                m.To.Add(new MailAddress("CommunityCareHubIOM@gmail.com"));
                 // CC in user's email
                 m.CC.Add(new MailAddress(Email));
                 // adds text and subject line then sends

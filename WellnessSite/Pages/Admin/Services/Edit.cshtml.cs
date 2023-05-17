@@ -18,6 +18,7 @@ namespace WellnessSite.Pages.Admin.Services
         private readonly SignInManager<ApplicationUser> _sim;
         private readonly WellnessSiteContext _context;
         public Preferences p;
+        public IList<Categories> c;
         public byte[]? imgData;
 
         public EditModel(SignInManager<ApplicationUser> sim, UserManager<ApplicationUser> um, WellnessSiteContext con)
@@ -37,6 +38,11 @@ namespace WellnessSite.Pages.Admin.Services
             if (id == null || _context.Service == null)
             {
                 return NotFound();
+            }
+
+            if (_context.Categories != null)
+            {
+                c = await _context.Categories.ToListAsync();
             }
 
             var service =  await _context.Service.FirstOrDefaultAsync(m => m.Id == id);
