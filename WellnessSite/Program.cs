@@ -6,19 +6,21 @@ using MessagePack.Resolvers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddRazorPages(options =>
-{
-    //options.Conventions.AuthorizeFolder("/Admin", "Admin");
-});
-
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("Admin", policy =>
+    options.AddPolicy("AdminAccess", policy =>
     {
         policy.RequireRole("Admin", "OrgAdmin");
     });
 });
+
+// Add services to the container.
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizeFolder("/Admin", "AdminAccess");
+});
+
+
 
 builder.Services.AddDbContext<WellnessSiteContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("WellnessSiteContext") ?? throw new InvalidOperationException("Connection string 'WellnessSiteContext' not found."));
@@ -61,8 +63,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapRazorPages();
 

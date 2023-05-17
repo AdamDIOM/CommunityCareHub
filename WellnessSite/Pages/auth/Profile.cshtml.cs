@@ -19,7 +19,7 @@ namespace WellnessSite.Pages.auth
         public IList<Service> Services;
         public Preferences p;
 
-        public string username;
+        public string? name;
 
         [BindProperty]
         [DataType(DataType.Password)]
@@ -52,11 +52,13 @@ namespace WellnessSite.Pages.auth
 
         public async Task OnGetAsync()
         {
-            username = _um.GetUserName(User);
-
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
 
             ApplicationUser u = await _um.GetUserAsync(User);
+            if(u != null && u.Name != null)
+            {
+                name = u.Name;
+            }
 
             bookmarks = await _context.Bookmarks.Where(b => b.UserID == u.Id).ToListAsync();
 
@@ -66,7 +68,7 @@ namespace WellnessSite.Pages.auth
 
         public async Task<IActionResult> OnPostAsync()
         {
-            username = _um.GetUserName(User);
+            name = _um.GetUserName(User);
 
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
 

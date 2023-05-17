@@ -6,63 +6,60 @@
     ViewData["Layout"] = "Img";
 }
 
-
-<h1>Your profile</h1>
-<dl class="row">
-    <dt class="col-sm-5">
-        Username
-    </dt>
-    <dd class="col-sm-7">
-        @Model.username
-    </dd>
-</dl>
-
-<h2>Bookmarks</h2>
-@foreach(Models.Bookmarks bm in Model.bookmarks)
+@if(Model.name != null && Model.name.Trim() != "")
 {
-    <p><a asp-page="../Services/Service" asp-route-id="@bm.ServiceID">@Model.Services.FirstOrDefault(s => s.Id == bm.ServiceID).Name</a></p>
+    <h1>Welcome back, @Model.name</h1>
 }
+else
+{
+    <h1>Your profile</h1>
+}
+<hr />
+<div class="row">
+    <form method="post">
+    <div class="col col-12 col-md-6">
+        @if(Model.bookmarks.Count() < 1)
+        {
+            <h3>Any services you bookmark will appear here</h3>
+        }
+        else
+        {
+            <h3>Bookmarks</h3>
+            @foreach(Models.Bookmarks bm in Model.bookmarks)
+            {
+                <p><a asp-page="../Services/Service" asp-route-id="@bm.ServiceID">@Model.Services.FirstOrDefault(s => s.Id == bm.ServiceID).Name</a></p>
+            }
+        }
+        <br />
+        <hr />
+        <h3>Change Password</h3>
+        <div class="form-group">
+            <label asp-for="CurrentPassword" class="control-label"></label>
+            <input asp-for="CurrentPassword" class="form-control" />
+            <span asp-validation-for="CurrentPassword" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password" class="control-label"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ConfirmPassword" class="control-label"></label>
+            <input asp-for="ConfirmPassword" class="form-control" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+        <input type="submit" value="Change" class="btn btn-danger" />
+    </div>
+    <div class="col col-12 col-md-6">
+
+    </div>
+    </form>
+</div>
+
+
 
 <!-- Change password functionality -->
-<form method="post">
-    <dl class="row">
-        <dt class="col-sm-5">
-            Current Password
-        </dt>
-        <dd class="col-sm-7">
-            <div class="form-group">
-                <label asp-for="CurrentPassword" class="control-label"></label>
-                <input asp-for="CurrentPassword" class="form-control" />
-                <span asp-validation-for="CurrentPassword" class="text-danger"></span>
-            </div>
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-sm-5">
-            New Password
-        </dt>
-        <dd class="col-sm-7">
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-sm-5">
-            Confirm Password
-        </dt>
-        <dd class="col-sm-7">
-            <div class="form-group">
-                <label asp-for="ConfirmPassword" class="control-label"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-        </dd>
-    </dl>
-    <input type="submit" value="Change" class="btn btn-danger" />
-</form>
+
 
 @section Styles{
     <style>

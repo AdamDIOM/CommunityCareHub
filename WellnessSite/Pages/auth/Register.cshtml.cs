@@ -13,6 +13,10 @@ namespace WellnessSite.Pages.auth
     {
         [BindProperty(SupportsGet = true)]
         public string email { get; set; }
+        [BindProperty]
+        [Required]
+        [Display(Name = "Name")]
+        public string Name { get; set; }
 
         [BindProperty]
         [Required]
@@ -117,11 +121,11 @@ namespace WellnessSite.Pages.auth
                 ApplicationUser user;
                 if (RequestAdmin)
                 {
-                    user = new ApplicationUser { UserName = Email, Email = Email, RequestedAdmin = RequestAdmin, Question1 = Q1, Answer1 = A1, Question2 = Q2, Answer2 = A2 };
+                    user = new ApplicationUser { UserName = Email, Email = Email, RequestedAdmin = RequestAdmin, Question1 = Q1, Answer1 = A1, Question2 = Q2, Answer2 = A2, Name = Name };
                 }
                 else
                 {
-                    user = new ApplicationUser { UserName = Email, Email = Email, RequestedAdmin = RequestAdmin };
+                    user = new ApplicationUser { UserName = Email, Email = Email, RequestedAdmin = RequestAdmin, Name = Name };
                 }
                 
                 var result = await _um.CreateAsync(user, Password);
