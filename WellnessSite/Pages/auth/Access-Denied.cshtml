@@ -1,0 +1,17 @@
+﻿@page
+@model WellnessSite.Pages.auth.Access_DeniedModel
+@{
+    ViewData["Title"] = "Access Denied";
+    ViewData["Prefs"] = Model.p.ToString();
+    ViewData["Layout"] = "Img";
+}
+
+<h1>Access Denied</h1>
+
+@section Styles{
+    <style>
+        body {
+            background-image: url("/img/login-bg.jpg");
+        }
+    </style>
+}

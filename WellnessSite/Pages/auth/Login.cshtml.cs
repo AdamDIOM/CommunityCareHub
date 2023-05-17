@@ -46,15 +46,27 @@ namespace WellnessSite.Pages.auth
 
         public async Task<IActionResult> OnPostAsync()
         {
-
-
             if (email == null) email = "";
 
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
 
             if (ModelState.IsValid)
             {
+                ApplicationUser u = await _um.FindByEmailAsync(Email);
+                if(u != null && (await _um.IsInRoleAsync(u, "OrgAdmin") || await _um.IsInRoleAsync(u, "Admin")))
+                {
+                    var r = await _um.CheckPasswordAsync(u, Password);
+                    if (r) return RedirectToPage("./AdminLogin", new { UID = u.Id });
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid Logon Attempt");
+                        return Page();
+                    }
+                    // redirect to adminlogin for sec qs
+                }
+                // else do below stuff
                 var result = await _sim.PasswordSignInAsync(Email, Password, false, false);
+                
                 if (result.Succeeded)
                 {
 					await UsefulFunctions.SetStandardAdmin(_um, _rm);

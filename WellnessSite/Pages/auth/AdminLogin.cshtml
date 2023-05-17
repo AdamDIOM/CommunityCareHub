@@ -1,0 +1,32 @@
+﻿@page
+@model WellnessSite.Pages.auth.AdminLoginModel
+@{
+    ViewData["Title"] = "Admin Login";
+    ViewData["Prefs"] = Model.p.ToString();
+    ViewData["Layout"] = "Img";
+}
+
+
+<h1>Admin login</h1>
+
+<form method="post">
+  
+
+    <div class="form-group">
+        <label asp-for="A" class="control-label">@Model.Q</label>
+        <input asp-for="A" class="form-control" />
+        <span asp-validation-for="A" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" value="Login" class="btn btn-success" asp-route-uid="@Model.UID" asp-route-Q="@Model.Q">Login</button>
+    </div>
+</form>
+
+@section Styles{
+    <style>
+        body {
+            background-image: url("/img/login-bg.jpg");
+        }
+    </style>
+}

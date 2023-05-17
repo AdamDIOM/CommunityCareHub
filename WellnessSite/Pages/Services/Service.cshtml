@@ -24,7 +24,15 @@
     <hr />
     <div class="row service-row">
         <div class="col-md-6">
-            @Model.Service.Description
+            <p><b>Description</b><br />
+            @if(Model.Service.Description == null || Model.Service.Description.Trim() == "")
+                {
+                    <span>Not Available</span>
+                }
+                else
+                {
+                    @Model.Service.Description                    
+                }
         </div>
         <div class="col-md-6">
             @if(Model.Service.ImageData != null && Model.Service.ImageData.Count() > 0){
@@ -36,22 +44,42 @@
         </div>
         <div class="col-md-6 form-group">
             <p>
-                <label class="control-label">Phone Number</label>
-                @Model.Service.PhoneNum
+                <b class="control-label">Phone Number</b>
+                <br />
+                @if(Model.Service.PhoneNum == null || Model.Service.PhoneNum.Trim() == "")
+                {
+                    <span>Not Available</span>
+                }
+                else
+                {
+                    @Model.Service.PhoneNum
+                }
             </p>
             <p>
-                <label class="control-label">Email Address</label>
-                @Model.Service.Email
+                <b class="control-label">Email Address</b>
+                <br />
+                @if(Model.Service.Email == null || Model.Service.Email.Trim() == "")
+                {
+                    <span>Not Available</span>
+                }
+                else
+                {
+                    <a href="mailto:@Model.Service.Email">@Model.Service.Email</a>               
+                }
             </p>
             <p>
-                <label class="control-label">Address</label>
-                @Model.Service.Address
-            </p>
-            <p>
-                @Model.Service.Town
-            </p>
-            <p>
-                @Model.Service.Postcode
+                <b class="control-label">Address</b>
+                <br />
+                @if((Model.Service.Address == null || Model.Service.Address.Trim() == "") && (Model.Service.Town == null || Model.Service.Town.Trim() == "") && (Model.Service.Postcode == null || Model.Service.Postcode.Trim() == ""))
+                {
+                    <span>Not Available</span>
+                }
+                else
+                {
+                    @if(Model.Service.Address != null && Model.Service.Address.Trim() != "") { <span>@Model.Service.Address</span><br /> } 
+                    @if(Model.Service.Town != null && Model.Service.Town.Trim() != "") { <span>@Model.Service.Town</span><br /> } 
+                    @if(Model.Service.Postcode != null && Model.Service.Postcode.Trim() != "") { <span>@Model.Service.Postcode</span> }
+                }
             </p>
         </div>
         <div class="col-md-6">
@@ -59,7 +87,16 @@
                 @Model.Service.Other
             </p>
             <p>
-                <a href="https://@Model.Service.WebLink">@Model.Service.WebLink</a>
+                @if(Model.Service.WebLink == null || Model.Service.WebLink.Trim() == "")
+                {
+                    <span>No website available</span>
+                }
+                else
+                {
+                     <b>Further information can be found at</b> <a href='
+                        @((Model.Service.WebLink.StartsWith("https://") || Model.Service.WebLink.StartsWith("http://")) ? @Model.Service.WebLink : "https://" + @Model.Service.WebLink)'>@Model.Service.WebLink</a>
+                }
+               
             </p>
         </div>
     </div>
