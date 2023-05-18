@@ -10,5 +10,6 @@ namespace WellnessSite.Data
         public string? Answer1 { get; set; }
         public string? Answer2 { get; set; }
         public string? Name { get; set; }
+        public string? CookieState { get; set; }
     }
 }

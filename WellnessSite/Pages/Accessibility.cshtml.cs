@@ -92,13 +92,16 @@ namespace WellnessSite.Pages
                     switch (theme)
                     {
                         case "greyscale":
-                            pr = new Preferences(p.UserID, p.FontSize, AccessibilityOptions.Greyscale);
+                            //pr = new Preferences(p.UserID, p.FontSize, AccessibilityOptions.Greyscale);
+                            u.CookieState = "greyscale";
                             break;
                         case "contrast":
-                            pr = new Preferences(p.UserID, p.FontSize, AccessibilityOptions.Contrast);
+                            //pr = new Preferences(p.UserID, p.FontSize, AccessibilityOptions.Contrast);
+                            u.CookieState = "contrast";
                             break;
                         case "invert":
-                            pr = new Preferences(p.UserID, p.FontSize, AccessibilityOptions.Invert);
+                            //pr = new Preferences(p.UserID, p.FontSize, AccessibilityOptions.Invert);
+                            u.CookieState = "invert";
                             break;
                         default:
                             break;
@@ -109,7 +112,7 @@ namespace WellnessSite.Pages
                 _context.Attach(pr).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
-			else if(UsefulFunctions.IsCookiesEnabled(this) == UsefulFunctions.CookiesOptions.Enabled)
+			if(UsefulFunctions.IsCookiesEnabled(this) == UsefulFunctions.CookiesOptions.Enabled)
 			{
                 if(reset == "true")
                 {

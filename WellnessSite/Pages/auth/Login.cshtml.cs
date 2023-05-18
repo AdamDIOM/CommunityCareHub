@@ -6,6 +6,7 @@ using WellnessSite.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Drawing;
 using WellnessSite.Models;
+using WellnessSite.Migrations;
 
 namespace WellnessSite.Pages.auth
 {
@@ -69,7 +70,11 @@ namespace WellnessSite.Pages.auth
                 
                 if (result.Succeeded)
                 {
-					await UsefulFunctions.SetStandardAdmin(_um, _rm);
+                    if(u != null && u.CookieState != null)
+                    {
+                        Response.Cookies.Append("colour", u.CookieState, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+                    }
+                    await UsefulFunctions.SetStandardAdmin(_um, _rm);
 					return Redirect("/Index");
                 }
                 ModelState.AddModelError(string.Empty, "Invalid Logon Attempt");

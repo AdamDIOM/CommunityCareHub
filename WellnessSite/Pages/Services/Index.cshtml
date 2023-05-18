@@ -14,6 +14,7 @@
                 <div class="form-group">
                     <input asp-for="Query" plaeholder="Search" class="form-control"/>
                     <input type="submit" asp-route-Query="@Model.Query" value="Search" class="btn btn-info">
+                    <a asp-page="./Index" class="btn btn-info">View all</a>
                 </div>
             </form>
             <p>
@@ -21,7 +22,6 @@
             {
                 <a asp-page="./Index" asp-route-Query="cat-@Convert.ToChar(letter)" class="btn btn-info a-z-button">@Convert.ToChar(letter)</a>
             }
-            <a asp-page="./Index" class="btn btn-info">View all</a>
             </p>
         </div>
     </div>
@@ -52,11 +52,19 @@
 
 <script>
     function changeHexMediaQueries(size) {
-        document.styleSheets[3].cssRules[0].media.mediaText = '(max-width: ' + (size * 2) + 'px)';
-        document.styleSheets[3].cssRules[1].media.mediaText = '(min-width: ' + (size * 2) + 'px) and (max-width: ' + (size * 3) + 'px)';
-        document.styleSheets[3].cssRules[2].media.mediaText = '(min-width: ' + (size * 3) + 'px) and (max-width: ' + (size * 4) + 'px)';
-        document.styleSheets[3].cssRules[3].media.mediaText = '(min-width: ' + (size * 4) + 'px) and (max-width: ' + (size * 5) + 'px)';
-        document.styleSheets[3].cssRules[4].media.mediaText = '(min-width: ' + (size * 5) + 'px)';
+        sheetnum = 3;
+        for(i = 0; i < document.styleSheets.length; i++){
+            if(document.styleSheets[i] != null && document.styleSheets[i].href.includes('hex')){
+                sheetnum = i;
+                break;
+            }
+        }
+       
+        document.styleSheets[sheetnum].cssRules[0].media.mediaText = '(max-width: ' + (size * 2) + 'px)';
+        document.styleSheets[sheetnum].cssRules[1].media.mediaText = '(min-width: ' + (size * 2) + 'px) and (max-width: ' + (size * 3) + 'px)';
+        document.styleSheets[sheetnum].cssRules[2].media.mediaText = '(min-width: ' + (size * 3) + 'px) and (max-width: ' + (size * 4) + 'px)';
+        document.styleSheets[sheetnum].cssRules[3].media.mediaText = '(min-width: ' + (size * 4) + 'px) and (max-width: ' + (size * 5) + 'px)';
+        document.styleSheets[sheetnum].cssRules[4].media.mediaText = '(min-width: ' + (size * 5) + 'px)';
     }
     changeHexMediaQueries(@(Math.Ceiling(Model.p.FontSize * 20 * 1.1547)))
 </script>

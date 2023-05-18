@@ -38,8 +38,8 @@ header:any-link, header a, header .nav-link{
     color:var(--headText);
 }
 
-header:any-link:hover, header a:hover, .header .nav-link:hover{
-    color:var(--headTextAlt)
+header:any-link:hover, header a:hover, header .nav-link:hover{
+    color:var(--headText)
 }
 
 .navbar-toggler-icon {
@@ -62,15 +62,6 @@ footer:any-link, footer a, footer .nav-link{
 
 footer:any-link:hover, footer a:hover, footer .nav-link:hover{
     color:var(--footTextAlt);
-}
-
-.accordion-body{
-    background-color:var(--backColour);
-}
-
-.accordion-header, .accordion-button, .accordion-button:not(.collapsed) {
-    background-color: var(--backColour);
-    color:var(--text);
 }
 
 .service-image{

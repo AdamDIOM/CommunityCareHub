@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Drawing;
 using WellnessSite.Models;
 
@@ -60,8 +61,9 @@ namespace WellnessSite.Data
                         page.Response.Cookies.Append("text", "15", new CookieOptions { Expires = DateTime.Now.AddDays(30) });
                     }
                 }
+                p.FontSize = textSize;
 
-                if (page.Request.Cookies["colour"] == null)
+                /*if (page.Request.Cookies["colour"] == null)
                 {
                     page.Response.Cookies.Append("colour", "standard", new CookieOptions { Expires = DateTime.Now.AddDays(30) });
                 }
@@ -83,7 +85,7 @@ namespace WellnessSite.Data
                             p.FontSize = textSize;
                             break;
                     }
-                }
+                }*/
             }
             return p;
         }
@@ -120,5 +122,24 @@ namespace WellnessSite.Data
 				}
 			}
 		}
+
+        public static string GetAccessibilityStylesheet(IHttpContextAccessor accessor)
+        {
+            switch (accessor.HttpContext.Request.Cookies["colour"])
+            {
+                case "greyscale":
+                    return "greyscale";
+                    break;
+                case "invert":
+                    return "invert";
+                    break;
+                case "contrast":
+                    return "contrast";
+                    break;
+                default:
+                    break;
+            }
+            return "";
+        }
     }
 }
