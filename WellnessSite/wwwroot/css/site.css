@@ -161,6 +161,14 @@ nav .container{
     display:none;
 }
 
+#AboutSegment {
+    background-color: #C1C8B0;
+}
+
+#BookmarkCarousel {
+    padding-left: 10px;
+    padding-right: 10px;
+
 .input-box{
     width:100%;
 }
