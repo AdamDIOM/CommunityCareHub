@@ -161,6 +161,6 @@ nav .container{
     display:none;
 }
 
-.form-control{
-    border:initial;
+.input-box{
+    width:100%;
 }
