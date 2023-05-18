@@ -135,7 +135,7 @@ namespace WellnessSite.Pages.auth
                 }
             }
 
-            return RedirectToPage("./Profile");
+            return RedirectToPage();
         }
 
     }
