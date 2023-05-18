@@ -50,6 +50,14 @@ else
         </div>
 		<button asp-page-handler="ChangePassword" class="btn btn-danger">Change</button>
 
+		<h3>Change Name</h3>
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+		<button asp-page-handler="ChangeName" class="btn btn-danger">Change</button>
+
     </div>
     <div class="col col-12 col-md-6">
         <h2>Modify Advanced Colours</h2>

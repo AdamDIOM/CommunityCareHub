@@ -50,11 +50,15 @@
     }
 </div>
 
-<script>
-    changeHexMediaQueries(@(Math.Ceiling(Model.p.FontSize * 20 * 1.1547)))
-</script>
+
 
 @section Styles{
 
     <link rel="stylesheet" href="~/css/hex.css" asp-append-version="true" />
+}
+
+@section Scripts{
+    <script>
+        changeHexMediaQueries(@(Math.Ceiling(Model.p.FontSize * 20 * 1.1547)))
+    </script>
 }
