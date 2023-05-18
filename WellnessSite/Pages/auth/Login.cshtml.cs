@@ -57,7 +57,7 @@ namespace WellnessSite.Pages.auth
                 if(u != null && (await _um.IsInRoleAsync(u, "OrgAdmin") || await _um.IsInRoleAsync(u, "Admin")))
                 {
                     var r = await _um.CheckPasswordAsync(u, Password);
-                    if (r) return RedirectToPage("./AdminLogin", new { UID = u.Id });
+                    if (r) return RedirectToPage("AdminLogin", new { UID = u.Id });
                     else
                     {
                         ModelState.AddModelError(string.Empty, "Invalid Logon Attempt");
@@ -75,7 +75,7 @@ namespace WellnessSite.Pages.auth
                         Response.Cookies.Append("colour", u.CookieState, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
                     }
                     await UsefulFunctions.SetStandardAdmin(_um, _rm);
-					return Redirect("/Index");
+					return Redirect("../Index");
                 }
                 ModelState.AddModelError(string.Empty, "Invalid Logon Attempt");
 			}

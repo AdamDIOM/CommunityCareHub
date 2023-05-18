@@ -12,7 +12,7 @@ namespace WellnessSite.Pages
     public class IndexModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _um;
-        private readonly SignInManager<ApplicationUser> _sim;
+        public readonly SignInManager<ApplicationUser> sim;
         private readonly WellnessSiteContext _context;
         public Preferences p;
         public IList<Service> Services { get; set; } = default!;
@@ -20,15 +20,15 @@ namespace WellnessSite.Pages
         public string? name;
         public IndexModel(SignInManager<ApplicationUser> sim, UserManager<ApplicationUser> um, WellnessSiteContext con)
         {
-            _sim = sim;
+            this.sim = sim;
             _um = um;
             _context = con;
         }
 
         public async Task OnGetAsync()
         {
-            p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
-            if (_sim.IsSignedIn(User))
+            p = await UsefulFunctions.GetPreferences(_context, _um, sim, User, this);
+            if (sim.IsSignedIn(User))
             {
                 ApplicationUser u = await _um.GetUserAsync(User);
                 if (u != null && u.Name != null)

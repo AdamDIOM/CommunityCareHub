@@ -74,7 +74,7 @@ namespace WellnessSite.Pages
                 Response.Cookies.Append("text", size.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(30) });
             }
 
-			return Redirect("/Accessibility");
+			return RedirectToPage();
 		}
 
         public async Task<IActionResult> OnPostSetPropertiesAsync(string reset, string theme)
@@ -130,7 +130,7 @@ namespace WellnessSite.Pages
                 
             }
 
-            return Redirect("/Accessibility");
+            return RedirectToPage();
 		}
     }
 }
