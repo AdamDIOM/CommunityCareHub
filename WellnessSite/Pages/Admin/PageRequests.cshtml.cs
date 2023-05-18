@@ -59,5 +59,6 @@ namespace WellnessSite.Pages.Admin
 
             requests = await _context.Service.Where(s => !s.Accepted).ToListAsync();
         }
+
     }
 }

@@ -24,7 +24,8 @@ function changeColours(prefs) {
     changeColour('--textSize', prefs[12] + 'px');
 }
 
-function display(property) {
+function display(property, value) {
+    console.log(value)
     if (document.getElementById(property).style.display == "block") {
         document.getElementById(property).style.display = "none";
     }

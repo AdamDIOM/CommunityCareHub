@@ -161,11 +161,6 @@ nav .container{
     display:none;
 }
 
-/*.form-control { This removes the border of input forms, so I just am not including it.
-    border: initial;
-}
-*/
-
 #AboutSegment {
     background-color: #C1C8B0;
 }
@@ -173,4 +168,7 @@ nav .container{
 #BookmarkCarousel {
     padding-left: 10px;
     padding-right: 10px;
+
+.input-box{
+    width:100%;
 }

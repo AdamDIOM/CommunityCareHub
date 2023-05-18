@@ -5,52 +5,53 @@
     ViewData["Prefs"] = Model.p.ToString();
 }
 <h1>Submitted Page Requests Pending Approval</h1>
+
 @if(Model.requests.Count() > 0)
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Maintainer
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var r in Model.requests)
-            {
+    <form method="post">
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @r.Name
-                    </td>
-                    <td>
-                        @if(r.Maintainer != null)
-                        {
-                            var u = await Model.um.FindByIdAsync(r.Maintainer);
-                            if(u != null)
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Maintainer
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var r in Model.requests)
+                {
+                    <tr>
+                        <td>
+                            @r.Name
+                        </td>
+                        <td>
+                            @if(r.Maintainer != null)
                             {
-                                @u.Email
+                                var u = await Model.um.FindByIdAsync(r.Maintainer);
+                                if(u != null)
+                                {
+                                    @u.Email
+                                }
+                                else
+                                {
+                                    @r.Maintainer
+                                }
                             }
-                            else
-                            {
-                                @r.Maintainer
-                            }
-                        }
-                    </td>
-                    <td>
-                        <form method="post">
-                            <a asp-page="Services/Details" asp-route-id="@r.Id" asp-route-ret="PageRequests">Details</a> | 
+                        </td>
+                        <td>
+                            <a asp-page="Services/Details" asp-route-id="@r.Id" asp-route-ret="PageRequests" class="btn btn-info">Details</a> | 
                             <button asp-page-handler="ProcessPageRequest" asp-route-sid="@r.Id" asp-route-accept="true" class="btn btn-success">Accept</button> | 
                             <button asp-route-handler="ProcessPageRequest" asp-route-sid="@r.Id" asp-route-accept="false" class="btn btn-danger">Decline</button>
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
 }
 else
 {
