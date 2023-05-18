@@ -15,10 +15,10 @@ else
     <h1>Your profile</h1>
 }
 <hr />
-<div class="row">
-    <form method="post">
+<div class="rw">
+    <form method="post" class="row">
     <div class="col col-12 col-md-6">
-        @if(Model.bookmarks.Count() < 1)
+        @if(Model.bookmarks != null && Model.bookmarks.Count() < 1)
         {
             <h3>Any services you bookmark will appear here</h3>
         }
@@ -48,10 +48,100 @@ else
             <input asp-for="ConfirmPassword" class="form-control" />
             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
         </div>
-        <input type="submit" value="Change" class="btn btn-danger" />
+		<button asp-page-handler="ChangePassword" class="btn btn-danger">Change</button>
+
     </div>
     <div class="col col-12 col-md-6">
+        <h2>Modify Advanced Colours</h2>
+        <input hidden asp-for="p.UserID" value="@Model.p.UserID" />
+		<div class="row">
+			<div class="col col-9">
+				<label asp-for="p.Text">Text Colour</label>
+			</div>
+			<div class="col col-3">
+				<input asp-for="p.Text" type="color" value="@Model.p.Text" />
+			</div>
 
+			<div class ="col col-9">
+				<label asp-for="p.Highlight">Highlight Colour</label>
+			</div>
+			<div class="col col-3">
+				<input asp-for="p.Highlight" type="color" value="@Model.p.Highlight" />
+			</div>
+
+			<div class="col col-9">
+				<label asp-for="p.Background">Background Colour</label>
+			</div>
+			<div class="col col-3">
+				<input asp-for="p.Background" type="color" value="@Model.p.Background" />
+			</div>
+
+			<div class="col col-9">
+				<label asp-for="p.Header">Header Colour</label>
+			</div>
+			<div class="col col-3">
+				<input asp-for="p.Header" type="color" value="@Model.p.Header" />
+			</div>
+
+			<div class="col col-9">
+				<label asp-for="p.HeaderText">Header Text Colour</label>
+			</div>
+			<div class="col col-3">
+				<input asp-for="p.HeaderText" type="color" value="@Model.p.HeaderText" />
+			</div>
+
+			<div class="col col-9">
+				<label asp-for="p.Footer">Footer Colour</label>
+			</div>
+			<div class="col col-3">
+				<input asp-for="p.Footer" type="color" value="@Model.p.Footer" />
+			</div>
+
+			<div class="col col-9">
+				<label asp-for="p.FooterText">Footer Text Colour</label>
+			</div>
+			<div class="col col-3">
+				<input asp-for="p.FooterText" type="color" value="@Model.p.FooterText" />
+			</div>
+
+
+			<div class="col col-9">
+				<label asp-for="p.Link">HyperLink Colour</label>
+			</div>
+			<div class="col col-3">
+				<input asp-for="p.Link" type="color" value="@Model.p.Link" />
+			</div>
+
+			<div class="col col-9">
+				<label asp-for="p.Link">Hexagon Colour</label>
+			</div>
+			<div class="col col-3">
+				<input asp-for="p.HexColour" type="color" value="@Model.p.HexColour" />
+			</div>
+
+			<div class="col col-9">
+				<label asp-for="p.Link">Hexagon Colour 2</label>
+			</div>
+			<div class="col col-3">
+				<input asp-for="p.HexColour2" type="color" value="@Model.p.HexColour2" />
+			</div>
+
+			<div class="col col-9">
+				<label asp-for="p.Link">Hexagon Text Colour</label>
+			</div>
+			<div class="col col-3">
+				<input asp-for="p.HexTextColour" type="color" value="@Model.p.HexTextColour" />
+			</div>
+
+			<div class="col col-9">
+				<label asp-for="p.Link">Hexagon Hover Colour</label>
+			</div>
+			<div class="col col-3">
+				<input asp-for="p.HexHover" type="color" value="@Model.p.HexHover" />
+			</div>
+		</div>
+		<button asp-page-handler="SetProperties" class="btn btn-success">Save</button>
+		<button asp-page-handler="SetProperties" asp-route-reset="true" class="btn btn-danger">Reset</button>
     </div>
     </form>
 </div>

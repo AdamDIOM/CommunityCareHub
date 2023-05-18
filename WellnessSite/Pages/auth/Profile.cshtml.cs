@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 using WellnessSite.Data;
+using WellnessSite.Migrations;
 using WellnessSite.Models;
 
 namespace WellnessSite.Pages.auth
@@ -17,7 +18,8 @@ namespace WellnessSite.Pages.auth
         private IList<Preferences> prefs;
         public IList<Bookmarks> bookmarks;
         public IList<Service> Services;
-        public Preferences p;
+        [BindProperty]
+        public Preferences p { get; set; }
 
         public string? name;
 
@@ -66,11 +68,19 @@ namespace WellnessSite.Pages.auth
 
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostChangePasswordAsync()
         {
-            name = _um.GetUserName(User);
+            ApplicationUser u = await _um.GetUserAsync(User);
+            if (u != null && u.Name != null)
+            {
+                name = u.Name;
+            }
 
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
+
+            bookmarks = await _context.Bookmarks.Where(b => b.UserID == u.Id).ToListAsync();
+
+            Services = await _context.Service.ToListAsync();
 
             if (!ModelState.IsValid)
             {
@@ -88,5 +98,42 @@ namespace WellnessSite.Pages.auth
                 return Page();
             }
         }
+
+
+        public async Task<IActionResult> OnPostSetPropertiesAsync(string reset)
+        {
+            if (_context.Preferences == null) return NotFound();
+
+            ApplicationUser u = await _um.GetUserAsync(User);
+            if (u != null && u.Name != null)
+            {
+                name = u.Name;
+            }
+
+            bookmarks = await _context.Bookmarks.Where(b => b.UserID == u.Id).ToListAsync();
+
+            Services = await _context.Service.ToListAsync();
+
+            Preferences pr = p;
+            if (_sim.IsSignedIn(User))
+            {
+                p.UserID = u.Id;
+                if (reset == "true") pr = new Preferences(p.UserID);
+                
+                _context.ChangeTracker.Clear();
+                _context.Attach(pr).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+            if (UsefulFunctions.IsCookiesEnabled(this) == UsefulFunctions.CookiesOptions.Enabled)
+            {
+                if (reset == "true")
+                {
+                    Response.Cookies.Append("colour", "standard", new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+                }
+            }
+
+            return RedirectToPage("./Profile");
+        }
+
     }
 }

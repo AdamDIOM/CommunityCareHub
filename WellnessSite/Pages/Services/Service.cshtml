@@ -14,7 +14,7 @@
     @if (Model.user != null)
     {
             <form method="post">
-                <button asp-page-handler="Bookmark" asp-route-id="@Model.id">@(Model.Bookmarked ? "Unb" : "B")ookmark Service</button>
+                <button asp-page-handler="Bookmark" asp-route-id="@Model.id" class="btn btn-@(Model.Bookmarked ? "danger" : "success")">@(Model.Bookmarked ? "Unb" : "B")ookmark Service</button>
             </form>
     }
     else

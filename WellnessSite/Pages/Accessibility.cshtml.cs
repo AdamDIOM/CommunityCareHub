@@ -119,7 +119,11 @@ namespace WellnessSite.Pages
                 {
                     theme = "standard";
                 }
-                Response.Cookies.Append("colour", theme, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+                if(theme != null)
+                {
+                    Response.Cookies.Append("colour", theme, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+                }
+                
             }
 
             return Redirect("/Accessibility");

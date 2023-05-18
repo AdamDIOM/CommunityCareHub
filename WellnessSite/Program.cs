@@ -18,6 +18,8 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/Admin", "AdminAccess");
+    options.Conventions.AuthorizePage("/auth/Profile");
+    options.Conventions.AuthorizePage("/auth/Logout");
 });
 
 

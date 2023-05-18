@@ -33,3 +33,19 @@ function display(property) {
     }
     
 }
+
+function changeHexMediaQueries(size) {
+    sheetnum = 3;
+    for (i = 0; i < document.styleSheets.length; i++) {
+        if (document.styleSheets[i] != null && document.styleSheets[i].href.includes('hex')) {
+            sheetnum = i;
+            break;
+        }
+    }
+
+    document.styleSheets[sheetnum].cssRules[0].media.mediaText = '(max-width: ' + (size * 2) + 'px)';
+    document.styleSheets[sheetnum].cssRules[1].media.mediaText = '(min-width: ' + (size * 2) + 'px) and (max-width: ' + (size * 3) + 'px)';
+    document.styleSheets[sheetnum].cssRules[2].media.mediaText = '(min-width: ' + (size * 3) + 'px) and (max-width: ' + (size * 4) + 'px)';
+    document.styleSheets[sheetnum].cssRules[3].media.mediaText = '(min-width: ' + (size * 4) + 'px) and (max-width: ' + (size * 5) + 'px)';
+    document.styleSheets[sheetnum].cssRules[4].media.mediaText = '(min-width: ' + (size * 5) + 'px)';
+}
