@@ -109,6 +109,7 @@ namespace WellnessSite.Pages
                     }
                 }
                 _context.ChangeTracker.Clear();
+                _context.Attach(u).State = EntityState.Modified;
                 _context.Attach(pr).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
