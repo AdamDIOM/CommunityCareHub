@@ -118,6 +118,10 @@ namespace WellnessSite.Pages
                 if(reset == "true")
                 {
                     theme = "standard";
+                    ApplicationUser u = await _um.GetUserAsync(User);
+                    u.CookieState = "standard";
+                    _context.Attach(u).State = EntityState.Modified;
+                    await _context.SaveChangesAsync();
                 }
                 if(theme != null)
                 {

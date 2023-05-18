@@ -17,6 +17,11 @@ namespace WellnessSite.Pages.auth
         {
             await _signInManager.SignOutAsync();
 
+            if (UsefulFunctions.IsCookiesEnabled(this) == UsefulFunctions.CookiesOptions.Enabled)
+            {
+                Response.Cookies.Append("colour", "standard", new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+            }
+
             return RedirectToPage("/Index");
         }
     }
