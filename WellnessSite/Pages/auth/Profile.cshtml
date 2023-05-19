@@ -27,7 +27,11 @@ else
             <h3>Bookmarks</h3>
             @foreach(Models.Bookmarks bm in Model.bookmarks)
             {
-                <p><a asp-page="../Services/Service" asp-route-id="@bm.ServiceID">@Model.Services.FirstOrDefault(s => s.Id == bm.ServiceID).Name</a></p>
+                <p>
+					<a asp-page="../Services/Service" asp-route-id="@bm.ServiceID">
+						<button class="btn btn-info">@Model.Services.FirstOrDefault(s => s.Id == bm.ServiceID).Name</button>
+					</a>
+				</p>
             }
         }
         <br />

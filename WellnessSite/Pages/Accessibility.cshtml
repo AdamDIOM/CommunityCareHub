@@ -7,24 +7,7 @@
 }
 <h1>Accessibility Settings</h1>
 <form method="post">
-
-	@if (Data.UsefulFunctions.IsCookiesEnabled(Model) != Data.UsefulFunctions.CookiesOptions.Enabled)
-		{
-			<div class="cookies-box">
-				<div class="cookie-buttons">
-					<form method="post">
-						@if(!Model.sim.IsSignedIn(User)){
-							<label>Please accept cookies to enable Accessibility features</label>
-						}
-						else{
-							<label>Please accept cookies to enable all Accessibility features</label>
-						}
-						<button asp-page-handler="Cookies" asp-route-choice="enabled" class="btn btn-success">Accept Cookies</button>
-						<button asp-page-handler="Cookies" asp-route-choice="disabled" class="btn btn-danger">Decline Nonessential Cookies</button>
-					</form>
-				</div>
-			</div>
-		}
+	
 	@if(Data.UsefulFunctions.IsCookiesEnabled(Model) == Data.UsefulFunctions.CookiesOptions.Enabled || Model.sim.IsSignedIn(User))
 		{
 			<div>
@@ -142,12 +125,31 @@
 		<button asp-page-handler="SetProperties" asp-route-reset="true" class="btn btn-danger">Reset</button>
 	}
 	
-	
+	<div class="cookies-box rounded">
+		<div class="cookie-buttons">
+			@if(!Model.sim.IsSignedIn(User)){
+				<label>Cookies must be accepted to enable Accessibility Features. </label>
+			}
+			else{
+				<label>Cookies must be accepted to enable all Accessibility Features. </label>
+			}
+			@if(Data.UsefulFunctions.IsCookiesEnabled(Model) != Data.UsefulFunctions.CookiesOptions.Enabled) {
+				<label>Cookies are currently <b>Disabled</b></label>
+				<button asp-page-handler="Cookies" asp-route-choice="enabled" class="btn btn-success">Accept Cookies</button>
+			}
+			else
+			{
+				<label>Cookies are currently <b>Enabled</b></label>
+				<button asp-page-handler="Cookies" asp-route-choice="disabled" class="btn btn-danger">Decline Nonessential Cookies</button>
+			}
+					
+		</div>
+	</div>
 </form>
 
 <script>
 	function changeTextSize(size){
-		document.documentElement.style.setProperty('--textSize', size + 'pt')
+		document.documentElement.style.setProperty('--textSize', size + 'px')
 	}
 </script>
 

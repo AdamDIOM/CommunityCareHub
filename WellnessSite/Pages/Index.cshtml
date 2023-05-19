@@ -61,15 +61,13 @@
                 @for (i =0; i < 4; i++) 
                 {
                     if(i < Model.bookmarks.Count()) {
-                        <div class="carousel-item-active">
-                            <a asp-page="/Services/Service" asp-route-id="@Model.bookmarks[i].ServiceID">
-                                <div class="hex xs-@(i%2) sm-@(i%3) md-@(i%5) lg-@(i%7) xl-@(i%9)">
-                                    <div class="small">
-                                        <h3>@Model.Services.FirstOrDefault(s => s.Id == Model.bookmarks[i].ServiceID).Name</h3>
-                                    </div>
+                        <a asp-page="/Services/Service" asp-route-id="@Model.bookmarks[i].ServiceID">
+                            <div class="hex xs-@(i%2) sm-@(i%3) md-@(i%5) lg-@(i%7) xl-@(i%9)">
+                                <div class="small">
+                                    <h3>@Model.Services.FirstOrDefault(s => s.Id == Model.bookmarks[i].ServiceID).Name</h3>
                                 </div>
-                            </a>
-                        </div>
+                            </div>
+                        </a>
                     }
                     else {
                         i = 4;
@@ -87,10 +85,10 @@
 <br />
 <div class="row row-about">
     <div class="col col-12 col-md-4" >
-        <img src="~/Img/PeelCastle.jpg" class="img-fluid rounded" alt="Peel castle close to sunset">
+        <img src="~/Img/PeelCastle.jpg" class="img-fluid mx-auto d-block rounded" alt="Peel castle close to sunset">
     </div>
     <div class="col col-12 col-md-4">
-        <div class="content rounded">
+        <div class="content rounded text-center">
             <h3>About Us</h3>
             <p>
                 Back in 2021 we realised that there was a gap in the market for a new way to display a directories and services list for the Isle of Man.
@@ -106,11 +104,18 @@
         </div>
     </div>
     <div class="col col-12 col-md-4">
-        <img src="~/img/Scenery.jpg" class="img-fluid rounded" alt="Rolling green hills nesseling a village">
+        <img src="~/img/Scenery.jpg" class="img-fluid mx-auto d-block rounded" alt="Rolling green hills nesseling a village">
     </div>
 </div>
+<br />
 
 @section Styles{
 
     <link rel="stylesheet" href="~/css/hex.css" asp-append-version="true" />
+}
+
+@section Scripts{
+    <script>
+        changeHexMediaQueries(@(Math.Ceiling(Model.p.FontSize * 20 * 1.1547)))
+    </script>
 }

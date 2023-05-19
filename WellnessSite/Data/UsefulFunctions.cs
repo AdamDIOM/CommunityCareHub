@@ -48,17 +48,17 @@ namespace WellnessSite.Data
 
                 int textSize;
 
-                if (page.Request.Cookies["text"] == null)
+                if (page.Request.Cookies[".guestTextSizeCookie"] == null)
                 {
-                    page.Response.Cookies.Append("text", "15", new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+                    page.Response.Cookies.Append(".guestTextSizeCookie", "15", new CookieOptions { Expires = DateTime.Now.AddDays(30) });
                     textSize = 15;
                 }
                 else
                 {
-                    if(!Int32.TryParse(page.Request.Cookies["text"], out textSize))
+                    if(!Int32.TryParse(page.Request.Cookies[".guestTextSizeCookie"], out textSize))
                     {
                         textSize = 15;
-                        page.Response.Cookies.Append("text", "15", new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+                        page.Response.Cookies.Append(".guestTextSizeCookie", "15", new CookieOptions { Expires = DateTime.Now.AddDays(30) });
                     }
                 }
                 p.FontSize = textSize;
@@ -92,8 +92,8 @@ namespace WellnessSite.Data
 
         public static CookiesOptions IsCookiesEnabled(Microsoft.AspNetCore.Mvc.RazorPages.PageModel page)
         {
-            if (page.Request.Cookies["cookies"] == "enabled") return CookiesOptions.Enabled;
-            else if (page.Request.Cookies["cookies"] == "disabled") return CookiesOptions.Disabled;
+            if (page.Request.Cookies[".cookieAcceptedStatusCookie"] == "enabled") return CookiesOptions.Enabled;
+            else if (page.Request.Cookies[".cookieAcceptedStatusCookie"] == "disabled") return CookiesOptions.Disabled;
             else return CookiesOptions.Unknown;
         }
 
@@ -125,7 +125,7 @@ namespace WellnessSite.Data
 
         public static string GetAccessibilityStylesheet(IHttpContextAccessor accessor)
         {
-            switch (accessor.HttpContext.Request.Cookies["colour"])
+            switch (accessor.HttpContext.Request.Cookies[".colourSchemeCookie"])
             {
                 case "greyscale":
                     return "greyscale";
@@ -141,5 +141,12 @@ namespace WellnessSite.Data
             }
             return "";
         }
+
+        public static void DisableCookies(Microsoft.AspNetCore.Mvc.RazorPages.PageModel page)
+        {
+			page.Response.Cookies.Append(".colourSchemeCookie", "standard", new CookieOptions { Expires = DateTime.Now });
+			page.Response.Cookies.Append(".guestTextSizeCookie", "standard", new CookieOptions { Expires = DateTime.Now });
+			page.Response.Cookies.Append(".cookieAcceptanceStatusCookie", "standard", new CookieOptions { Expires = DateTime.Now });
+		}
     }
 }

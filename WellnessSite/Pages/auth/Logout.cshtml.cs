@@ -24,10 +24,7 @@ namespace WellnessSite.Pages.auth
 
             if (UsefulFunctions.IsCookiesEnabled(this) == UsefulFunctions.CookiesOptions.Enabled)
             {
-                Response.Cookies.Append("colour", "standard", new CookieOptions { Expires = DateTime.Now.AddDays(30) });
-                ApplicationUser u = await _um.GetUserAsync(User);
-                u.CookieState = "standard";
-                _context.Attach(u).State = EntityState.Modified;
+                UsefulFunctions.DisableCookies(this);
             }
 
             return RedirectToPage("/Index");

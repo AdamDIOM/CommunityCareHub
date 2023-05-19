@@ -41,9 +41,29 @@ namespace WellnessSite.Pages
         {
 			cookies = UsefulFunctions.IsCookiesEnabled(this);
 			p = await UsefulFunctions.GetPreferences(_context, _um, sim, User, this);
-			if (choice == "enabled") cookies = UsefulFunctions.CookiesOptions.Enabled;
-			else cookies = UsefulFunctions.CookiesOptions.Disabled;
-			Response.Cookies.Append("cookies", choice, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+            var u = await _um.GetUserAsync(User);
+            if (choice == "enabled")
+            {
+                cookies = UsefulFunctions.CookiesOptions.Enabled;
+				if (u != null && u.CookieState == null)
+				{
+					u.CookieState = "standard";
+					_context.Attach(u).State = EntityState.Modified;
+					await _context.SaveChangesAsync();
+				}
+			}
+            else cookies = UsefulFunctions.CookiesOptions.Disabled;
+			Response.Cookies.Append(".cookieAcceptedStatusCookie", choice, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+            if (choice == "disabled")
+            {
+                UsefulFunctions.DisableCookies(this);
+                if (u != null)
+                {
+					u.CookieState = null;
+					_context.Attach(u).State = EntityState.Modified;
+					await _context.SaveChangesAsync();
+				}
+            }
             return RedirectToPage("./Accessibility");
 		}
 		public async Task<IActionResult> OnPostSetText(string reset, int size)
@@ -71,7 +91,7 @@ namespace WellnessSite.Pages
             else if(UsefulFunctions.IsCookiesEnabled(this) == UsefulFunctions.CookiesOptions.Enabled)
 
             {
-                Response.Cookies.Append("text", size.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+                Response.Cookies.Append(".guestTextSizeCookie", size.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(30) });
             }
 
 			return RedirectToPage("./Accessibility");
@@ -116,7 +136,7 @@ namespace WellnessSite.Pages
                 {
                     theme = "standard";
                 }
-                Response.Cookies.Append("colour", theme, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+                Response.Cookies.Append(".colourSchemeCookie", theme, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
             }
             return RedirectToPage();
         }

@@ -72,7 +72,7 @@ namespace WellnessSite.Pages.auth
                 {
                     if(u != null && u.CookieState != null)
                     {
-                        Response.Cookies.Append("colour", u.CookieState, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+                        Response.Cookies.Append(".colourSchemeCookie", u.CookieState, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
                     }
                     await UsefulFunctions.SetStandardAdmin(_um, _rm);
 					return Redirect("../Index");

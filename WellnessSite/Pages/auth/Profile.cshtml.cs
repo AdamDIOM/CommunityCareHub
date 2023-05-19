@@ -131,7 +131,7 @@ namespace WellnessSite.Pages.auth
             {
                 if (reset == "true")
                 {
-                    Response.Cookies.Append("colour", "standard", new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+                    Response.Cookies.Append(".colourSchemeCookie", "standard", new CookieOptions { Expires = DateTime.Now.AddDays(30) });
                 }
             }
 
