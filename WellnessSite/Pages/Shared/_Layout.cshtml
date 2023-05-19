@@ -1,6 +1,10 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+    @using Microsoft.AspNetCore.Identity;
+    @using WellnessSite.Data;
+    @inject SignInManager<ApplicationUser> SignInManager;
+    @inject UserManager<ApplicationUser> UserManager;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - WellnessSite</title>
@@ -9,6 +13,7 @@
     <link rel="stylesheet" href="~/WellnessSite.styles.css" asp-append-version="true" />
     @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
     <link rel="stylesheet" href="~/css/@(Data.UsefulFunctions.GetAccessibilityStylesheet(HttpContextAccessor)).css" asp-append-version="true" />
+
     
     
     @RenderSection("Styles", false)
@@ -45,7 +50,7 @@
             
         <nav class="navbar navbar-expand-@size navbar-toggleable-@size border-bottom box-shadow">
             <div class="container">
-            <img src="/img/logo.png" alt-text="logo" class="logo" />
+            <img src="/img/CCHlogo.png" alt-text="logo" class="logo" />
             <a class="navbar-brand" asp-area="" asp-page="/Index">Community Care Hub</a>
                 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -69,10 +74,6 @@
                     </ul>
 
                     <ul class="navbar-nav /*flex-grow-1*/">
-                        @using Microsoft.AspNetCore.Identity;
-                        @using WellnessSite.Data;
-                        @inject SignInManager<ApplicationUser> SignInManager;
-                        @inject UserManager<ApplicationUser> UserManager;
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
