@@ -100,7 +100,7 @@ main {
 }
 
 .cookies-box{
-    width:50%;
+    width:100%;
     min-height:10%;
     padding:10px;
     background-color:pink;
@@ -161,16 +161,19 @@ nav .container{
     display:none;
 }
 
-/*.form-control { This removes the border of input forms, so I just am not including it.
-    border: initial;
-}
-*/
-
-#AboutSegment {
-    background-color: #C1C8B0;
+.row-about .content {
+    background-color: var(--hex2);
+    padding:5px;
 }
 
-#BookmarkCarousel {
-    padding-left: 10px;
-    padding-right: 10px;
+.input-box{
+    width:100%;
+}
+
+.caro-wrapper{
+    padding:0px;
+}
+
+.bookmarks .row, .row-about{
+    margin:0px;
 }
