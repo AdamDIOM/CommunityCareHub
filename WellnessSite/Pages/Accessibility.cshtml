@@ -13,7 +13,7 @@
 			<div class="cookies-box">
 				<div class="cookie-buttons">
 					<form method="post">
-						if(!Model.sim.IsSignedIn(User)){
+						@if(!Model.sim.IsSignedIn(User)){
 							<label>Please accept cookies to enable Accessibility features</label>
 						}
 						else{

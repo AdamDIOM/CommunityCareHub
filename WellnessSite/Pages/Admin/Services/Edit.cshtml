@@ -13,6 +13,7 @@
         <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Service.Id" />
+            <input type="hidden" asp-for="Service.Accepted" />
             <input type="hidden" asp-for="Service.Maintainer" />
             <div class="form-group">
                 <label asp-for="Service.Name" class="control-label"></label>

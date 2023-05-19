@@ -5,7 +5,7 @@
     ViewData["Prefs"] = Model.p.ToString();
 }
 
-<div class="container-fluid "> 
+<div class="container-fluid caro-wrapper"> 
     <div id="IndexCarousel" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-indicators">
         <button type="button" data-bs-target="#IndexCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -39,19 +39,16 @@
 </div>
 </br>
 
-@using Microsoft.AspNetCore.Identity;
-@using WellnessSite.Data;
-@inject SignInManager<ApplicationUser> SignInManager;
 <div id="BookmarkCarousel">
     <div class="row align-self-center" >
         <h2 class="align-self-start col-10"> Bookmarked Services</h2>
-        @if (SignInManager.IsSignedIn(User))
+        @if (Model.sim.IsSignedIn(User))
         {
-        <a class="btn btn-primary align-self-end col-2" href="/auth/Profile" role="button">View all bookmarks</a>
+        <a class="btn btn-primary align-self-end col-2" asp-page="/auth/Profile" role="button">View all bookmarks</a>
         }
     </div>
 
-    @if (SignInManager.IsSignedIn(User))
+    @if (Model.sim.IsSignedIn(User))
     {
         int i;
         @if(Model.bookmarks.Count() < 1 || Model.bookmarks == null)
@@ -94,20 +91,20 @@
 </div>
 </br>
 <div class="row" >
-    <div class="col-5 text-center" >
+    <div class="col col-12 col-md-4 text-center" >
         <img src="~/Img/PeelCastle.jpg" class="img-fluid rounded" alt="Peel castle close to sunset">
     </div>
-    <div class="col-2" id="AboutSegment">
+    <div class="col col-12 col-md-4" id="AboutSegment">
        <h3>About Us</h3>
        <p>Back in 2021 we realised that there was a gap in the market for a new way to display a directories and services list for the Isle of Man.
           All of us who work in healthcare knew that there was a problem,
           and that we needed a better solution, but we just couldn’t figure out how to do it.<p></p>
        <br />
        <div class="align-self-center">
-            <a class="btn btn-primary" href="./About" role="button">Read more about us here</a>
+            <a class="btn btn-primary" asp-page="/About" role="button">Read more about us here</a>
        </div>
     </div>
-    <div class="col-5 text-center ">
+    <div class="col col-12 col-md-4 text-center ">
         <img src="~/Img/Scenery.jpg" class="img-fluid rounded" alt="Rolling green hills nesseling a village">
     </div>
 </div>

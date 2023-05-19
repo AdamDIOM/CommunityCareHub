@@ -44,9 +44,8 @@ namespace WellnessSite.Pages.auth
         public string ConfirmPassword { get; set; }
 
         [BindProperty]
-        [Required]
         [Display(Name = "New Name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         public ProfileModel(SignInManager<ApplicationUser> sim,
             UserManager<ApplicationUser> um, WellnessSiteContext context)
@@ -136,7 +135,7 @@ namespace WellnessSite.Pages.auth
                 }
             }
 
-            return RedirectToPage("./Profile");
+            return RedirectToPage();
         }
 
     }

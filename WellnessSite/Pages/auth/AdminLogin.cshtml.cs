@@ -94,9 +94,8 @@ namespace WellnessSite.Pages.auth
             {
                 Q = u.Question2;
             }
-            return Page();
-
-            return RedirectToPage();
+            //return Page();
+            return RedirectToPage("../Index");
         }
     }
 }

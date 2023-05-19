@@ -87,7 +87,8 @@ namespace WellnessSite.Pages.Contact
                 m.Subject = $"Wellness Form Enquiry - {Subject}";
                 sc.Send(m);
                 // provided nothing failed, redirects to confirmation page to show user their message.
-                return Redirect("/Contact/Confirm?Message=" + Message);
+                return RedirectToPage("/Contact/Confirm");
+                //return Redirect("Confirm?Message=" + Message); removing message but will need to add this back in the future
             }
             // if something goes wrong, the page is reloaded with an error message
             catch (Exception e)

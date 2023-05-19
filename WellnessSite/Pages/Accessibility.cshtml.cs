@@ -44,7 +44,7 @@ namespace WellnessSite.Pages
 			if (choice == "enabled") cookies = UsefulFunctions.CookiesOptions.Enabled;
 			else cookies = UsefulFunctions.CookiesOptions.Disabled;
 			Response.Cookies.Append("cookies", choice, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
-            return RedirectToPage();
+            return RedirectToPage("./Accessibility");
 		}
 		public async Task<IActionResult> OnPostSetText(string reset, int size)
         {
@@ -74,63 +74,58 @@ namespace WellnessSite.Pages
                 Response.Cookies.Append("text", size.ToString(), new CookieOptions { Expires = DateTime.Now.AddDays(30) });
             }
 
-			return Redirect("/Accessibility");
+			return RedirectToPage("./Accessibility");
 		}
 
         public async Task<IActionResult> OnPostSetPropertiesAsync(string reset, string theme)
         {
-			if (_context.Preferences == null) return NotFound();
+            if (_context.Preferences == null) return NotFound();
 
             Preferences pr = p;
-			if (sim.IsSignedIn(User))
-			{
-				ApplicationUser u = await _um.GetUserAsync(User);
-				p.UserID = u.Id;
-                if (reset == "true") pr = new Preferences(p.UserID);
-                else
+            if (sim.IsSignedIn(User)) //Currently users have to double click buttons to have effects happen. Page isn't resetting properly.
+            {
+                ApplicationUser u = await _um.GetUserAsync(User);
+                p.UserID = u.Id;
+                if (reset == "true")
                 {
-                    switch (theme)
-                    {
-                        case "greyscale":
-                            //pr = new Preferences(p.UserID, p.FontSize, AccessibilityOptions.Greyscale);
-                            u.CookieState = "greyscale";
-                            break;
-                        case "contrast":
-                            //pr = new Preferences(p.UserID, p.FontSize, AccessibilityOptions.Contrast);
-                            u.CookieState = "contrast";
-                            break;
-                        case "invert":
-                            //pr = new Preferences(p.UserID, p.FontSize, AccessibilityOptions.Invert);
-                            u.CookieState = "invert";
-                            break;
-                        default:
-                            break;
-
-                    }
+                    pr = new Preferences(p.UserID);
+                    u.CookieState = "standard";
+                    Response.Cookies.Append("colour", reset, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+                }
+                switch (theme)
+                {
+                    case "greyscale":
+                        //pr = new Preferences(p.UserID, p.FontSize, AccessibilityOptions.Greyscale);
+                        u.CookieState = "greyscale";
+                        Response.Cookies.Append("colour", theme, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+                        break;
+                    case "contrast":
+                        //pr = new Preferences(p.UserID, p.FontSize, AccessibilityOptions.Contrast);
+                        u.CookieState = "contrast";
+                        Response.Cookies.Append("colour", theme, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+                        break;
+                    case "invert":
+                        //pr = new Preferences(p.UserID, p.FontSize, AccessibilityOptions.Invert);
+                        u.CookieState = "invert";
+                        Response.Cookies.Append("colour", theme, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+                        break;
+                    default:
+                        break;
                 }
                 _context.ChangeTracker.Clear();
                 _context.Attach(u).State = EntityState.Modified;
                 _context.Attach(pr).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
-			if(UsefulFunctions.IsCookiesEnabled(this) == UsefulFunctions.CookiesOptions.Enabled)
-			{
-                if(reset == "true")
+            else if (UsefulFunctions.IsCookiesEnabled(this) == UsefulFunctions.CookiesOptions.Enabled)
+            {
+                if (reset == "true")
                 {
                     theme = "standard";
-                    ApplicationUser u = await _um.GetUserAsync(User);
-                    u.CookieState = "standard";
-                    _context.Attach(u).State = EntityState.Modified;
-                    await _context.SaveChangesAsync();
                 }
-                if(theme != null)
-                {
-                    Response.Cookies.Append("colour", theme, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
-                }
-                
+                Response.Cookies.Append("colour", theme, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
             }
-
-            return Redirect("/Accessibility");
-		}
+            return RedirectToPage();
+        }
     }
 }
