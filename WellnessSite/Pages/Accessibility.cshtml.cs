@@ -89,25 +89,18 @@ namespace WellnessSite.Pages
                 if (reset == "true")
                 {
                     pr = new Preferences(p.UserID);
-                    u.CookieState = "standard";
-                    Response.Cookies.Append("colour", reset, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+		    u.CookieState = "standard";
                 }
                 switch (theme)
                 {
                     case "greyscale":
-                        //pr = new Preferences(p.UserID, p.FontSize, AccessibilityOptions.Greyscale);
                         u.CookieState = "greyscale";
-                        Response.Cookies.Append("colour", theme, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
                         break;
                     case "contrast":
-                        //pr = new Preferences(p.UserID, p.FontSize, AccessibilityOptions.Contrast);
                         u.CookieState = "contrast";
-                        Response.Cookies.Append("colour", theme, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
                         break;
                     case "invert":
-                        //pr = new Preferences(p.UserID, p.FontSize, AccessibilityOptions.Invert);
                         u.CookieState = "invert";
-                        Response.Cookies.Append("colour", theme, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
                         break;
                     default:
                         break;
@@ -117,7 +110,7 @@ namespace WellnessSite.Pages
                 _context.Attach(pr).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
-            else if (UsefulFunctions.IsCookiesEnabled(this) == UsefulFunctions.CookiesOptions.Enabled)
+            if (UsefulFunctions.IsCookiesEnabled(this) == UsefulFunctions.CookiesOptions.Enabled)
             {
                 if (reset == "true")
                 {
