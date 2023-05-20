@@ -50,7 +50,7 @@
             
         <nav class="navbar navbar-expand-@size navbar-toggleable-@size border-bottom box-shadow">
             <div class="container">
-            <img src="/img/CCHlogo.png" alt-text="logo" class="logo" />
+             <a asp-page="/Index"><img src="/img/CCHlogo.png" alt-text="logo" class="logo"  /></a>
             <a class="navbar-brand" asp-area="" asp-page="/Index">Community Care Hub</a>
                 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -176,6 +176,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Privacy">Privacy Policy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-page="/CookiePolicy">Cookie Policy</a>
                         </li>
                     </ul>
                 </div>

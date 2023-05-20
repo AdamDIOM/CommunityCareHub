@@ -72,12 +72,13 @@ namespace WellnessSite.Pages.auth
                 {
                     if(u != null && u.CookieState != null)
                     {
-                        Response.Cookies.Append("colour", u.CookieState, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+                        Response.Cookies.Append(".colourSchemeCookie", u.CookieState, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
                     }
                     await UsefulFunctions.SetStandardAdmin(_um, _rm);
 					return Redirect("../Index");
                 }
                 ModelState.AddModelError(string.Empty, "Invalid Logon Attempt");
+                return Page(); //Should have now fixed the login error where one failed attempt stopped the ability for a successful login
 			}
 			await UsefulFunctions.SetStandardAdmin(_um, _rm);
 			return Page();

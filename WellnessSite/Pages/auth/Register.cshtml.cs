@@ -137,11 +137,14 @@ namespace WellnessSite.Pages.auth
 					await _sim.SignInAsync(user, isPersistent: false);
 					await UsefulFunctions.SetStandardAdmin(_um, _rm);
 					return RedirectToPage("/Index");
-                }
-                foreach (var error in result.Errors)
+                } else
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
+                return Page();
 			}
 			await UsefulFunctions.SetStandardAdmin(_um, _rm);
 			return Page();

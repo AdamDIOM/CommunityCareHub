@@ -22,5 +22,5 @@
 @if (await Model.um.IsInRoleAsync(await Model.um.GetUserAsync(User), "OrgAdmin"))
 {
     <h1>Organisation Admin Settings</h1>
-    <a asp-page="Services/Index">Edit your Services</a>
+    <a asp-page="Services/Index" class="btn btn-info">Edit all Services</a>
 }

@@ -74,7 +74,7 @@ namespace WellnessSite.Pages.auth
                 await _sim.SignInAsync(u, false);
                 if (u != null && u.CookieState != null)
                 {
-                    Response.Cookies.Append("colour", u.CookieState, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+                    Response.Cookies.Append(".colourSchemeCookie", u.CookieState, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
                 }
                 return RedirectToPage("../Index");
             }
