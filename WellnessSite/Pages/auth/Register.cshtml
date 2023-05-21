@@ -38,7 +38,7 @@
     <div id="secQs">
         <div class="form-group">
             <label asp-for="Q1" class="control-label"></label>
-            <select asp-for="Q1" class="form-control">
+            <select asp-for="Q1" class="form-select">
                     @foreach(Models.SecQues q in Model.sq)
                     {
                         <option value="@q.Question">@q.Question</option>
@@ -55,7 +55,7 @@
 
         <div class="form-group">
             <label asp-for="Q2" class="control-label"></label>
-            <select asp-for="Q2" class="form-control">
+            <select asp-for="Q2" class="form-select">
                 @foreach(Models.SecQues q in Model.sq)
                 {
                     <option value="@q.Question">@q.Question</option>
