@@ -177,3 +177,7 @@ nav .container{
 .bookmarks .row, .row-about{
     margin:0px;
 }
+
+#AdminServiceTable { /*Is making the admin service table match figma, remove if not wanted*/
+    background-color: var(--hex2);
+}
