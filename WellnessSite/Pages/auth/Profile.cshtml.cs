@@ -47,6 +47,8 @@ namespace WellnessSite.Pages.auth
         [Display(Name = "New Name")]
         public string? Name { get; set; }
 
+        public bool RequestAdmin { get; set; }
+
         public ProfileModel(SignInManager<ApplicationUser> sim,
             UserManager<ApplicationUser> um, WellnessSiteContext context)
         {
@@ -103,15 +105,11 @@ namespace WellnessSite.Pages.auth
         }
 
         public async Task<IActionResult> OnPostChangenameAsync()
-        { /*
+        {
             ApplicationUser u = await _um.GetUserAsync(User);
             if (u != null && u.Name != null)
             {
                 name = u.Name;
-            }
-            if (!ModelState.IsValid)
-            {
-                return Page();
             }
 
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
@@ -121,17 +119,44 @@ namespace WellnessSite.Pages.auth
             Services = await _context.Service.ToListAsync();
 
             var user = await _um.GetUserAsync(User);
-            if (user.UserName != userName)
+            if (user.Name != Name)
             {
-                await _um.SetUserNameAsync(user, userName);
-                return Page();
+                user.Name = Name;
+                await _context.SaveChangesAsync();
+                return RedirectToPage("/auth/Profile");
             }
             else
             {
-                return Page();
+                return RedirectToPage("/auth/Profile");
             }
-            */
-            return Page();
+        }
+
+        public async Task<IActionResult> OnPostRequestAdminAsync()
+        {
+            ApplicationUser u = await _um.GetUserAsync(User);
+            if (u != null && u.Name != null)
+            {
+                name = u.Name;
+            }
+
+            p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
+
+            bookmarks = await _context.Bookmarks.Where(b => b.UserID == u.Id).ToListAsync();
+
+            Services = await _context.Service.ToListAsync();
+
+            var user = await _um.GetUserAsync(User);
+            RequestAdmin = true;
+            if (user.RequestedAdmin != RequestAdmin)
+            {
+                user.RequestedAdmin = RequestAdmin;
+                await _context.SaveChangesAsync();
+                return RedirectToPage("/auth/Profile");
+            }
+            else
+            {
+                return RedirectToPage("/auth/Profile");
+            }
         }
 
         public async Task<IActionResult> OnPostSetPropertiesAsync(string reset)

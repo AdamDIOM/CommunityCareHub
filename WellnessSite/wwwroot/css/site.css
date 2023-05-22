@@ -178,6 +178,10 @@ nav .container{
     margin:0px;
 }
 
-#AdminServiceTable { /*Is making the admin service table match figma, remove if not wanted*/
-    background-color: var(--hex2);
+.table-row-0 {
+    background-color: #ffc2d1;
+}
+
+.table-row-1 {
+    background-color: #ffe5ec;
 }

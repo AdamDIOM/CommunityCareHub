@@ -54,13 +54,18 @@ else
             <button asp-page-handler="ChangePassword" class="btn btn-danger">Change password</button>
             <br />
             
-            <h3>Change Name</h3> <p>This is currently broken please don't touch it</p>
+            <h3>Change Name</h3>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <button asp-page-handler="Changename" class="btn btn-danger">Change name</button>
+            <br />
+           
+            <h3> Request Organisation Admin </h3> 
+            <p> Being an Organisation Admin allows you to create services</p>
+            <button asp-page-handler="RequestAdmin" class="btn btn-danger">Request to be an Organisation Admin</button>
         </div>
         <div class="col col-12 col-md-6">
             <h2>Modify Advanced Colours</h2>
