@@ -19,7 +19,7 @@
             <button asp-page-handler="SetText" asp-route-size=25 class="btn btn-lg btn-info">Extra Large</button>
         </div>
     }
-    @if ((Data.UsefulFunctions.IsCookiesEnabled(Model) == Data.UsefulFunctions.CookiesOptions.Enabled && Model.sim.IsSignedIn(User)) || Data.UsefulFunctions.IsCookiesEnabled(Model) == Data.UsefulFunctions.CookiesOptions.Enabled)
+    @if (Data.UsefulFunctions.IsCookiesEnabled(Model) == Data.UsefulFunctions.CookiesOptions.Enabled)
     {
         <div>
             <h2>Text, Background and Graphics Colours</h2>
