@@ -25,12 +25,12 @@ function changeColours(prefs) {
 }
 
 function display(property, value) {
-    console.log(value)
-    if (document.getElementById(property).style.display == "block") {
-        document.getElementById(property).style.display = "none";
+    console.log(value.checked)
+    if (value.checked) {
+        document.getElementById(property).style.display = "block";
     }
     else {
-        document.getElementById(property).style.display = "block";
+        document.getElementById(property).style.display = "none";
     }
     
 }

@@ -38,8 +38,24 @@ namespace WellnessSite.Pages.Admin
             if(user != null)
             {
                 user.RequestedAdmin = false;
-                if(accept == "true") await _um.AddToRoleAsync(user, "OrgAdmin");
-                await _context.SaveChangesAsync();
+				await _context.SaveChangesAsync();
+				if (accept == "true")
+                {
+                    await _um.AddToRoleAsync(user, "OrgAdmin");
+                    UsefulFunctions.SendEmail(
+                        title: "Community Care Hub Admin Request Accepted",
+                        to: user.Email,
+                        message: "Hello there,\nWe are pleased to let you know that your request to become an Organisation Admin for the Community Care Hub has been accepted!\n Many thanks,\n The Community Care Hub Team"
+                        );
+                }
+                else
+                {
+					UsefulFunctions.SendEmail(
+						title: "Community Care Hub Admin Request Declined",
+						to: user.Email,
+						message: "Hello there,\nWe are afraid to tell you that your request to become an Organisation Admin for the Community Care Hub has been declined.\n Kind regards,\n The Community Care Hub Team"
+						);
+				}
             }
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
 
