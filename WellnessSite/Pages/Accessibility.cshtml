@@ -1,249 +1,166 @@
 ﻿@page
 @model WellnessSite.Pages.AccessibilityModel
 @{
-	ViewData["Title"] = "Accessibility Options";
-	ViewData["Prefs"] = Model.p.ToString();
-	ViewData["Layout"] = "Img";
+    ViewData["Title"] = "Accessibility Options";
+    ViewData["Prefs"] = Model.p.ToString();
+    ViewData["Layout"] = "Img";
 }
 <h1>Accessibility Settings</h1>
 <form method="post">
-	
-	@if(Data.UsefulFunctions.IsCookiesEnabled(Model) == Data.UsefulFunctions.CookiesOptions.Enabled || Model.sim.IsSignedIn(User))
-		{
-			<div>
-				<h2>Text and Graphics Size</h2>
-				<input asp-for="p.FontSize" type="range" min="10" max="25" value="@Model.p.FontSize" onchange="changeTextSize(this.value)" />
-				<button asp-page-handler="SetText" class="btn btn-success">Save</button>
-				<br /> <br />
-				<button asp-page-handler="SetText" asp-route-size=15 class="btn btn-sm btn-info">Standard</button>
-				<button asp-page-handler="SetText" asp-route-size=20 class="btn btn-info">Large</button>
-				<button asp-page-handler="SetText" asp-route-size=25 class="btn btn-lg btn-info">Extra Large</button>
-			</div>
-			<div>
-				<h2>Text, Background and Graphics Colours</h2>
-				<p>
-					<button asp-page-handler="SetProperties" asp-route-reset="true" class="btn btn-info">Standard</button>
-					<button asp-page-handler="SetProperties" asp-route-theme="greyscale" class="btn btn-secondary">Greyscale</button>
-					<button asp-page-handler="SetProperties" asp-route-theme="contrast"class="btn btn-warning">High Contrast</button>
-					<button asp-page-handler="SetProperties" asp-route-theme="invert" class="btn btn-dark">Invert Colours</button>
-				</p>
-			</div>
-		}
-		
-	@if (Model.sim.IsSignedIn(User))
-	{
-		<h2>Advanced Preferences</h2>
-		<input hidden asp-for="p.UserID" value="@Model.p.UserID" />
-		<div class="row">
+    @if (Data.UsefulFunctions.IsCookiesEnabled(Model) == Data.UsefulFunctions.CookiesOptions.Enabled || Model.sim.IsSignedIn(User))
+    {
+        <div>
+            <h2>Text and Graphics Size</h2>
+            <input asp-for="p.FontSize" type="range" min="10" max="25" value="@Model.p.FontSize" onchange="changeTextSize(this.value)" />
+            <button asp-page-handler="SetText" class="btn btn-success">Save</button>
+            <br /> <br />
+            <button asp-page-handler="SetText" asp-route-size=15 class="btn btn-sm btn-info">Standard</button>
+            <button asp-page-handler="SetText" asp-route-size=20 class="btn btn-info">Large</button>
+            <button asp-page-handler="SetText" asp-route-size=25 class="btn btn-lg btn-info">Extra Large</button>
+        </div>
+    }
+    @if ((Data.UsefulFunctions.IsCookiesEnabled(Model) == Data.UsefulFunctions.CookiesOptions.Enabled && Model.sim.IsSignedIn(User)) || Data.UsefulFunctions.IsCookiesEnabled(Model) == Data.UsefulFunctions.CookiesOptions.Enabled)
+    {
+        <div>
+            <h2>Text, Background and Graphics Colours</h2>
+            <p>
+                <button asp-page-handler="SetProperties" asp-route-reset="true" class="btn btn-info">Standard</button>
+                <button asp-page-handler="SetProperties" asp-route-theme="greyscale" class="btn btn-secondary">Greyscale</button>
+                <button asp-page-handler="SetProperties" asp-route-theme="contrast" class="btn btn-warning">High Contrast</button>
+                <button asp-page-handler="SetProperties" asp-route-theme="invert" class="btn btn-dark">Invert Colours</button>
+            </p>
+        </div>
+    } 
 
-				<h3> Text preferences</h3>
-				<div class="col col-9">
-					<label asp-for="p.Text">Text Colour</label>
-				</div>
-				<div class="col col-3">
-					<input asp-for="p.Text" type="color" value="@Model.p.Text" />
-				</div>
+    @if (Model.sim.IsSignedIn(User))
+    {
+        <h2>Advanced Preferences</h2>
+        <input hidden asp-for="p.UserID" value="@Model.p.UserID" />
+        <div class="row">
 
-				<h3> Page preferences</h3>
-				<div class="col col-9">
-					<label asp-for="p.Background">Background Colour</label>
-				</div>
-				<div class="col col-3">
-					<input asp-for="p.Background" type="color" value="@Model.p.Background" />
-				</div>
-				<div class="col col-9">
-					<label asp-for="p.Link">Hexagon Colour</label>
-				</div>
-				<div class="col col-3">
-					<input asp-for="p.HexColour" type="color" value="@Model.p.HexColour" />
-				</div>
+            <h3> Text preferences</h3>
+            <div class="col col-9">
+                <label asp-for="p.Text">Text Colour</label>
+            </div>
+            <div class="col col-3">
+                <input asp-for="p.Text" type="color" value="@Model.p.Text" />
+            </div>
 
-				<div class="col col-9">
-					<label asp-for="p.Link">Hexagon Colour 2</label>
-				</div>
-				<div class="col col-3">
-					<input asp-for="p.HexColour2" type="color" value="@Model.p.HexColour2" />
-				</div>
+            <h3> Page preferences</h3>
+            <div class="col col-9">
+                <label asp-for="p.Background">Background Colour</label>
+            </div>
+            <div class="col col-3">
+                <input asp-for="p.Background" type="color" value="@Model.p.Background" />
+            </div>
+            <div class="col col-9">
+                <label asp-for="p.Link">Hexagon Colour</label>
+            </div>
+            <div class="col col-3">
+                <input asp-for="p.HexColour" type="color" value="@Model.p.HexColour" />
+            </div>
 
-				<div class="col col-9">
-					<label asp-for="p.Link">Hexagon Text Colour</label>
-				</div>
-				<div class="col col-3">
-					<input asp-for="p.HexTextColour" type="color" value="@Model.p.HexTextColour" />
-				</div>
+            <div class="col col-9">
+                <label asp-for="p.Link">Hexagon Colour 2</label>
+            </div>
+            <div class="col col-3">
+                <input asp-for="p.HexColour2" type="color" value="@Model.p.HexColour2" />
+            </div>
 
-				<div class="col col-9">
-					<label asp-for="p.Link">Hexagon Hover Colour</label>
-				</div>
-				<div class="col col-3">
-					<input asp-for="p.HexHover" type="color" value="@Model.p.HexHover" />
-				</div>
-				<div class ="col col-9">
-					<label asp-for="p.Highlight">Highlight Colour</label>
-				</div>
-				<div class="col col-3">
-					<input asp-for="p.Highlight" type="color" value="@Model.p.Highlight" />
-				</div>
-				<div class="col col-9">
-					<label asp-for="p.Link">HyperLink Colour</label>
-				</div>
-				<div class="col col-3">
-					<input asp-for="p.Link" type="color" value="@Model.p.Link" />
-				</div>
+            <div class="col col-9">
+                <label asp-for="p.Link">Hexagon Text Colour</label>
+            </div>
+            <div class="col col-3">
+                <input asp-for="p.HexTextColour" type="color" value="@Model.p.HexTextColour" />
+            </div>
 
-				<h3> Banner preferences</h3>
-				<div class="col col-9">
-					<label asp-for="p.Header">Banner Colour</label>
-				</div>
-				<div class="col col-3">
-					<input asp-for="p.Header" type="color" value="@Model.p.Header" />
-				</div>
+            <div class="col col-9">
+                <label asp-for="p.Link">Hexagon Hover Colour</label>
+            </div>
+            <div class="col col-3">
+                <input asp-for="p.HexHover" type="color" value="@Model.p.HexHover" />
+            </div>
+            <div class="col col-9">
+                <label asp-for="p.Highlight">Highlight Colour</label>
+            </div>
+            <div class="col col-3">
+                <input asp-for="p.Highlight" type="color" value="@Model.p.Highlight" />
+            </div>
+            <div class="col col-9">
+                <label asp-for="p.Link">HyperLink Colour</label>
+            </div>
+            <div class="col col-3">
+                <input asp-for="p.Link" type="color" value="@Model.p.Link" />
+            </div>
 
-				<div class="col col-9">
-					<label asp-for="p.HeaderText">Banner Text Colour</label>
-				</div>
-				<div class="col col-3">
-					<input asp-for="p.HeaderText" type="color" value="@Model.p.HeaderText" />
-				</div>
+            <h3> Banner preferences</h3>
+            <div class="col col-9">
+                <label asp-for="p.Header">Banner Colour</label>
+            </div>
+            <div class="col col-3">
+                <input asp-for="p.Header" type="color" value="@Model.p.Header" />
+            </div>
 
-				<div class="col col-9">
-					<label asp-for="p.Footer">Footer Colour</label>
-				</div>
-				<div class="col col-3">
-					<input asp-for="p.Footer" type="color" value="@Model.p.Footer" />
-				</div>
+            <div class="col col-9">
+                <label asp-for="p.HeaderText">Banner Text Colour</label>
+            </div>
+            <div class="col col-3">
+                <input asp-for="p.HeaderText" type="color" value="@Model.p.HeaderText" />
+            </div>
 
-				<div class="col col-9">
-					<label asp-for="p.FooterText">Footer Text Colour</label>
-				</div>
-				<div class="col col-3">
-					<input asp-for="p.FooterText" type="color" value="@Model.p.FooterText" />
-				</div>
-		</div>
+            <div class="col col-9">
+                <label asp-for="p.Footer">Footer Colour</label>
+            </div>
+            <div class="col col-3">
+                <input asp-for="p.Footer" type="color" value="@Model.p.Footer" />
+            </div>
 
-		/*
-		<div class="row">
-			<div class="col col-6">
-				<label asp-for="p.Text">Text Colour</label>
-			</div>
-			<div class="col col-6">
-				<input asp-for="p.Text" type="color" value="@Model.p.Text" />
-			</div>
+            <div class="col col-9">
+                <label asp-for="p.FooterText">Footer Text Colour</label>
+            </div>
+            <div class="col col-3">
+                <input asp-for="p.FooterText" type="color" value="@Model.p.FooterText" />
+            </div>
+        </div>
 
-			<div class ="col col-6">
-				<label asp-for="p.Highlight">Highlight Colour</label>
-			</div>
-			<div class="col col-6">
-				<input asp-for="p.Highlight" type="color" value="@Model.p.Highlight" />
-			</div>
+        <button asp-page-handler="SetProperties" class="btn btn-success">Save</button>
+        <button asp-page-handler="SetProperties" asp-route-reset="true" class="btn btn-danger">Reset</button>
+    }
 
-			<div class="col col-6">
-				<label asp-for="p.Background">Background Colour</label>
-			</div>
-			<div class="col col-6">
-				<input asp-for="p.Background" type="color" value="@Model.p.Background" />
-			</div>
+    <div class="cookies-box rounded">
+        <div class="cookie-buttons">
+            @if (!Model.sim.IsSignedIn(User))
+            {
+                <label>Cookies must be accepted to enable Accessibility Features. </label>
+            }
+            else
+            {
+                <label>Cookies must be accepted to enable all Accessibility Features. </label>
+            }
+            @if (Data.UsefulFunctions.IsCookiesEnabled(Model) != Data.UsefulFunctions.CookiesOptions.Enabled)
+            {
+                <label>Cookies are currently <b>Disabled</b></label>
+                <button asp-page-handler="Cookies" asp-route-choice="enabled" class="btn btn-success">Accept Cookies</button>
+            }
+            else
+            {
+                <label>Cookies are currently <b>Enabled</b></label>
+                <button asp-page-handler="Cookies" asp-route-choice="disabled" class="btn btn-danger">Decline Nonessential Cookies</button>
+            }
 
-			<div class="col col-6">
-				<label asp-for="p.Header">Header Colour</label>
-			</div>
-			<div class="col col-6">
-				<input asp-for="p.Header" type="color" value="@Model.p.Header" />
-			</div>
-
-			<div class="col col-6">
-				<label asp-for="p.HeaderText">Header Text Colour</label>
-			</div>
-			<div class="col col-6">
-				<input asp-for="p.HeaderText" type="color" value="@Model.p.HeaderText" />
-			</div>
-
-			<div class="col col-6">
-				<label asp-for="p.Footer">Footer Colour</label>
-			</div>
-			<div class="col col-6">
-				<input asp-for="p.Footer" type="color" value="@Model.p.Footer" />
-			</div>
-
-			<div class="col col-6">
-				<label asp-for="p.FooterText">Footer Text Colour</label>
-			</div>
-			<div class="col col-6">
-				<input asp-for="p.FooterText" type="color" value="@Model.p.FooterText" />
-			</div>
-
-
-			<div class="col col-6">
-				<label asp-for="p.Link">HyperLink Colour</label>
-			</div>
-			<div class="col col-6">
-				<input asp-for="p.Link" type="color" value="@Model.p.Link" />
-			</div>
-
-			<div class="col col-6">
-				<label asp-for="p.Link">Hexagon Colour</label>
-			</div>
-			<div class="col col-6">
-				<input asp-for="p.HexColour" type="color" value="@Model.p.HexColour" />
-			</div>
-
-			<div class="col col-6">
-				<label asp-for="p.Link">Hexagon Colour 2</label>
-			</div>
-			<div class="col col-6">
-				<input asp-for="p.HexColour2" type="color" value="@Model.p.HexColour2" />
-			</div>
-
-			<div class="col col-6">
-				<label asp-for="p.Link">Hexagon Text Colour</label>
-			</div>
-			<div class="col col-6">
-				<input asp-for="p.HexTextColour" type="color" value="@Model.p.HexTextColour" />
-			</div>
-
-			<div class="col col-6">
-				<label asp-for="p.Link">Hexagon Hover Colour</label>
-			</div>
-			<div class="col col-6">
-				<input asp-for="p.HexHover" type="color" value="@Model.p.HexHover" />
-			</div>
-		</div>
-		*/
-		<button asp-page-handler="SetProperties" class="btn btn-success">Save</button>
-		<button asp-page-handler="SetProperties" asp-route-reset="true" class="btn btn-danger">Reset</button>
-	}
-	
-	<div class="cookies-box rounded">
-		<div class="cookie-buttons">
-			@if(!Model.sim.IsSignedIn(User)){
-				<label>Cookies must be accepted to enable Accessibility Features. </label>
-			}
-			else{
-				<label>Cookies must be accepted to enable all Accessibility Features. </label>
-			}
-			@if(Data.UsefulFunctions.IsCookiesEnabled(Model) != Data.UsefulFunctions.CookiesOptions.Enabled) {
-				<label>Cookies are currently <b>Disabled</b></label>
-				<button asp-page-handler="Cookies" asp-route-choice="enabled" class="btn btn-success">Accept Cookies</button>
-			}
-			else
-			{
-				<label>Cookies are currently <b>Enabled</b></label>
-				<button asp-page-handler="Cookies" asp-route-choice="disabled" class="btn btn-danger">Decline Nonessential Cookies</button>
-			}
-					
-		</div>
-	</div>
+        </div>
+    </div>
 </form>
 
 <script>
-	function changeTextSize(size){
-		document.documentElement.style.setProperty('--textSize', size + 'px')
-	}
+    function changeTextSize(size) {
+        document.documentElement.style.setProperty('--textSize', size + 'px')
+    }
 </script>
 
 @section Styles{
     <style>
-        body{
+        body {
             background-image: url("/img/about-bg.jpg");
         }
     </style>
