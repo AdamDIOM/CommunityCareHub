@@ -39,6 +39,7 @@ namespace WellnessSite.Pages.Admin
             {
                 user.RequestedAdmin = false;
                 if(accept == "true") await _um.AddToRoleAsync(user, "OrgAdmin");
+                await _context.SaveChangesAsync();
             }
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
 

@@ -55,11 +55,14 @@
             <th></th>
         </tr>
     </thead>
-    <tbody id="AdminServiceTable">
-        @foreach (var item in Model.Service)
-        {
-            <!-- Would be really nice to figure out how to lmit records shown to 35ish and use pagination of some kind to get more-->
-            <tr>
+    <tbody>
+        @{
+            int i = 0;
+            foreach (var item in Model.Service)
+            {
+                i++;
+                <!-- Would be really nice to figure out how to lmit records shown to 35ish and use pagination of some kind to get more-->
+            <tr class="table-row-@(i % 2)">
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
@@ -101,6 +104,7 @@
                     </p>
                 </td>
             </tr>
+        }
         }
     </tbody>
 </table>
