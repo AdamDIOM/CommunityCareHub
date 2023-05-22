@@ -78,6 +78,7 @@ namespace WellnessSite.Pages.auth
 					return Redirect("../Index");
                 }
                 ModelState.AddModelError(string.Empty, "Invalid Logon Attempt");
+                return Page(); //Should have now fixed the login error where one failed attempt stopped the ability for a successful login
 			}
 			await UsefulFunctions.SetStandardAdmin(_um, _rm);
 			return Page();

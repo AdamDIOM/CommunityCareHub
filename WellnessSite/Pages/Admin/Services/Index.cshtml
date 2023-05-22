@@ -5,16 +5,29 @@
     ViewData["Title"] = "Modify Services List";
     ViewData["Prefs"] = Model.p.ToString();
 }
-
-<h1>Services</h1>
-<form>
-    <label asp-for="qry">Search</label>
-    <input asp-for="qry" />
-    <input type="submit" asp-route-qry="@Model.qry" value="Search" class="btn btn-success">
-</form>
+<div class="row">
+    <div class="col-md-3 col-1"></div>
+    <div class="col-md-6 col-10">
+        <div class="centre"><h1>Services</h1></div>
+        <div class="centre">
+            <div class="form-group">
+                    <input asp-for="qry" plaeholder="Search" class="input-box"/>
+                    <input type="submit" asp-route-qry="@Model.qry" value="Search" class="btn btn-info">
+                    <a asp-page="./Index" class="btn btn-info">View all</a>
+                </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-1"></div>
+</div>
 <p>
-    <a asp-page="Create">Create New Service Page</a>
+    <a class="btn btn-info text-center" asp-page="Create">Create New Service Page</a>
 </p>
+    @if(await Model._um.IsInRoleAsync(await Model._um.GetUserAsync(User), "OrgAdmin"))
+    { <!-- Made it so OrgAdmins are notified about needing to wait for approval on services -->
+        <p>All new services require admin approval before they appear in the published services list.</p>
+        <p>Those awaiting approval have an unticked box, those approved show a ticked box and those declined will be removed.</p>
+    }
+ 
 <table class="table">
     <thead>
         <tr>
@@ -33,25 +46,33 @@
             <th>
                 @Html.DisplayNameFor(model => model.Service[0].ImageData)
             </th>
+                @if (await Model._um.IsInRoleAsync(await Model._um.GetUserAsync(User), "OrgAdmin"))
+            { <!-- OrgAdmin only see this, shows approval status of their service-->
+                <th>
+                    @Html.DisplayNameFor(model => model.Service[0].Accepted)
+                </th>
+            }
             <th></th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model.Service) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WebLink)
-            </td>
-            <td>
+    <tbody id="AdminServiceTable">
+        @foreach (var item in Model.Service)
+        {
+            <!-- Would be really nice to figure out how to lmit records shown to 35ish and use pagination of some kind to get more-->
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WebLink)
+                </td>
+                <td>
                     @if (item.ImageData != null && item.ImageData.Count() > 0)
                     {
                         <img class="edit-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(item.ImageData))" alt="@item.ImageAltText" />
@@ -60,8 +81,15 @@
                     {
                         <p>Image unavailable</p>
                     }
-            </td>
-            <td>
+                </td>
+
+                @if (await Model._um.IsInRoleAsync(await Model._um.GetUserAsync(User), "OrgAdmin"))
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Accepted)
+                    </td>
+                }
+                <td>
                     <p>
                         <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
                     </p>
@@ -71,8 +99,8 @@
                     <p>
                         <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
                     </p>
-            </td>
-        </tr>
-}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

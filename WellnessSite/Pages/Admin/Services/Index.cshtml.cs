@@ -21,7 +21,7 @@ namespace WellnessSite.Pages.Admin.Services
         [BindProperty(SupportsGet = true)]
         public string qry { get; set; }
 
-        public IList<Service> Service { get;set; } = default!;
+        public IList<Service> Service { get; set; } = default!;
 
         public IndexModel(SignInManager<ApplicationUser> sim, UserManager<ApplicationUser> um, WellnessSiteContext con)
         {
@@ -31,9 +31,9 @@ namespace WellnessSite.Pages.Admin.Services
         }
         public async Task OnGetAsync()
         {
-            
+
             ApplicationUser u = await _um.GetUserAsync(User);
-                
+
             if (_context.Service != null)
             {
                 Service = await _context.Service.ToListAsync();
@@ -61,9 +61,11 @@ namespace WellnessSite.Pages.Admin.Services
 
                 ).ToList();
             }
-            
+
 
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
         }
     }
 }
+
+   

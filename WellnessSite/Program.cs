@@ -35,10 +35,14 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddRoles<IdentityRole>();
 
 builder.Services.ConfigureApplicationCookie(options =>
-{
+{ //Identity cookie should now delete expire after 60 minutes provided there hasn't been any activity on the site for those 60 minutes from said user.
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+
     options.AccessDeniedPath = "/auth/Access-Denied";
     options.LoginPath = "/auth/Login";
     options.LogoutPath = "/auth/Logout";
+    options.SlidingExpiration = true;
 });
 
 

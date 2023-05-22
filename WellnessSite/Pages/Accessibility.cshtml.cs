@@ -101,32 +101,14 @@ namespace WellnessSite.Pages
         {
             if (_context.Preferences == null) return NotFound();
 
+            ApplicationUser u = await _um.GetUserAsync(User);
             Preferences pr = p;
-            if (sim.IsSignedIn(User)) //Currently users have to double click buttons to have effects happen. Page isn't resetting properly.
+            if (this.sim.IsSignedIn(User))
             {
-                ApplicationUser u = await _um.GetUserAsync(User);
                 p.UserID = u.Id;
-                if (reset == "true")
-                {
-                    pr = new Preferences(p.UserID);
-		    u.CookieState = "standard";
-                }
-                switch (theme)
-                {
-                    case "greyscale":
-                        u.CookieState = "greyscale";
-                        break;
-                    case "contrast":
-                        u.CookieState = "contrast";
-                        break;
-                    case "invert":
-                        u.CookieState = "invert";
-                        break;
-                    default:
-                        break;
-                }
+                if (reset == "true") pr = new Preferences(p.UserID);
+
                 _context.ChangeTracker.Clear();
-                _context.Attach(u).State = EntityState.Modified;
                 _context.Attach(pr).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
@@ -136,7 +118,10 @@ namespace WellnessSite.Pages
                 {
                     theme = "standard";
                 }
-                Response.Cookies.Append(".colourSchemeCookie", theme, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+                if (theme != null)
+                {
+                    Response.Cookies.Append(".colourSchemeCookie", theme, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
+                }
             }
             return RedirectToPage();
         }
