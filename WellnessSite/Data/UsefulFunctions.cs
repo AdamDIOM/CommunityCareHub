@@ -3,6 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Drawing;
 using WellnessSite.Models;
+using System.Net;
+using System.Xml.Linq;
+using System.Net.Mail;
+using Newtonsoft.Json.Linq;
 
 namespace WellnessSite.Data
 {
@@ -147,6 +151,29 @@ namespace WellnessSite.Data
 			page.Response.Cookies.Append(".colourSchemeCookie", "standard", new CookieOptions { Expires = DateTime.Now });
 			page.Response.Cookies.Append(".guestTextSizeCookie", "standard", new CookieOptions { Expires = DateTime.Now });
 			page.Response.Cookies.Append(".cookieAcceptanceStatusCookie", "standard", new CookieOptions { Expires = DateTime.Now });
+		}
+
+        public static void SendEmail(string title, string to, string message, string? cc = "")
+        {
+			SmtpClient sc = new SmtpClient
+			{
+				Credentials = new NetworkCredential("CommunityCareHubIOM@gmail.com", "ydwazxgxyngmcrhw"),
+				DeliveryMethod = SmtpDeliveryMethod.Network,
+				EnableSsl = true,
+				Host = "smtp.gmail.com",
+				Port = 587
+			};
+
+			MailMessage m = new MailMessage();
+			m.From = new MailAddress("CommunityCareHubIOM@gmail.com", "Community Care Hub");
+			m.To.Add(new MailAddress(to));
+            if(cc != null && cc.Trim() != "")
+            {
+				m.CC.Add(new MailAddress(cc));
+			}
+			m.Body = message;
+			m.Subject = title;
+			sc.Send(m);
 		}
     }
 }

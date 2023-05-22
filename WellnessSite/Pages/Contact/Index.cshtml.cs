@@ -5,9 +5,6 @@ using WellnessSite.Data;
 using WellnessSite.Models;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using System.Net.Mail;
-using System.Net;
-using System.Xml.Linq;
 
 namespace WellnessSite.Pages.Contact
 {
@@ -63,29 +60,13 @@ namespace WellnessSite.Pages.Contact
 
             try
             {
-                // links to email client
-                SmtpClient sc = new SmtpClient
-                {
-                    Credentials = new NetworkCredential("CommunityCareHubIOM@gmail.com", "ydwazxgxyngmcrhw"),
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    EnableSsl = true,
-                    Host = "smtp.gmail.com",
-                    Port = 587
-                };
+                UsefulFunctions.SendEmail(
+                    title: $"Wellness Form Enquiry - {Subject}",
+                    to: "CommunityCareHubIOM@gmail.com",
+                    message: $"Message from {Name}:" + $"{Message}",
+                    cc: Email
+                    );
 
-
-                MailMessage m = new MailMessage();
-                // from gmail address
-                m.From = new MailAddress("CommunityCareHubIOM@gmail.com", "Wellness Site Enquiry");
-                // sent to Chester email address (emulating restaurant address)
-                m.To.Add(new MailAddress("CommunityCareHubIOM@gmail.com"));
-                // CC in user's email
-                m.CC.Add(new MailAddress(Email));
-                // adds text and subject line then sends
-                m.Body = $"Message from {Name}:" +
-                    $"{Message}.";
-                m.Subject = $"Wellness Form Enquiry - {Subject}";
-                sc.Send(m);
                 return RedirectToPage("./Confirm", new { Message = Message });
             }
             // if something goes wrong, the page is reloaded with an error message
