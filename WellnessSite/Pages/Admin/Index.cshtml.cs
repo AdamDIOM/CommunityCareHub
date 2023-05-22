@@ -12,7 +12,7 @@ namespace WellnessSite.Pages.Admin
 		private readonly SignInManager<ApplicationUser> _sim;
 		private readonly WellnessSiteContext _context;
 		public Preferences p;
-
+		public string welcomeMsg;
 		public IndexModel(SignInManager<ApplicationUser> sim, UserManager<ApplicationUser> um, WellnessSiteContext con)
 		{
 			_sim = sim;
@@ -23,6 +23,17 @@ namespace WellnessSite.Pages.Admin
 		public async Task OnGetAsync()
 		{
 			p = await UsefulFunctions.GetPreferences(_context, um, _sim, User, this);
+
+			var u = await um.GetUserAsync(User);
+
+            if (u != null && u.Name != null && u.Name.Trim() != "")
+			{
+				welcomeMsg = "Hi there, " + u.Name;
+			}
+			else
+			{
+				welcomeMsg = "Hi there";
+			}
 		}
 	}
 }

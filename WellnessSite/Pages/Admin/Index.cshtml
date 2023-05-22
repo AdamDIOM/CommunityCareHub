@@ -4,23 +4,28 @@
     ViewData["Title"] = "Admin Hub";
     ViewData["Prefs"] = Model.p.ToString();
 }
+<div class="d-none d-md-block">
+    @if (await Model.um.IsInRoleAsync(await Model.um.GetUserAsync(User), "Admin"))
+    {
+        <h1>Admin Settings</h1>
+        <p>
+            <a asp-page="Services/Index" class="btn btn-info">Edit all Services</a>
+        </p>
+        <p>
+            <a asp-page="AdminRequests" class="btn btn-info">View Admin Requests</a>
+        </p>
+        <p>
+            <a asp-page="PageRequests" class="btn btn-info">View Page Requests</a>
+        </p>
+    }
 
-@if (await Model.um.IsInRoleAsync(await Model.um.GetUserAsync(User), "Admin"))
-{
-    <h1>Admin Settings</h1>
-    <p>
+    @if (await Model.um.IsInRoleAsync(await Model.um.GetUserAsync(User), "OrgAdmin"))
+    {
+        <h1>Organisation Admin Settings</h1>
         <a asp-page="Services/Index" class="btn btn-info">Edit all Services</a>
-    </p>
-    <p>
-        <a asp-page="AdminRequests" class="btn btn-info">View Admin Requests</a>
-    </p>
-    <p>
-        <a asp-page="PageRequests" class="btn btn-info">View Page Requests</a>
-    </p>
-}
-
-@if (await Model.um.IsInRoleAsync(await Model.um.GetUserAsync(User), "OrgAdmin"))
-{
-    <h1>Organisation Admin Settings</h1>
-    <a asp-page="Services/Index" class="btn btn-info">Edit all Services</a>
-}
+    }
+</div>
+<div class="d-block d-md-none">
+    <h2>@Model.welcomeMsg</h2>
+    <p>Unfortunately, our admin features are only available to desktop/laptop users. If you wish to use these features, you will have to use a non-mobile device.</p>
+</div>

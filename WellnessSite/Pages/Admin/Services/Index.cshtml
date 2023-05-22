@@ -38,13 +38,7 @@
                 @Html.DisplayNameFor(model => model.Service[0].Category)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Service[0].Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Service[0].WebLink)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Service[0].ImageData)
+                @Html.DisplayNameFor(model => model.Service[0].Description)
             </th>
                 @if (await Model._um.IsInRoleAsync(await Model._um.GetUserAsync(User), "OrgAdmin"))
             { <!-- OrgAdmin only see this, shows approval status of their service-->
@@ -70,20 +64,7 @@
                     @Html.DisplayFor(modelItem => item.Category)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WebLink)
-                </td>
-                <td>
-                    @if (item.ImageData != null && item.ImageData.Count() > 0)
-                    {
-                        <img class="edit-image" src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(item.ImageData))" alt="@item.ImageAltText" />
-                    }
-                    else
-                    {
-                        <p>Image unavailable</p>
-                    }
+                    @Html.DisplayFor(modelItem => item.Description)
                 </td>
 
                 @if (await Model._um.IsInRoleAsync(await Model._um.GetUserAsync(User), "OrgAdmin"))
