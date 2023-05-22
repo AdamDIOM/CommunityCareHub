@@ -19,7 +19,7 @@ namespace WellnessSite.Pages.Admin.Services
         private readonly WellnessSiteContext _context;
         public Preferences p;
         public IList<Categories> c;
-        public string uid;
+        public string email;
 
         public CreateModel(SignInManager<ApplicationUser> sim, UserManager<ApplicationUser> um, WellnessSiteContext con)
         {
@@ -38,7 +38,7 @@ namespace WellnessSite.Pages.Admin.Services
                 c = await _context.Categories.ToListAsync();
             }
 
-            uid = (await _um.GetUserAsync(User)).Id;
+            email = (await _um.GetUserAsync(User)).Email;
 
             return Page();
 
