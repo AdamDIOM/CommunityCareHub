@@ -49,6 +49,23 @@ namespace WellnessSite.Pages.auth
 
         public bool RequestAdmin { get; set; }
 
+        [BindProperty]
+        [Display(Name = "Security Question 1")]
+        public string Q1 { get; set; }
+        [BindProperty]
+        [Display(Name = "Security Question 2")]
+        public string Q2 { get; set; }
+        [BindProperty]
+        [Display(Name = "Answer 1")]
+        public string A1 { get; set; }
+        [BindProperty]
+        [Display(Name = "Answer 2")]
+        public string A2 { get; set; }
+
+        public string? SQError { get; set; } = "";
+
+        public IList<SecQues> sq;
+
         public ProfileModel(SignInManager<ApplicationUser> sim,
             UserManager<ApplicationUser> um, WellnessSiteContext context)
         {
@@ -71,6 +88,11 @@ namespace WellnessSite.Pages.auth
 
             Services = await _context.Service.ToListAsync();
 
+            if (_context.SecQues != null)
+            {
+                sq = await _context.SecQues.ToListAsync();
+            }
+
         }
 
         public async Task<IActionResult> OnPostChangePasswordAsync()
@@ -81,11 +103,19 @@ namespace WellnessSite.Pages.auth
                 name = u.Name;
             }
 
+            if (_context.SecQues != null)
+            {
+                sq = await _context.SecQues.ToListAsync();
+            }
+
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
 
             bookmarks = await _context.Bookmarks.Where(b => b.UserID == u.Id).ToListAsync();
 
             Services = await _context.Service.ToListAsync();
+
+            ModelState.Remove("A1");
+            ModelState.Remove("A2");
 
             if (!ModelState.IsValid)
             {
@@ -118,6 +148,11 @@ namespace WellnessSite.Pages.auth
 
             Services = await _context.Service.ToListAsync();
 
+            if (_context.SecQues != null)
+            {
+                sq = await _context.SecQues.ToListAsync();
+            }
+
             var user = await _um.GetUserAsync(User);
             if (user.Name != Name)
             {
@@ -145,13 +180,42 @@ namespace WellnessSite.Pages.auth
 
             Services = await _context.Service.ToListAsync();
 
+            if (_context.SecQues != null)
+            {
+                sq = await _context.SecQues.ToListAsync();
+            }
+
             var user = await _um.GetUserAsync(User);
+
+            if (Q1 == Q2)
+            {
+                SQError = "The chosen security questions must be different.";
+                return Page();
+            }
+
             RequestAdmin = true;
             if (user.RequestedAdmin != RequestAdmin)
             {
-                user.RequestedAdmin = RequestAdmin;
-                await _context.SaveChangesAsync();
-                return RedirectToPage("/auth/Profile");
+                ModelState.Remove("CurrentPassword");
+                ModelState.Remove("Password");
+                ModelState.Remove("ConfirmPassword");
+
+                if (ModelState.IsValid)
+                {
+                    user.RequestedAdmin = RequestAdmin;
+
+                    user.Question1 = Q1;
+                    user.Question2 = Q2;
+                    user.Answer1 = A1;
+                    user.Answer2 = A2;
+
+                    await _context.SaveChangesAsync();
+                    return RedirectToPage("/auth/Profile");
+                }
+                else
+                {
+                    return Page();
+                }
             }
             else
             {
@@ -172,6 +236,11 @@ namespace WellnessSite.Pages.auth
             bookmarks = await _context.Bookmarks.Where(b => b.UserID == u.Id).ToListAsync();
 
             Services = await _context.Service.ToListAsync();
+
+            if (_context.SecQues != null)
+            {
+                sq = await _context.SecQues.ToListAsync();
+            }
 
             Preferences pr = p;
             if (_sim.IsSignedIn(User))
