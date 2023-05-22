@@ -21,7 +21,7 @@ namespace WellnessSite.Pages.auth
         [BindProperty]
         public Preferences p { get; set; }
 
-        //public string? name;
+        public string? name;
 
         [BindProperty]
         [DataType(DataType.Password)]
@@ -45,7 +45,7 @@ namespace WellnessSite.Pages.auth
 
         [BindProperty]
         [Display(Name = "New Name")]
-        public string? userName { get; set; }
+        public string? Name { get; set; }
 
         public ProfileModel(SignInManager<ApplicationUser> sim,
             UserManager<ApplicationUser> um, WellnessSiteContext context)
@@ -60,9 +60,9 @@ namespace WellnessSite.Pages.auth
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
 
             ApplicationUser u = await _um.GetUserAsync(User);
-            if (u != null && u.UserName != null)
+            if (u != null && u.Name != null)
             {
-                userName = u.UserName;
+                name = u.Name;
             }
 
             bookmarks = await _context.Bookmarks.Where(b => b.UserID == u.Id).ToListAsync();
@@ -74,9 +74,9 @@ namespace WellnessSite.Pages.auth
         public async Task<IActionResult> OnPostChangePasswordAsync()
         {
             ApplicationUser u = await _um.GetUserAsync(User);
-            if (u != null && u.UserName != null)
+            if (u != null && u.Name != null)
             {
-                userName = u.UserName;
+                name = u.Name;
             }
 
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
@@ -102,12 +102,12 @@ namespace WellnessSite.Pages.auth
             }
         }
 
-        public async Task<IActionResult> OnPostChangeUsernameAsync()
-        {
+        public async Task<IActionResult> OnPostChangenameAsync()
+        { /*
             ApplicationUser u = await _um.GetUserAsync(User);
-            if (u != null && u.UserName != null)
+            if (u != null && u.Name != null)
             {
-                userName = u.UserName;
+                name = u.Name;
             }
             if (!ModelState.IsValid)
             {
@@ -130,6 +130,8 @@ namespace WellnessSite.Pages.auth
             {
                 return Page();
             }
+            */
+            return Page();
         }
 
         public async Task<IActionResult> OnPostSetPropertiesAsync(string reset)
@@ -137,9 +139,9 @@ namespace WellnessSite.Pages.auth
             if (_context.Preferences == null) return NotFound();
 
             ApplicationUser u = await _um.GetUserAsync(User);
-            if (u != null && u.UserName != null)
+            if (u != null && u.Name != null)
             {
-                userName = u.UserName;
+                name = u.Name;
             }
 
             bookmarks = await _context.Bookmarks.Where(b => b.UserID == u.Id).ToListAsync();

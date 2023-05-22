@@ -6,9 +6,9 @@
     ViewData["Layout"] = "Img";
 }
 
-@if (Model.userName != null && Model.userName.Trim() != "")
+@if (Model.name != null && Model.name.Trim() != "")
 {
-    <h1>Welcome back, @Model.userName</h1>
+    <h1>Welcome back, @Model.name</h1>
 }
 else
 {
@@ -56,11 +56,11 @@ else
             
             <h3>Change Name</h3> <p>This is currently broken please don't touch it</p>
             <div class="form-group">
-                <label asp-for="userName" class="control-label"></label>
-                <input asp-for="userName" class="form-control" />
-                <span asp-validation-for="userName" class="text-danger"></span>
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <button asp-page-handler="ChangeUsername" class="btn btn-danger">Change name</button>
+            <button asp-page-handler="Changename" class="btn btn-danger">Change name</button>
         </div>
         <div class="col col-12 col-md-6">
             <h2>Modify Advanced Colours</h2>
