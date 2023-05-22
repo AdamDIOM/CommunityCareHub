@@ -39,7 +39,7 @@ namespace WellnessSite.Pages.Admin.Services
                 Service = await _context.Service.ToListAsync();
                 if (!await _um.IsInRoleAsync(await _um.GetUserAsync(User), "Admin"))
                 {
-                    Service = Service.Where(s => s.Maintainer == u.Id).ToList();
+                    Service = Service.Where(s => s.Maintainer == u.Email).ToList();
                 }
             }
             if (qry != null && qry.Trim() != "")
