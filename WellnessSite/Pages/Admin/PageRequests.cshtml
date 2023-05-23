@@ -25,10 +25,10 @@
                 @foreach (var r in Model.requests)
                 {
                     <tr>
-                        <td>
+                        <td class="width-40"> 
                             @r.Name
                         </td>
-                        <td>
+                        <td> class="width-40"
                             @if(r.Maintainer != null)
                             {
                                 var u = await Model.um.FindByIdAsync(r.Maintainer);
@@ -42,7 +42,7 @@
                                 }
                             }
                         </td>
-                        <td>
+                        <td class="width-40">
                             <a asp-page="Services/Details" asp-route-id="@r.Id" asp-route-ret="PageRequests" class="btn btn-info">Details</a> | 
                             <button asp-page-handler="ProcessPageRequest" asp-route-sid="@r.Id" asp-route-accept="true" class="btn btn-success">Accept</button> | 
                             <button asp-route-handler="ProcessPageRequest" asp-route-sid="@r.Id" asp-route-accept="false" class="btn btn-danger">Decline</button>

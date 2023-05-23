@@ -193,3 +193,13 @@ nav .container{
 .bookmark-text {
     padding: 10px;
 }
+
+.Cookie-Table-0{
+    background-color: var(--hex1);
+    color: var(--text);
+}
+
+.Cookie-Table-1 {
+    background-color: var(--hex2);
+    color: var(--text);
+}
