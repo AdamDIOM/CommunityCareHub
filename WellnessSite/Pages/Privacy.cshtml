@@ -4,14 +4,6 @@
     ViewData["Title"] = "Privacy Policy";
     ViewData["Prefs"] = Model.p.ToString();
     ViewData["Layout"] = "Img";
-
-    @section Styles{
-    <style>
-        body {
-            background-image: url("img/login-bg.jpeg");
-        }
-    </style>
-}
 }
 <h1>Privacy Policy </h1>
 <p>Protecting your private information is our priority. This statement applies to <a asp-page="Index">here</a> and Community Care Hub and governs all data collection and usage.
@@ -134,3 +126,12 @@ We also reserve the right to gather additional personal and non-personal informa
 <p>CommunityCareHubIOM@gmail.com </p>
 <p> Effective as of 18th May 2023. </p>
 <br />
+
+@section Styles
+{
+    <style>
+        body {
+            background-image: url("~/img/login-bg.jpeg");
+        }
+    </style>
+}
