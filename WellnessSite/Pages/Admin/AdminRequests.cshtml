@@ -22,13 +22,13 @@
         @foreach (var u in Model.users)
         {
             <tr>
-                <td>
+                <td class="width-40">
                     @u.UserName
                 </td>
-                <td>
+                <td class="width-40">
                     @u.Email
                 </td>
-                <td>
+                <td class="width-20">
                     <form method="post">
                         <button asp-page-handler="ProcessAdminRequest" asp-route-uid="@u.Id" asp-route-accept="true" class="btn btn-success">Accept</button> | <button asp-route-handler="ProcessAdminRequest" asp-route-uid="@u.Id" asp-route-accept="false" class="btn btn-danger">Decline</button>
                     </form>
