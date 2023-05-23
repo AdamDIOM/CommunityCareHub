@@ -22,7 +22,7 @@
 <p>
     <a class="btn btn-info text-center" asp-page="Create">Create New Service Page</a>
 </p>
-    @if(await Model._um.IsInRoleAsync(await Model._um.GetUserAsync(User), "OrgAdmin"))
+    @if((await Model._um.IsInRoleAsync(await Model._um.GetUserAsync(User), "OrgAdmin") && !await Model._um.IsInRoleAsync(await Model._um.GetUserAsync(User), "Admin")))
     { <!-- Made it so OrgAdmins are notified about needing to wait for approval on services -->
         <p>All new services require admin approval before they appear in the published services list.</p>
         <p>Those awaiting approval have an unticked box, those approved show a ticked box and those declined will be removed.</p>
@@ -40,7 +40,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Service[0].Description)
             </th>
-                @if (await Model._um.IsInRoleAsync(await Model._um.GetUserAsync(User), "OrgAdmin"))
+                @if ((await Model._um.IsInRoleAsync(await Model._um.GetUserAsync(User), "OrgAdmin") && !await Model._um.IsInRoleAsync(await Model._um.GetUserAsync(User), "Admin")))
             { <!-- OrgAdmin only see this, shows approval status of their service-->
                 <th>
                     @Html.DisplayNameFor(model => model.Service[0].Accepted)
@@ -67,7 +67,7 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
 
-                @if (await Model._um.IsInRoleAsync(await Model._um.GetUserAsync(User), "OrgAdmin"))
+                @if ((await Model._um.IsInRoleAsync(await Model._um.GetUserAsync(User), "OrgAdmin") && !await Model._um.IsInRoleAsync(await Model._um.GetUserAsync(User), "Admin")))
                 {
                     <td>
                         @Html.DisplayFor(modelItem => item.Accepted)
