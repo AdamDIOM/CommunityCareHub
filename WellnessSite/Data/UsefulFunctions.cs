@@ -153,27 +153,29 @@ namespace WellnessSite.Data
 			page.Response.Cookies.Append(".cookieAcceptanceStatusCookie", "standard", new CookieOptions { Expires = DateTime.Now });
 		}
 
-        public static void SendEmail(string title, string to, string message, string? cc = "")
+        public static SmtpClient sc = new SmtpClient
         {
-			SmtpClient sc = new SmtpClient
-			{
-				Credentials = new NetworkCredential("CommunityCareHubIOM@gmail.com", "ydwazxgxyngmcrhw"),
-				DeliveryMethod = SmtpDeliveryMethod.Network,
-				EnableSsl = true,
-				Host = "smtp.gmail.com",
-				Port = 587
-			};
+            Credentials = new NetworkCredential("CommunityCareHubIOM@gmail.com", "ydwazxgxyngmcrhw"),
+            DeliveryMethod = SmtpDeliveryMethod.Network,
+            EnableSsl = true,
+            Host = "smtp.gmail.com",
+            Port = 587
+        };
 
+        public static bool SendEmail(string title, string to, string message, string? cc = "")
+        {
+            if (to == null || to.Trim() == "" || !to.Contains('@')) return false;
 			MailMessage m = new MailMessage();
 			m.From = new MailAddress("CommunityCareHubIOM@gmail.com", "Community Care Hub");
 			m.To.Add(new MailAddress(to));
-            if(cc != null && cc.Trim() != "")
+            if (cc != null && cc.Trim() != "" && cc.Contains('@'))
             {
 				m.CC.Add(new MailAddress(cc));
 			}
 			m.Body = message;
 			m.Subject = title;
 			sc.Send(m);
+            return true;
 		}
     }
 }
