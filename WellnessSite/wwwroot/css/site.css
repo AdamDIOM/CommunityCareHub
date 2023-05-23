@@ -190,6 +190,12 @@ nav .container{
     background-color: #B2C579;
 }
 
+.width-40{
+    width:40%;
+}
+.width-20{
+    width:20%;
+}
 .bookmark-text {
     padding: 10px;
 }

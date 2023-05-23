@@ -41,7 +41,7 @@
 
 <div class="bookmarks">
     <div class="row align-self-center">
-        <h2 class="col-12 col-sm-8 col-md-10">Bookmarked Services</h2>
+        <h2 class="col-12 col-sm-8 col-md-10 text-center">Bookmarked Services</h2>
         @if (Model.sim.IsSignedIn(User))
         {
         <a class="btn btn-info col-12 col4 col-md-2" asp-page="auth/Profile">View all bookmarks</a>
@@ -63,13 +63,17 @@
                 @for (i =0; i < 4; i++) 
                 {
                     if(i < Model.bookmarks.Count()) {
-                        <a asp-page="/Services/Service" asp-route-id="@Model.bookmarks[i].ServiceID">
-                            <div class="hex xs-@(i%2) sm-@(i%3) md-@(i%5) lg-@(i%7) xl-@(i%9)">
-                                <div class="small">
-                                    <h3>@Model.Services.FirstOrDefault(s => s.Id == Model.bookmarks[i].ServiceID).Name</h3>
+                        var s = Model.Services.FirstOrDefault(s => s.Id == Model.bookmarks[i].ServiceID);
+                        if(s != null)
+                        {
+                            <a asp-page="/Services/Service" asp-route-id="@Model.bookmarks[i].ServiceID">
+                                <div class="hex xs-@(i%2) sm-@(i%3) md-@(i%5) lg-@(i%7) xl-@(i%9)">
+                                    <div class="small">
+                                        <h3>@s.Name</h3>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
+                        }
                     }
                     else {
                         i = 4;
@@ -100,7 +104,7 @@
        
             <br />
             <div class="align-self-center">
-                <a class="btn btn-info"  asp-page="About" role="button">Read more about us here</a>
+                <a class="btn btn-info" asp-page="About" role="button">Read more about us here</a>
             </div>
 
         </div>

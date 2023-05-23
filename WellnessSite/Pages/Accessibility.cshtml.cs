@@ -66,7 +66,7 @@ namespace WellnessSite.Pages
             }
             return RedirectToPage("./Accessibility");
 		}
-		public async Task<IActionResult> OnPostSetText(string reset, int size)
+		public async Task<IActionResult> OnPostSetTextAsync(string reset, int size)
         {
 			if (_context.Preferences == null) return NotFound();
 

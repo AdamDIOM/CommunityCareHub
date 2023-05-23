@@ -60,12 +60,12 @@ namespace WellnessSite.Pages.Contact
 
             try
             {
-                UsefulFunctions.SendEmail(
+                if (!UsefulFunctions.SendEmail(
                     title: $"Wellness Form Enquiry - {Subject}",
                     to: "CommunityCareHubIOM@gmail.com",
-                    message: $"Message from {Name}:" + $"{Message}",
+                    message: $"Message from {Name}:\n\n" + $"{Message}",
                     cc: Email
-                    );
+                    )) throw new Exception();
 
                 return RedirectToPage("./Confirm", new { Message = Message });
             }
