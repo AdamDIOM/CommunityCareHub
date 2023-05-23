@@ -4,14 +4,6 @@
     ViewData["Title"] = "Cookie Policy";
     ViewData["Prefs"] = Model.p.ToString();
     ViewData["Layout"] = "Img";
-
-    @section Styles{
-        <style>
-            body {
-                background-image: url("img/login-bg.jpeg");
-            }
-        </style>
-    }
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -269,3 +261,12 @@
     has not adhered to this statement, please contact us at:
 </p>
 <p>CommunityCareHubIOM@gmail.com </p>
+
+@section Styles
+{
+    <style>
+        body {
+                background-image: url("img/login-bg.jpeg");
+             }
+    </style>
+}
