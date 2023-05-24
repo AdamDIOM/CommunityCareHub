@@ -51,6 +51,8 @@
     @if (Model.sim.IsSignedIn(User))
     {
         int i;
+        int j = 4;
+        int k = 0;
         @if(Model.bookmarks.Count() < 1 || Model.bookmarks == null)
         {
             <div class="centre">
@@ -60,23 +62,29 @@
         else
         {
             <div class="hexbox">
-                @for (i =0; i < 4; i++) 
+                @for (i =0; i < j; i++) 
                 {
                     if(i < Model.bookmarks.Count()) {
                         var s = Model.Services.FirstOrDefault(s => s.Id == Model.bookmarks[i].ServiceID);
                         if(s != null)
                         {
+                            if (s.Accepted == false)
+                            {
+                                j++;
+                                continue;
+                            }
                             <a asp-page="/Services/Service" asp-route-id="@Model.bookmarks[i].ServiceID">
-                                <div class="hex xs-@(i%2) sm-@(i%3) md-@(i%5) lg-@(i%7) xl-@(i%9)">
+                                <div class="hex xs-@(k%2) sm-@(k%3) md-@(k%5) lg-@(k%7) xl-@(k%9)">
                                     <div class="small">
                                         <h3>@s.Name</h3>
                                     </div>
                                 </div>
                             </a>
+                            k++;
                         }
                     }
                     else {
-                        i = 4;
+                        i = j;
                     }
                 }
             </div>

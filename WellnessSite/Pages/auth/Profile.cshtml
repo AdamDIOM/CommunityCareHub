@@ -26,10 +26,15 @@ else
             {
                 <h3>Bookmarks</h3>
 
-                @foreach (Models.Bookmarks bm in Model.bookmarks)
+                @foreach (Models.Bookmarks bm in Model.bookmarks) 
                 {
+                    var s = @Model.Services.First(s => s.Id == bm.ServiceID);
+                    if (!s.Accepted)
+                    {
+                        continue;
+                    }
                     <p>
-                        <a class="btn btn-info text-center w-100" asp-page="/Services/Service" asp-route-id="@bm.ServiceID">@Model.Services.First(s => s.Id == bm.ServiceID).Name</a>
+                        <a class="btn btn-info text-center w-100" asp-page="/Services/Service" asp-route-id="@bm.ServiceID">@s.Name</a>
                     </p>
                 }
 
