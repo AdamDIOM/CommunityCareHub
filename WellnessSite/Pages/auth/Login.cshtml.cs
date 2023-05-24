@@ -14,6 +14,8 @@ namespace WellnessSite.Pages.auth
     {
         [BindProperty(SupportsGet = true)]
         public string email { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string ReturnUrl { get; set; }
         [Required]
         [BindProperty]
         [EmailAddress]
@@ -43,6 +45,7 @@ namespace WellnessSite.Pages.auth
 			await UsefulFunctions.SetStandardAdmin(_um, _rm);
 			if (email == null) email = "";
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
+            if (ReturnUrl == null) ReturnUrl = "";
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -51,13 +54,15 @@ namespace WellnessSite.Pages.auth
 
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
 
+            ModelState.Remove("ReturnUrl");
+
             if (ModelState.IsValid)
             {
                 ApplicationUser u = await _um.FindByEmailAsync(Email);
                 if(u != null && (await _um.IsInRoleAsync(u, "OrgAdmin") || await _um.IsInRoleAsync(u, "Admin")))
                 {
                     var r = await _um.CheckPasswordAsync(u, Password);
-                    if (r) return RedirectToPage("AdminLogin", new { UID = u.Id });
+                    if (r) return RedirectToPage("AdminLogin", new { UID = u.Id, ReturnUrl});
                     else
                     {
                         ModelState.AddModelError(string.Empty, "Invalid Logon Attempt");
@@ -75,7 +80,22 @@ namespace WellnessSite.Pages.auth
                         Response.Cookies.Append(".colourSchemeCookie", u.CookieState, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
                     }
                     await UsefulFunctions.SetStandardAdmin(_um, _rm);
-					return Redirect("../Index");
+                    try
+                    {
+                        if (ReturnUrl == null || ReturnUrl.Trim() == "") return Redirect("../Index");
+                        return Redirect(ReturnUrl);
+                    }
+                    catch
+                    {
+                        try
+                        {
+                            return Redirect(ReturnUrl + "/Index");
+                        }
+                        catch
+                        {
+                            return Redirect("../Index");
+                        }
+                    }
                 }
                 ModelState.AddModelError(string.Empty, "Invalid Logon Attempt");
                 return Page(); //Should have now fixed the login error where one failed attempt stopped the ability for a successful login

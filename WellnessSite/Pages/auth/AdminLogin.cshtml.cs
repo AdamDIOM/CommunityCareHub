@@ -18,6 +18,9 @@ namespace WellnessSite.Pages.auth
         public IList<SecQues> sq;
         [BindProperty(SupportsGet = true)]
         public string UID { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string ReturnUrl { get; set; }
         public string? SQError { get; set; } = "";
 
         [BindProperty]
@@ -57,7 +60,7 @@ namespace WellnessSite.Pages.auth
 
         }
 
-        public async Task<IActionResult> OnPostAsync(string UID, string Q)
+        public async Task<IActionResult> OnPostAsync(string UID, string Q, string ReturnUrl)
         {
 
             var u = await _um.FindByIdAsync(UID);
@@ -76,7 +79,22 @@ namespace WellnessSite.Pages.auth
                 {
                     Response.Cookies.Append(".colourSchemeCookie", u.CookieState, new CookieOptions { Expires = DateTime.Now.AddDays(30) });
                 }
-                return RedirectToPage("../Index");
+                try
+                {
+                    if (ReturnUrl == null || ReturnUrl.Trim() == "") return Redirect("../Index");
+                    return Redirect(ReturnUrl);
+                }
+                catch
+                {
+                    try
+                    {
+                        return Redirect(ReturnUrl + "/Index");
+                    }
+                    catch
+                    {
+                        return Redirect("../Index");
+                    }
+                }
             }
 
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
@@ -94,8 +112,8 @@ namespace WellnessSite.Pages.auth
             {
                 Q = u.Question2;
             }
-            //return Page();
-            return RedirectToPage("../Index");
+            return Page();
+            //return RedirectToPage("../Index");
         }
     }
 }

@@ -11,7 +11,7 @@
 
 <form method="post">
   
-
+    <input hidden asp-for="ReturnUrl" value="@Model.ReturnUrl" />
     <div class="form-group">
         <label asp-for="A" class="control-label">@Model.Q</label>
         <input asp-for="A" class="form-control" />
