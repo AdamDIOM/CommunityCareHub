@@ -10,11 +10,13 @@
     <div class="col-md-6 col-10">
         <div class="centre"><h1>Services</h1></div>
         <div class="centre">
+            <form>
             <div class="form-group">
                     <input asp-for="qry" plaeholder="Search" class="input-box"/>
                     <input type="submit" asp-route-qry="@Model.qry" value="Search" class="btn btn-info">
                     <a asp-page="./Index" class="btn btn-info">View all</a>
                 </div>
+            </form>
         </div>
     </div>
     <div class="col-md-3 col-1"></div>
@@ -56,36 +58,36 @@
             {
                 i++;
                 <!-- Would be really nice to figure out how to lmit records shown to 35ish and use pagination of some kind to get more-->
-            <tr class="table-row-@(i % 2)">
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-
-                @if ((await Model._um.IsInRoleAsync(await Model._um.GetUserAsync(User), "OrgAdmin") && !await Model._um.IsInRoleAsync(await Model._um.GetUserAsync(User), "Admin")))
-                {
+                <tr class="table-row-@(i % 2)">
                     <td>
-                        @Html.DisplayFor(modelItem => item.Accepted)
+                        @Html.DisplayFor(modelItem => item.Name)
                     </td>
-                }
-                <td>
-                    <p>
-                        <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-colour">Edit</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-colour">Details</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-colour">Delete</a>
-                    </p>
-                </td>
-            </tr>
-        }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+
+                    @if ((await Model._um.IsInRoleAsync(await Model._um.GetUserAsync(User), "OrgAdmin") && !await Model._um.IsInRoleAsync(await Model._um.GetUserAsync(User), "Admin")))
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Accepted)
+                        </td>
+                    }
+                    <td>
+                        <p>
+                            <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-colour btn-service">Edit</a>
+                        </p>
+                        <p>
+                            <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-colour btn-service">Details</a>
+                        </p>
+                        <p>
+                            <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-colour btn-service">Delete</a>
+                        </p>
+                    </td>
+                </tr>
+            }
         }
     </tbody>
 </table>

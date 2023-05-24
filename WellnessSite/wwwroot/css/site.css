@@ -209,3 +209,7 @@ nav .container{
     background-color: var(--hex2);
     color: var(--text);
 }
+
+.btn-service {
+    width: 100%
+}
