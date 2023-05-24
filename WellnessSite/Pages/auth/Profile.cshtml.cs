@@ -24,6 +24,9 @@ namespace WellnessSite.Pages.auth
         public string? name;
 
         [BindProperty]
+        public string Email { get; set; }
+
+        [BindProperty]
         [DataType(DataType.Password)]
         [Required]
         [Display(Name = "Current Password")]
@@ -83,6 +86,10 @@ namespace WellnessSite.Pages.auth
             {
                 name = u.Name;
             }
+            if (u != null)
+            {
+                Email = u.Email;
+            }
 
             bookmarks = await _context.Bookmarks.Where(b => b.UserID == u.Id).ToListAsync();
 
@@ -101,6 +108,10 @@ namespace WellnessSite.Pages.auth
             if (u != null && u.Name != null)
             {
                 name = u.Name;
+            }
+            if (u != null)
+            {
+                Email = u.Email;
             }
 
             if (_context.SecQues != null)
@@ -141,6 +152,10 @@ namespace WellnessSite.Pages.auth
             {
                 name = u.Name;
             }
+            if (u != null)
+            {
+                Email = u.Email;
+            }
 
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
 
@@ -172,6 +187,10 @@ namespace WellnessSite.Pages.auth
             if (u != null && u.Name != null)
             {
                 name = u.Name;
+            }
+            if (u != null)
+            {
+                Email = u.Email;
             }
 
             p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
@@ -231,6 +250,10 @@ namespace WellnessSite.Pages.auth
             if (u != null && u.Name != null)
             {
                 name = u.Name;
+            }
+            if (u != null)
+            {
+                Email = u.Email;
             }
 
             bookmarks = await _context.Bookmarks.Where(b => b.UserID == u.Id).ToListAsync();
