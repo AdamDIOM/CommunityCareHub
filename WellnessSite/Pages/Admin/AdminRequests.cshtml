@@ -4,6 +4,11 @@
     ViewData["Title"] = "Admin Requests List";
     ViewData["Prefs"] = Model.p.ToString();
 }
+<div>
+    <br />
+    <a asp-page="./Index" class="btn btn-info">Back</a>
+    <br />
+</div>
 <h1>Users Requesting Organisation Admin Rights</h1>
 @if(Model.users.Count() > 0){
 <table class="table">

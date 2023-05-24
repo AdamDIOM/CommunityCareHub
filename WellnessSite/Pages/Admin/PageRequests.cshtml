@@ -4,6 +4,11 @@
     ViewData["Title"] = "Page Requests List";
     ViewData["Prefs"] = Model.p.ToString();
 }
+<div>
+    <br />
+    <a asp-page="./Index" class="btn btn-info">Back</a>
+    <br />
+</div>
 <h1>Submitted Page Requests Pending Approval</h1>
 
 @if(Model.requests.Count() > 0)
