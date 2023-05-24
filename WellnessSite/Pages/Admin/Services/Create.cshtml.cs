@@ -14,7 +14,7 @@ namespace WellnessSite.Pages.Admin.Services
 {
     public class CreateModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _um;
+        public readonly UserManager<ApplicationUser> um;
         private readonly SignInManager<ApplicationUser> _sim;
         private readonly WellnessSiteContext _context;
         public Preferences p;
@@ -24,21 +24,21 @@ namespace WellnessSite.Pages.Admin.Services
         public CreateModel(SignInManager<ApplicationUser> sim, UserManager<ApplicationUser> um, WellnessSiteContext con)
         {
             _sim = sim;
-            _um = um;
+            this.um = um;
             _context = con;
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
 
-            p = await UsefulFunctions.GetPreferences(_context, _um, _sim, User, this);
+            p = await UsefulFunctions.GetPreferences(_context, um, _sim, User, this);
 
             if(_context.Categories != null)
             {
                 c = await _context.Categories.ToListAsync();
             }
 
-            email = (await _um.GetUserAsync(User)).Email;
+            email = (await um.GetUserAsync(User)).Email;
 
             return Page();
 
@@ -51,7 +51,17 @@ namespace WellnessSite.Pages.Admin.Services
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Service == null || Service == null)
+
+            p = await UsefulFunctions.GetPreferences(_context, um, _sim, User, this);
+
+            if (_context.Categories != null)
+            {
+                c = await _context.Categories.ToListAsync();
+            }
+
+            email = (await um.GetUserAsync(User)).Email;
+
+            if (!ModelState.IsValid || _context.Service == null || Service == null)
             {
                 return Page();
             }
